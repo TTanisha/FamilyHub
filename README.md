@@ -40,6 +40,12 @@ After some use, users of the application will be asked to complete a survey that
 * Message Board
 * (Non-Functional) Can respond to 100 users with 1000 requests per minute concurrently
 
+## Technologies ##
+
+* Front-end: ReactJS
+* Back-end: Node.js Express.js
+* Storage: MongoDB
+
 ## Architecture Diagram
 
 ![Architecture-diagram](./docs/architecture-diagram.png)

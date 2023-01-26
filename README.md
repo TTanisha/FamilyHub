@@ -37,8 +37,8 @@ After some use, users of the application will be asked to complete a survey that
 
 * Individual Family Member Profiles
 * Family Groups
-* Message Board
-* (Non-Functional) Can respond to 100 users with 1000 requests per minute concurrently
+
+* Able to respond to 100 users with 1000 requests per minute concurrently.
 
 ## Technologies ##
 

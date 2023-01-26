@@ -30,9 +30,9 @@ After some use, users of the application will be asked to complete a survey that
 ## Core Features ## 
 
 * Shared Calendar 
-    * Users of the same family group will be able to view a shared calendar
-    * The calendar can be viewed in a monthly or daily layout. 
-    * Users can add, edit, and remove recurring or single/one-time events to this calendar and each event will be viewable to everyone in the family group. 
+    * Users of the same family group will be able to view a shared calendar.
+    * The calendar can be seen in a monthly or daily view. 
+    * Users can add recurring or one-time events to the calendar. 
 
 * Family Member Profiles
 * Family Groups

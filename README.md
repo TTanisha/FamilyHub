@@ -35,9 +35,16 @@ After some use, users of the application will be asked to complete a survey that
     * Users can add recurring or one-time events to the calendar. 
 
 * Family Member Profiles
-* Family Groups
 
-* Able to respond to 100 users with 1000 requests per minute concurrently.
+* Family Groups
+    * Users can create family groups.
+    * Users that belong to a family group can see events on their calendars.
+    * Users can invite other family members to the group.
+    * Users can leave the family group.
+
+* Able to respond to 100 users with 1000 requests per minute concurrently. ( for example: 100 users would add 10 events to the calendar.
+
+---
 
 ## Technologies ##
 
@@ -45,10 +52,13 @@ After some use, users of the application will be asked to complete a survey that
 * Back-end: Node.js Express.js
 * Storage: MongoDB
 
+---
+
 ## Architecture Diagram
 
 ![Architecture-diagram](./docs/architecture-diagram.png)
 
+---
 
 ## User Stories
 
@@ -70,3 +80,6 @@ After some use, users of the application will be asked to complete a survey that
 ### Family Member Profiles
 
 ### Family Groups
+* As a family member, I want to be able to invite my family members to the family group.
+* As a family member, I would like to be able to create a family group 
+* As a user, I want to be able to leave a family group.

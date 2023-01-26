@@ -53,6 +53,19 @@ After some use, users of the application will be asked to complete a survey that
 ## User Stories
 
 ### Shared Calendar
+* As a family member, I want to be able to view the shared calendar. 
+    * As a family member I would like to be able to see a monthly view of the family calendars I am a part of
+    * As a family member I would like to be able to see a view of all family events for a specific day.
+    * As a family member, I want to be able to view the details of a single event in the calendar. 
+* As a family member, I want to be able to add an event to a family calendar. 
+    * As a family member, I want to be able to add a recurring event to the calendar. 
+    * As a family member, I want to be able to add a single event to the calendar. 
+* As a family member, I want to be able to remove an event from a family calendar.
+    * As a family member, I want to be able to remove a recurring event in the calendar. 
+    * As a family member, I want to be able to remove a single (cancelled)  event to the calendar. 
+* As a family member, I want to be able to edit an event on a family calendar.
+    * As a family member, I want to be able to edit a recurring event in the calendar. 
+    * As a family member, I want to be able to edit a single event in the calendar. 
 
 ### Family Member Profiles
 

@@ -35,7 +35,7 @@ After some use, users of the application will be asked to complete a survey that
     * Users can add, edit, and remove recurring or single/one-time events to this calendar and each event will be viewable to everyone in the family group. 
     * Each user will be able to customize/personalize their individual view of the calendar.
 
-* Individual Family Member Profiles
+* Family Member Profiles
 * Family Groups
 
 * Able to respond to 100 users with 1000 requests per minute concurrently.
@@ -49,3 +49,12 @@ After some use, users of the application will be asked to complete a survey that
 ## Architecture Diagram
 
 ![Architecture-diagram](./docs/architecture-diagram.png)
+
+
+## User Stories
+
+### Shared Calendar
+
+### Family Member Profiles
+
+### Family Groups

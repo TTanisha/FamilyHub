@@ -35,6 +35,9 @@ After some use, users of the application will be asked to complete a survey that
     * Users can add recurring or one-time events to the calendar. 
 
 * Family Member Profiles
+    * Users can add personal information to their profile (name, pronouns, birthday, email, cell and home numbers, and address). 
+    * Users can view and edit their own profile.
+    * Users can view the profile of other family members. 
 
 * Family Groups
     * Users can create family groups.
@@ -78,6 +81,15 @@ After some use, users of the application will be asked to complete a survey that
     * As a family member, I want to be able to edit a single event in the calendar. 
 
 ### Family Member Profiles
+* As a signed-in user, I want to be able to add/edit my personal information.   
+   * As a signed-in user, I want to be able to include my name in my profile. 
+   * As a signed-in user, I want to be able to include my pronouns in my profile. 
+   * As a signed-in user, I want to be able to include my birthday in my profile. 
+   * As a signed-in user, I want to be able to include my cell number in my profile. 
+   * As a signed-in user, I want to be able to include my home phone number in my profile.
+   * As a signed-in user, I want to be able to include my address in my profile. 
+* As a signed-in user, I want to be able to view my own profile. 
+* As a signed-in user in a family group, I want to be able to view other family members' profiles. 
 
 ### Family Groups
 * As a family member, I want to be able to invite my family members to the family group.

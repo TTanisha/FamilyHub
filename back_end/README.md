@@ -4,12 +4,29 @@
 
 ### Requirements
 
-1. Install dependencies (For running locally)
+- For running locally wihtout docker:
 
-- npm install express
+    - Make sure express is intalled.```npm install express```
 
-- npm install nodemon -D *(runs app again when change made)*
+    - Make sure nodemon is intalled. (-D for development) ```npm install nodemon -D``` *(runs app again when change made)*
 
- - How to run a docker container (image ID: 2981efcebd27) ```docker run -p 5000:5000 2981efcebd27```
+    - Type ```npm start```
 
- - Image in dockerhub alreadt: armijosj/familyhub
+    - Or type ```npm dev``` (using nodemon)
+
+
+- For creating an image locally **(not necessary when pulled from Docker Hub )** 
+
+    - ```docker build ./back_end -t armijosj/familyhub:server```
+
+- For pushing an image manually **(not necessary when pulled from Docker Hub )** ( username: *armijosj* and password: *dckr_pat_D6kvLu_NbuDnl4jkJG1ubmJ5uzQ* (Actually iit is a CLI access token) )
+
+    - ```docker push armijosj/familyhub:server```
+
+- For pulling the image from DockerHub (After running github actions or pushing manually)
+
+    - Type  ```docker pull armijosj/familyhub:server``` in the terminal.
+
+- For running the Docker image (Create a container and run the server)
+
+    - Type ```docker run -p 5000:5000 armijosj/familyhub:server``` to run the server.

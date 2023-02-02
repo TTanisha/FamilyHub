@@ -10,7 +10,7 @@
 
 - npm install nodemon -D *(runs app again when change made)*
 
-- npm install mongodb
+- npm install mongodb cors dotenv
 
 
 

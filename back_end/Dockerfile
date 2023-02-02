@@ -10,4 +10,4 @@ COPY . .
 # Server port
 EXPOSE 5000
 
-CMD ["pnpm", "start"]
+CMD ["npm", "start"]

@@ -1,11 +1,18 @@
 const express = require('express')
-const app = express()
-const port = 5000
+const app = require("./app");
+const PORT = 5000
 
-app.get('/api', (req, res) => {
+// Connect to Database
+
+
+// Demo response to make sure it is working
+app.get('/', (req, res) => {
   res.json({"message": ["Message", "from", "backend", "server"]})
 })
 
-app.listen(port, () => {
-  console.log(`Server running on port: ${port}`)
+// Run the server
+app.listen(PORT, () => {
+  console.log(`Server running on port: ${PORT}`)
 })
+
+module.exports = app;

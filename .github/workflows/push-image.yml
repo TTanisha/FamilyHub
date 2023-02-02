@@ -2,7 +2,7 @@ run-name: Pushing image to Docker Hub
 
 name: Push image to Docker Hub
 
-on: fork
+on: push
 #   push:
 #     branches: [ main ]
 #   pull_request:

@@ -3,11 +3,11 @@ WORKDIR /usr/src/app
 
 # Install app dependencies
 COPY package*.json ./
-RUN pnpm install
+RUN npm install
 
 # Bundle app source
 COPY . .
 # Server port
 EXPOSE 5000
 
-CMD ["pnpm", "start"]
+CMD ["npm", "start"]

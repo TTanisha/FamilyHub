@@ -6,13 +6,13 @@
 
 - For running locally wihtout docker:
 
-    - Make sure express is intalled.```pnpm install express```
+    - Make sure express is intalled.```npm install express```
 
-    - Make sure nodemon is intalled. (-D for development) ```pnpm install nodemon -D``` *(runs app again when change made)*
+    - Make sure nodemon is intalled. (-D for development) ```npm install nodemon -D``` *(runs app again when change made)*
 
-    - Type ```pnpm start```
+    - Type ```npm start```
 
-    - Or type ```pnpm dev``` (using nodemon)
+    - Or type ```npm dev``` (using nodemon)
 
 
 - For creating an image locally **(not necessary when pulled from Docker Hub )** 

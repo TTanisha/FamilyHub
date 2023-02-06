@@ -17,28 +17,28 @@ const Calendar = () => {
   }, []);
 
   return (
-    <div class="container">
-      <div class="filters-container"></div>
+    <div className="container">
+      <div className="filters-container"></div>
       <div>
-        <span class="calendar-navi">
-          <button class="prev-button" type="button">
+        <span className="calendar-navi">
+          <button className="prev-button" type="button">
             <FaArrowLeft />
           </button>
-          <div class="calendar-center-header">
-            <div id="renderRange" class="calendar-title">January</div>
-            <button type="button" class="select-date">
+          <div className="calendar-center-header">
+            <div id="renderRange" className="calendar-title">January</div>
+            <button type="button" className="select-date">
               <FaRegCaretSquareDown />
             </button>
-            <button type="button" class="today-button">Today</button>
+            <button type="button" className="today-button">Today</button>
           </div>
-          <button type="button" class="next-button">
+          <button type="button" className="next-button">
             <FaArrowRight />
           </button>
         </span>
-        <div id="calendar" class="calendar"></div>
+        <div id="calendar" className="calendar"></div>
       </div>
-      <div class="schedule-container"></div>
-      <div class="event-buttons-container"></div>
+      <div className="schedule-container"></div>
+      <div className="event-buttons-container"></div>
     </div>
   );
 };

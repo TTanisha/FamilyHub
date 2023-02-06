@@ -11,6 +11,8 @@ specifiers:
   react-is: ^18.2.0
   react-router-dom: ^6.8.0
   styled-components: ^5.3.6
+  tui-date-picker: ^4.3.3
+  tui-time-picker: ^2.1.6
   vite: ^4.0.0
 
 dependencies:
@@ -21,6 +23,8 @@ dependencies:
   react-is: 18.2.0
   react-router-dom: 6.8.0_biqbaboplfbrettd7655fr4n2y
   styled-components: 5.3.6_7i5myeigehqah43i5u7wbekgba
+  tui-date-picker: 4.3.3
+  tui-time-picker: 2.1.6
 
 devDependencies:
   '@types/react': 18.0.27
@@ -564,11 +568,11 @@ packages:
     resolution: {integrity: sha512-3vtRKHgVxu3Jp9t718R9BuzoD4NcQ8YJ5XRzsSKxNDiDonD2MXIT1TmSkenxuCycZJoQT5d2vE8LwWJxBC1gmA==}
     dependencies:
       '@types/prop-types': 15.7.5
-      '@types/scheduler': 0.16.2
+      '@types/schedule-containerr': 0.16.2
       csstype: 3.1.1
     dev: true
 
-  /@types/scheduler/0.16.2:
+  /@types/schedule-containerr/0.16.2:
     resolution: {integrity: sha512-hppQEBDmlwhFAXKJX2KnWLYu5yMfi91yazPb2l+lbJiwW+wdo1gNeRA+3RgNSO39WYX2euey41KEwnqesU2Jew==}
     dev: true
 
@@ -1177,7 +1181,7 @@ packages:
     dependencies:
       loose-envify: 1.4.0
       react: 18.2.0
-      scheduler: 0.23.0
+      schedule-containerr: 0.23.0
     dev: false
 
   /react-icons/4.7.1_react@18.2.0:
@@ -1263,7 +1267,7 @@ packages:
       xmlchars: 2.2.0
     dev: false
 
-  /scheduler/0.23.0:
+  /schedule-containerr/0.23.0:
     resolution: {integrity: sha512-CtuThmgHNg7zIZWAXi3AsyIzA3n4xx7aNyjwC2VJldO2LMVDhFK+63xGqq6CsJH4rTAt6/M+N4GhZiDYPx9eUw==}
     dependencies:
       loose-envify: 1.4.0

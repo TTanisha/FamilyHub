@@ -15,7 +15,9 @@
     "react-icons": "^4.7.1",
     "react-is": "^18.2.0",
     "react-router-dom": "^6.8.0",
-    "styled-components": "^5.3.6"
+    "styled-components": "^5.3.6",
+    "tui-date-picker": "^4.3.3",
+    "tui-time-picker": "^2.1.6"
   },
   "devDependencies": {
     "@types/react": "^18.0.26",

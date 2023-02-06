@@ -13,8 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "cors": "^2.8.5",
+    "dotenv": "^16.0.3",
     "express": "^4.18.2",
-    "mongoose": "^6.9.0"
+    "mongodb": "^5.0.0",
+    "mongoose": "^6.9.0",
+    "pnpm": "^7.26.3"
   },
   "devDependencies": {
     "nodemon": "^2.0.20"

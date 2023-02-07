@@ -4,6 +4,7 @@ import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 import { useEffect } from 'react';
 import './calendar.css';
 import { FaArrowLeft, FaArrowRight, FaRegCaretSquareDown } from "react-icons/fa";
+import moment from 'moment';
 
 function createCalendar() {
   return new TUICalendar('#calendar', {
@@ -11,10 +12,17 @@ function createCalendar() {
     isReadOnly: true});
 }
 
+function setCalendarTitle() {
+  const monthString = moment().format("MMMM");
+  document.getElementById("renderRange").innerHTML=monthString;
+}
+
 const Calendar = () => {  
   useEffect(() => {
     createCalendar();
+    setCalendarTitle();
   }, []);
+
 
   return (
     <div className="container">
@@ -25,7 +33,7 @@ const Calendar = () => {
             <FaArrowLeft />
           </button>
           <div className="calendar-center-header">
-            <div id="renderRange" className="calendar-title">January</div>
+            <div id="renderRange" className="calendar-title"></div>
             <button type="button" className="select-date">
               <FaRegCaretSquareDown />
             </button>

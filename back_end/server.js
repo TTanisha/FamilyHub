@@ -1,9 +1,8 @@
 const app = require("./app");
-
 const mongoose = require("mongoose");
 require("dotenv").config({path: "config.env"}); // load environment variables
-
 const PORT = process.env.PORT || 5000; // access the port variable from config.env
+
 
 // Database connection
 const DB = process.env.FAMILYHUB_DB_URI;
@@ -21,12 +20,18 @@ mongoose.connect(DB, connectionOptions).then(
 
 // Demo response to make sure it is working
 app.get('/', (req, res) => {
-  res.json({"message": ["Message", "from", "backend", "server"]})
+  res.json({"message": ["Message", "from", "backend", "server"]});
 });
 
 // Run the server
 app.listen(PORT, () => {
   console.log("Server running on port:", PORT);
 });
+
+// Handling Error
+process.on("unhandledRejection", err => {
+  console.log(`An error occurred: ${err.message}`)
+  server.close(() => process.exit(1))
+})
 
 module.exports = app;

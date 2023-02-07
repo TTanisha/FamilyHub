@@ -1,6 +1,14 @@
 const express = require("express");
 const cors = require("cors");
+var bodyParser = require('body-parser')
+
 const app = express();
+
+// parse application/x-www-form-urlencoded
+app.use(bodyParser.urlencoded({ extended: true }));
+
+// parse application/json
+app.use(bodyParser.json())
 
 //Get Routes
 const userRouter = require("./routes/userRoutes");

@@ -5,13 +5,18 @@ const Users = require("../models/userModel");
 
 exports.registerUser = async(req, res, next) => { 
     
+    console.log("Sould have something-> ");
+
+    console.log(req.body);
     const { username, password } = req.body
+
+
     if (password.length < 6) {
         return res.status(400).json({ message: "Password less than 6 characters" })
     }
 
     try {
-          await User.create({
+          await Users.create({
             username,
             password,
           }).then(user =>
@@ -23,8 +28,8 @@ exports.registerUser = async(req, res, next) => {
     } catch (err) {
         res.status(401).json({
             message: "User not successful created",
-            error: error.mesage,
+            error: err.mesage,
           })
     }
-
+    
 };

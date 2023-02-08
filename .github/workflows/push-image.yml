@@ -5,7 +5,7 @@ name: Push image to Docker Hub
 on:
   push:
     branches: [ main ]
-  merge:
+  pull_request:
     branches: [ main ]
     
 jobs:

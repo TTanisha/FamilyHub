@@ -1,5 +1,6 @@
 const Users = require("../models/userModel");
-
+const errorToJSON = require('error-to-json');
+const { db } = require("../models/userModel");
 
 // Include controller logic
 
@@ -27,11 +28,19 @@ exports.registerUser = async(req, res, next) => {
             })
           )
     } catch (err) {
-      console.log(err)
-        res.status(401).json({
-            message: "User not successful created",
-            error: err.mesage,
-          })
+      //parsing error to JSON
+      var reason = "";
+      var dbError = errorToJSON.parse(err);
+      console.log("The following error occured:" + dbError);
+      
+      if (dbError.code == 11000) {    //duplicate key error
+        reason =  dbError.keyValue.username + " already exists. "
+      }
+
+
+      res.status(401).json({
+          message: reason + "User not successful created",
+        })
     }
     
 };

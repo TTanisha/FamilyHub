@@ -6,6 +6,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "Email required."],
     unique: true
   },
+  passwordHash: {
+    type: String,
+    required: [true, "Password required."]
+  },
   firstName: {
     type: String,
     required: [true, "First name is required."],
@@ -44,9 +48,15 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: [false]
   },
-  timestamps: true // adds createdAt and updatedAt Date fields
+  groups: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'FamilyGroup',
+    required: [false]
+  },
+  timestamps: [true] // adds createdAt and updatedAt Date fields
 });
 
 const User = mongoose.model("User", userSchema);
-// const TestUsers = mongoose.model("TestUsers", userSchema);
-module.exports = User;
+const TestUser = mongoose.model("TestUser", userSchema);
+
+module.exports = {User, TestUser};

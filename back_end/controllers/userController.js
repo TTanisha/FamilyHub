@@ -5,15 +5,12 @@ const { db } = require("../models/userModel");
 // Include controller logic
 
 exports.registerUser = async(req, res, next) => { 
-    
-    const { username, password, firstName, lastName, birthday, eMail } = req.body
-    if (password.length < 6) {
-        return res.status(400).json({ message: "Password less than 6 characters" })
-    }
-
-    // TO DO: further input validation
 
     try {
+      const { username, password, firstName, lastName, birthday, eMail } = req.body
+      if (password.length < 6) {
+          return res.status(400).json({ message: "Password less than 6 characters" })
+      }
           await Users.create({
             username,
             password,

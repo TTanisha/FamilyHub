@@ -34,9 +34,14 @@ exports.registerUser = async(req, res, next) => {
       console.log("The following error occured:" + dbError);
       
       if (dbError.code == 11000) {    //duplicate key error
-        reason =  dbError.keyValue.username + " already exists. "
-      }
+        if (dbError.keyValue.username != undefined){
 
+          reason =  "The user name: " + dbError.keyValue.username + " already exists. "
+        } else if (dbError.keyValue.eMail != undefined){
+         
+          reason =  "The email: " + dbError.keyValue.eMail + " is already in use. "
+        }
+      }
 
       res.status(401).json({
           message: reason + "User not successful created",

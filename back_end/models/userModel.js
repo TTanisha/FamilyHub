@@ -1,8 +1,6 @@
 const mongoose = require("mongoose");
 
-// set up the mongoDB schema
-
-/* For example
+// mongoDB schema
 const userSchema = mongoose.Schema({
     firstName: {
         type: String,
@@ -26,12 +24,12 @@ const userSchema = mongoose.Schema({
         type: String,
         required: [true, "A user must have password"],
     },
+    birthday: {
+        type: String,
+        required: [true, "A user must have birthday"],
+    },
 });
 
 
-*/
-
-
-// const Users = mongoose.model("Users", userSchema);
-// const TestUsers = mongoose.model("TestUsers", userSchema);
-// (module.exports = Users), TestUsers;
+const Users = mongoose.model("Users", userSchema);
+module.exports = Users;

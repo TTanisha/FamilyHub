@@ -1,11 +1,10 @@
-const userController = require("../controllers/userController");
 const express = require("express");
 const router = express.Router();
 
+// Controllers
+const userController = require("../controllers/userController");
 
 // send each request to corresponding controller function
-
-// for example: router.route("/createUser").post(userController.createUser);
-
+router.route("/registerUser").post(userController.registerUser);
 
 module.exports = router;

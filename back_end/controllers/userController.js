@@ -1,22 +1,48 @@
 const Users = require("../models/userModel");
-
+const errorToJSON = require('error-to-json');
+const { db } = require("../models/userModel");
 
 // Include controller logic
 
-/*For example: 
+exports.registerUser = async(req, res, next) => { 
 
-exports.createUser = async(req, res) => { 
     try {
-
-    logic  
-
-    let newUser = await Users.create(req.body);
-
-    more logic
-
+      const { username, password, firstName, lastName, birthday, eMail } = req.body
+      if (password.length < 6) {
+          return res.status(400).json({ message: "Password less than 6 characters" })
+      }
+          await Users.create({
+            username,
+            password,
+            firstName, 
+            lastName,
+            birthday, 
+            eMail
+          }).then(user =>
+            res.status(200).json({
+              message: "User successfully created",
+              user,
+            })
+          )
     } catch (err) {
-        handle error
-    }
+      //parsing error to JSON
+      var reason = "";
+      var dbError = errorToJSON.parse(err);
+      console.log("The following error occured:" + dbError);
+      
+      if (dbError.code == 11000) {    //duplicate key error
+        if (dbError.keyValue.username != undefined){
 
+          reason =  "The user name: " + dbError.keyValue.username + " already exists. "
+        } else if (dbError.keyValue.eMail != undefined){
+         
+          reason =  "The email: " + dbError.keyValue.eMail + " is already in use. "
+        }
+      }
+
+      res.status(401).json({
+          message: reason + "User not successful created",
+        })
+    }
+    
 };
-*/

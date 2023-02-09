@@ -2,11 +2,11 @@ run-name: Pushing image to Docker Hub
 
 name: Push image to Docker Hub
 
-on: fork
-#   push:
-#     branches: [ main ]
-#   pull_request:
-#     branches: [ main ]
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
     
 jobs:
   push_to_registry:

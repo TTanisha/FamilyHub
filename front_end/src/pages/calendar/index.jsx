@@ -3,43 +3,77 @@ import TUICalendar from '@toast-ui/calendar';
 import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 import { useEffect } from 'react';
 import './calendar.css';
-import { FaArrowLeft, FaArrowRight, FaRegCaretSquareDown } from "react-icons/fa";
+import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import moment from 'moment';
 
+let tuiCalendar = new TUICalendar('#calendar', {
+  defaultView: 'month',
+  isReadOnly: true
+});
+
+let currDate = new Date();
+
 function createCalendar() {
-  return new TUICalendar('#calendar', {
+  tuiCalendar = new TUICalendar('#calendar', {
     defaultView: 'month',
-    isReadOnly: true});
+    isReadOnly: true
+  });
+  return tuiCalendar;
+}
+
+function getNext() {
+  tuiCalendar.next();
+
+  currDate.setMonth(currDate.getMonth() + 1);
+  tuiCalendar.setDate(currDate);
+  setCalendarTitle();
+
+  tuiCalendar.render();
+}
+
+function getPrev() {
+  tuiCalendar.prev();
+
+  currDate.setMonth(currDate.getMonth() - 1);
+  tuiCalendar.setDate(currDate);
+  setCalendarTitle();
+
+  tuiCalendar.render();
+}
+
+function getToday() {
+  tuiCalendar.today();
+
+  currDate = new Date();
+  setCalendarTitle();
+
+  tuiCalendar.render();
 }
 
 function setCalendarTitle() {
-  const monthString = moment().format("MMMM");
-  document.getElementById("renderRange").innerHTML=monthString;
+  let string = moment(tuiCalendar.getDate().toString()).format("MMMM YYYY");
+  document.getElementById("renderRange").innerHTML = string;
 }
 
-const Calendar = () => {  
+const Calendar = () => {
   useEffect(() => {
     createCalendar();
     setCalendarTitle();
-  }, []);
-
+  });
 
   return (
     <div className="container">
       <div className="filters-container"></div>
       <div>
         <span className="calendar-navi">
-          <button className="prev-button" type="button">
+          <button className="prev-button" type="button" onClick={getPrev}>
             <FaArrowLeft />
           </button>
           <div className="calendar-center-header">
             <div id="renderRange" className="calendar-title"></div>
-            <button type="button" className="select-date">
-              <FaRegCaretSquareDown />
-            </button>
-            <button type="button" className="today-button">Today</button>
+            <button type="button" className="today-button" onClick={getToday}>Today</button>
           </div>
-          <button type="button" className="next-button">
+          <button type="button" className="next-button" onClick={getNext}>
             <FaArrowRight />
           </button>
         </span>

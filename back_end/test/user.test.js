@@ -5,11 +5,10 @@ let request = supertest(app);
 const mongoose = require('mongoose');
 require("dotenv").config({path: "config.env"}); // load environment variables
 
-/*
 
-Can't connect
+
 beforeAll( async ()=> {
-    jest.useFakeTimers('legacy')
+    //jest.useFakeTimers('legacy')
     
     // Database connection
     const DB = process.env.FAMILYHUB_DB_URI;
@@ -30,11 +29,11 @@ beforeAll( async ()=> {
 
 afterAll( async () => {
     //make we have deleted the test user from the database
-    //await user.findOneAndDelete({username: 'TestUser'})
+    await user.findOneAndDelete({username: 'TestUser'})
     await mongoose.connection.close();
 })
 
-*/
+
 
 
 describe("test1", () => {
@@ -45,7 +44,8 @@ describe("test1", () => {
 
 
 
-/* IN DEVELOPMENT
+/* IN DEVELOPMENT*/
+
 describe('Enter new User',() =>{
     test('User has provided all details correct',async () => {
         const response = await request.post('/api/users/registerUser').send({
@@ -56,9 +56,9 @@ describe('Enter new User',() =>{
             password: 'Test123@',
             birthday: "31/01/2001",
         }) 
-        expect(response.statusCode).toBe(201);
-        //await user.findOneAndDelete({username: 'TestUser'});    
+        expect(response.statusCode).toBe(200);
+        await user.findOneAndDelete({username: 'TestUser'});    
     });
 } )
 
-*/
+

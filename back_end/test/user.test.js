@@ -5,31 +5,36 @@ let request = supertest(app);
 const mongoose = require('mongoose');
 require("dotenv").config({path: "config.env"}); // load environment variables
 
+/*
 
-// beforeAll( async ()=> {
-//     jest.useFakeTimers('legacy')
+Can't connect
+beforeAll( async ()=> {
+    jest.useFakeTimers('legacy')
     
-//     // Database connection
-//     const DB = process.env.FAMILYHUB_DB_URI;
-//     mongoose.set('strictQuery', false);// Preparation for deprecation 
-//     const connectionOptions = {
-//         // Required due to changes in the MongoDB Node.js driver
-//         useNewUrlParser: true, 
-//         useUnifiedTopology: true
-//     }
+    // Database connection
+    const DB = process.env.FAMILYHUB_DB_URI;
+    console.log(DB);
+    mongoose.set('strictQuery', false);// Preparation for deprecation 
+    const connectionOptions = {
+        // Required due to changes in the MongoDB Node.js driver
+        useNewUrlParser: true, 
+        useUnifiedTopology: true
+    }
 
-//     mongoose.connect(DB, connectionOptions).then(
-//         () => {console.log("Successfully connected to MongoDB.")},
-//         err => {console.error("Unable to connect to MongoDB.", err.message)}
-//     );
-// })
+    mongoose.connect(DB, connectionOptions).then(
+        () => {console.log("Successfully connected to MongoDB.")},
+        err => {console.error("Unable to connect to MongoDB.", err.message)}
+    );
+})
 
 
-// afterAll( async () => {
-//     //make we have deleted the test user from the database
-//     await user.findOneAndDelete({username: 'TestUser'})
-//     await mongoose.connection.close();
-// })
+afterAll( async () => {
+    //make we have deleted the test user from the database
+    //await user.findOneAndDelete({username: 'TestUser'})
+    await mongoose.connection.close();
+})
+
+*/
 
 
 describe("test1", () => {

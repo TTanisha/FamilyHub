@@ -52,8 +52,7 @@ const userSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'FamilyGroup',
     required: [false]
-  },
-  timestamps: [true] // adds createdAt and updatedAt Date fields
+  }
 });
 
 const User = mongoose.model("User", userSchema);

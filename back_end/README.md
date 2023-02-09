@@ -8,9 +8,9 @@
 
     - Make sure all dependencies are installed:  
       
-      - ```npm install cors dotenv express mongodb mongoose```
+      - ```npm install cors dotenv error-to-json express mongodb mongoose```
 
-    - Make sure nodemon is intalled. (-D for development) ```npm install nodemon -D``` *(runs app again when change made)*
+    - Make sure nodemon is installed. (-D for development) ```npm install nodemon -D``` *(runs app again when change made)*
 
     - Type ```npm start```
 

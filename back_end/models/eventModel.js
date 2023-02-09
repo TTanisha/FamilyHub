@@ -39,10 +39,8 @@ const eventSchema = new mongoose.Schema({
   tags: [{
     type: String,
     required: [false],
-    minlength: [1, "The tag must have at least one character."],
-    timestamps: [true]
-  }],
-  timestamps: [true] // adds createdAt and updatedAt Date fields
+    minlength: [1, "The tag must have at least one character."]
+  }]
 });
 
 const Event = mongoose.model("Event", eventSchema);

@@ -9,11 +9,10 @@ const groupSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: [true, "The group must have a user."]
-  },
-  timestamps: [true] // adds createdAt and updatedAt Date fields
+  }
 });
 
-const FamilyGroup = mongoose.model("Family Group", groupSchema);
-const TestFamilyGroup = mongoose.model("Test Family Group", groupSchema);
+const FamilyGroup = mongoose.model("FamilyGroup", groupSchema);
+const TestFamilyGroup = mongoose.model("TestFamilyGroup", groupSchema);
 
 module.exports = {FamilyGroup, TestFamilyGroup};

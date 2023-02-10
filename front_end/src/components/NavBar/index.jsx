@@ -1,9 +1,9 @@
 import React from "react";
 import { Nav, NavLink, NavMenu } 
-    from "./NavbarElements";
+    from "../../components/NavBar/navbarElements"; //Need to define path relative to ./src
   
 const Navbar = () => {
-  return (
+  return ( 
     <>
       <Nav>
         <NavMenu>

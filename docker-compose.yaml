@@ -1,0 +1,27 @@
+# A docker-compose must always start with the version tag. "3" is the latest version at this time.
+version: "3"
+# Use the keyword 'services' to start to define services.
+services:          # 1 service = 1 container.
+  frontend_service:              # Front end image
+    # Run the service using an existing image or using a Dockerfile
+    
+    # From an existing image
+    image: "armijosj/familyhub:client"       # image name with the version
+    
+    # From a Dockerfile
+    build: ./front_end/          # path of the Dockerfile to build the image
+    # If you specify image as well as build, then Compose names the built image specified in 'image':
+
+    ports:          # Expose ports
+      - 5173:5173     # HOST:CONTAINER
+      
+    depends_on:       # First build server and then front_end
+      - backend_service    # 
+    
+  backend_service:
+    image: "armijosj/familyhub:server"
+
+    build: ./back_end/
+    
+    ports:          # Expose ports
+      - 5000:5000     # HOST:CONTAINER

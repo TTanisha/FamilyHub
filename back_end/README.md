@@ -17,9 +17,9 @@
     - Or type ```npm dev``` (using nodemon)
 
 
-- For creating an image locally **(not necessary when pulled from Docker Hub )** 
+- For creating an image locally in ./back_end/
 
-    - ```docker build ./back_end -t armijosj/familyhub:server```
+    - ```docker build ./ -t armijosj/familyhub:server```
 
 - For pushing an image manually **(not necessary when pulled from Docker Hub )** ( username: *armijosj* and password: *dckr_pat_D6kvLu_NbuDnl4jkJG1ubmJ5uzQ* (Actually iit is a CLI access token) )
 

@@ -11,6 +11,83 @@
 
 ---
 
+## How to run it:
+
+### Front End AND Back End using Docker
+
+In the repository directory type:
+
+- For building images, creating containers and running them:
+
+    ```
+    docker-compose up --build
+     ```
+
+- For building images, creating containers but not running them:
+
+    ```
+    docker-compose up --build --no-start
+    ```
+
+
+### Only Front End
+
+Inside **./front_end/** directory, type:
+
+- Using docker:
+    - Create the image:
+
+        ```
+        docker build ./ -t armijosj/familyhub:client
+        ```
+
+    - Run the image
+
+        ```
+        docker run -p 5173:5173 armijosj/familyhub:client
+        ```
+
+- Using npm:
+
+    ``` 
+    npm install
+    npm run dev
+    ```
+
+- Using pnpm:
+
+   ```
+    pnpm install
+    pnpm run dev
+   ```
+
+### Only Back End
+
+Inside **./back_end/** directory, type:
+
+- Using docker:
+
+    - Create the image:
+
+        ```
+        docker build ./ -t armijosj/familyhub:server
+        ```
+
+    - Run the image
+
+        ```
+        docker run -p 5000:5000 armijosj/familyhub:server
+        ```
+
+- Using npm:
+
+    ``` 
+    npm install
+    npm run dev
+    ```
+
+---
+
 ## Vision
 
 FamilyHub is a web-based application designed to help families stay on top of important events with their loved ones through the use of a shared calendar. This application aims to reduce friction and conflict within families by enabling them to improve their organization and communication of events. Thus, FamilyHub will help bring families closer together by giving them an avenue to stay connected, share memories, plan events, and build stronger bonds. 

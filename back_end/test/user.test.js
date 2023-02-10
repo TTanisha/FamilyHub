@@ -6,7 +6,7 @@ const mongoose = require('mongoose');
 require("dotenv").config({path: "config.env"}); // load environment variables
 
 
-
+/* 
 beforeAll( async ()=> {
     //jest.useFakeTimers('legacy')
     
@@ -24,14 +24,14 @@ beforeAll( async ()=> {
         () => {console.log("Successfully connected to MongoDB.")},
         err => {console.error("Unable to connect to MongoDB.", err.message)}
     );
-})
+}) */
 
-
+/* 
 afterAll( async () => {
     //make we have deleted the test user from the database
     await user.findOneAndDelete({username: 'TestUser'})
     await mongoose.connection.close();
-})
+}) */
 
 
 
@@ -46,7 +46,7 @@ describe("test1", () => {
 
 /* IN DEVELOPMENT*/
 
-describe('Enter new User',() =>{
+/* describe('Enter new User',() =>{
     test('User has provided all details correct',async () => {
         const response = await request.post('/api/users/registerUser').send({
             firstName: 'TestFirstName',
@@ -60,5 +60,5 @@ describe('Enter new User',() =>{
         await user.findOneAndDelete({username: 'TestUser'});    
     });
 } )
-
+ */
 

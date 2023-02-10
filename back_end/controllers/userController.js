@@ -4,7 +4,7 @@ const { db } = require("../models/userModel");
 
 // Include controller logic
 
-
+/* 
 exports.registerUser = async(req, res, next) => { 
     try {
       const { username, password, firstName, lastName, birthday, eMail } = req.body
@@ -82,4 +82,4 @@ exports.getUser = async(req, res) => {
         message: "Unsuccessful Login. " + reason,
     });
   }
-};
+}; */

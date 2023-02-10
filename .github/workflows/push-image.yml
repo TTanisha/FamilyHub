@@ -26,9 +26,16 @@ jobs:
       - name: Docker Server build
         run: |
           docker build ./back_end -t armijosj/familyhub:server
-      - name: Docker push
+      - name: Docker Server push
         run: |
           docker push armijosj/familyhub:server
+
+      - name: Docker Client build
+        run: |
+          docker build ./back_end -t armijosj/familyhub:client
+      - name: Docker Client push
+        run: |
+          docker push armijosj/familyhub:client
 
       
         

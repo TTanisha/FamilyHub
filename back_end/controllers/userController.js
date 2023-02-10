@@ -4,8 +4,8 @@ const { db } = require("../models/userModel");
 
 // Include controller logic
 
-exports.registerUser = async(req, res, next) => { 
 
+exports.registerUser = async(req, res, next) => { 
     try {
       const { username, password, firstName, lastName, birthday, eMail } = req.body
       if (password.length < 6) {
@@ -20,6 +20,7 @@ exports.registerUser = async(req, res, next) => {
             eMail
           }).then(user =>
             res.status(200).json({
+              status: "success",
               message: "User successfully created",
               user,
             })
@@ -45,4 +46,40 @@ exports.registerUser = async(req, res, next) => {
         })
     }
     
+};
+
+
+exports.getUser = async(req, res) => {
+  try {
+    
+    const { username, password } = req.body
+    const user = await Users.findOne({ username: username });
+    reason = "";
+
+    if (user == null) {
+      reason = "User not found";
+      throw err;
+    }
+
+    if (user.password === password) {
+        res.status(200).json({
+            status: "success",
+            message: "Found user",
+            data: {
+                user: user,
+            },
+        });
+        return;
+
+    } else {
+      reason = "Invalid Password";
+      throw err;
+    }
+  } catch (err) {
+
+    res.status(404).json({
+        status: "fail",
+        message: "Unsuccessful Login. " + reason,
+    });
+  }
 };

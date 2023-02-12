@@ -4,10 +4,10 @@
     position: absolute;
     left: 0px;
     top: 0px;
-    height: 90%;
+    height: 88%;
 
     display: grid;
-    grid-template-columns: 0.5fr 1.8fr 0.5fr;
+    grid-template-columns: 0.5fr 1fr 0.5fr;
     grid-template-rows: 1fr;
     gap: 0px 0px;
     grid-auto-flow: row;
@@ -18,10 +18,14 @@
   .content { grid-area: content; }
 
 .header {
+    border: thin solid;
     font-weight: bold;
     font-size: larger;
-    text-decoration: underline;
-    
+    background-color: rgb(189 255 248);
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
   

@@ -5,6 +5,7 @@ import { BrowserRouter as Router, Routes, Route}
     from 'react-router-dom';
 import Calendar from './pages/calendar';
 import Home from './pages';
+import FamilyGroups from './pages/familyGroups/familyGroups';
   
 function App() {
 return (
@@ -13,6 +14,7 @@ return (
     <Routes>
       <Route exact path='/' element={<Home />} />
       <Route path='/calendar' element={<Calendar/>} />
+      <Route path='/familygroups' element={<FamilyGroups/>} />
     </Routes>
     </Router>
 );

@@ -1,0 +1,27 @@
+.familyGroupContainer { 
+    padding-top: 100px;
+    width: 99vw;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+    height: 90%;
+
+    display: grid;
+    grid-template-columns: 0.5fr 1.8fr 0.5fr;
+    grid-template-rows: 1fr;
+    gap: 0px 0px;
+    grid-auto-flow: row;
+    grid-template-areas:
+      ". content .";
+  }
+  
+  .content { grid-area: content; }
+
+.header {
+    font-weight: bold;
+    font-size: larger;
+    text-decoration: underline;
+    
+}
+
+  

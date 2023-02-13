@@ -20,7 +20,7 @@ exports.createFamilyGroup = async(req, res, next) => {
       //parsing error to JSON
       var reason = "";
       var dbError = errorToJSON.parse(err);
-      console.log("The following error occured:" + dbError);
+      console.log("The following error occurred:" + dbError);
 
       res.status(401).json({
           message: reason + "Family group not successfully created",

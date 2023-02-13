@@ -66,14 +66,14 @@ exports.deleteEvent = async(req, res) => {
           data: {eventToDelete}
         });
       }
-    } else {
+    } else { // invalid user permissions 
       throw err;
     }
   } catch (err) {
     res.status(400).json({ // bad request 
       status: "fail",
       message: err.message,
-      description: "Failed to delete the user",
+      description: "Failed to delete the event",
     });
   };
 };

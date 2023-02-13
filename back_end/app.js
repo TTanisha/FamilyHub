@@ -22,5 +22,6 @@ app.use(express.json())
 // define routes and API
 app.use("/api/users", userRouter);
 app.use("/api/familyGroups", familyGroup);
+app.use("/api/events", eventRouter);
 
 module.exports = app;

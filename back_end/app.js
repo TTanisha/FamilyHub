@@ -13,6 +13,7 @@ app.use(bodyParser.json())
 //Get Routes
 const userRouter = require("./routes/userRoutes");
 const familyGroup = require("./routes/familyGroupRoutes");
+const eventRouter = require("./routes/eventRoutes");
 
 app.use(cors());
 // grant access to user's data from body
@@ -21,6 +22,5 @@ app.use(express.json())
 // define routes and API
 app.use("/api/users", userRouter);
 app.use("/api/familyGroups", familyGroup);
-//app.use("/FamilyHub/family", familyRouter)  or  app.use("/api/family", familyRouter)
 
 module.exports = app;

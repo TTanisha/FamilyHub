@@ -9,7 +9,7 @@ const eventSchema = new mongoose.Schema({
     type: String,
     required: [false]
   },
-  creationUser: {
+  creationUser: { 
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: [true, "The event must be created by a user."]
@@ -32,7 +32,7 @@ const eventSchema = new mongoose.Schema({
   },
   recurrenceRule: {
     type: String, 
-    enum: ["DAILY", "WEEKLY", "MONTHLY", "YEARLY"],
+    enum: ["ONCE", "DAILY", "WEEKLY", "MONTHLY", "YEARLY"],
     required: [true, "The event must specify if it is a one-time or recurring."]
   },
   tags: [{
@@ -43,8 +43,8 @@ const eventSchema = new mongoose.Schema({
   familyGroup: { // calendarId
     type: mongoose.Schema.Types.ObjectId,
     ref: 'FamilyGroup',
-    required: [true, "The event must belong to a family group."]
-  }
+    required: [false, "The event must belong to a family group."]
+  } // TODO: can we have personal events not associated with group? 
 });
 
 const Event = mongoose.model("Event", eventSchema);

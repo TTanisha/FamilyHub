@@ -10,7 +10,7 @@
       
       - ```npm install cors dotenv express mongodb mongoose```
 
-    - Make sure nodemon is intalled. (-D for development) ```npm install nodemon -D``` *(runs app again when change made)*
+    - Make sure nodemon is installed. (-D for development) ```npm install nodemon -D``` *(runs app again when change made)*
 
     - Type ```npm start```
 
@@ -31,4 +31,4 @@
 
 - For running the Docker image (Create a container and run the server)
 
-    - Type ```docker run -p 5000:5000 armijosj/familyhub:server``` to run the server. NOTE: the -p PORT:PORT script opens the specified port. If a change is made to the running server port, then it should also change on the run script.
+    - Type ```docker run -p 8080:8080 armijosj/familyhub:server``` to run the server. NOTE: the -p PORT:PORT script opens the specified port. If a change is made to the running server port, then it should also change on the run script.

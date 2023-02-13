@@ -24,4 +24,4 @@ services:          # 1 service = 1 container.
     build: ./back_end/
     
     ports:          # Expose ports
-      - 5000:5000     # HOST:CONTAINER
+      - 8080:8080     # HOST:CONTAINER

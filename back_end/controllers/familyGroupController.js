@@ -57,54 +57,55 @@ exports.getFamilyGroup = async(req, res) => {
   }
 };
 
-exports.addMemberToFamilyGroup = async(req, res) => {
+exports.addMemberToFamilyGroup = async (req, res) => {
     try {
-      
-      const { groupId, memberId } = req.body
-      const group = await FamilyGroups.findOne({ _id: groupId });
-      const member = await Users.findOne({ _id: memberId });
 
-      reason = "";
-  
-      if (group == null) {
-        reason = "Family Group not found";
-        throw err;
-      }
+        const { groupId, memberId } = req.body
+        const group = await FamilyGroups.findOne({ _id: groupId });
+        const member = await Users.findOne({ _id: memberId });
 
-      if (member == null) {
-        reason = "Member not found";
-        throw err;
-      }
+        reason = "";
 
-      const isNotNewMember = await FamilyGroups.findOne({
-        _id: groupId ,
-        groupMembers: { $in: [member._id]},
-        }).count();
+        if (group == null) {
+            reason = "Family Group not found";
+            throw err;
+        }
 
-        if(!isNotNewMember) {
+        if (member == null) {
+            reason = "Member not found";
+            throw err;
+        }
+
+        //if new member, count should = 0 
+        const count = await FamilyGroups.findOne({ _id: groupId },
+            {
+                groupMembers: { $in: [member._id] },
+            }).count();
+
+        if (count >= 1) {
             reason = "Member already in family.";
             throw err;
         }
 
-      const result = await FamilyGroups.updateOne({ _id: groupId },
-        {
-            $addToSet: {
-                groupMembers: member,
+        const result = await FamilyGroups.updateOne({ _id: groupId },
+            {
+                $addToSet: {
+                    groupMembers: member,
+                },
+            });
+
+        res.status(200).json({
+            status: "success",
+            message: "Added member to group",
+            data: {
+                group: group,
             },
         });
-
-      res.status(200).json({
-          status: "success",
-          message: "Added member to group",
-          data: {
-              group: group,
-          },
-      });
     } catch (err) {
-      res.status(404).json({
-          status: "fail",
-          message: reason + " Member not successfully added to group",
+        res.status(404).json({
+            status: "fail",
+            message: reason + " Member not successfully added to group",
         });
     }
-  };
+};
 

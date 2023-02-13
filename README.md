@@ -11,6 +11,12 @@
 
 ---
 
+## Sprint 2 Documentation
+Sequence Diagrams for:
+* [User Profile](../FamilyHub/docs/sprint-2/profile-page-sequence-diagram.png)
+* [Family Group](../FamilyHub/docs/sprint-2/family-group-sequence-diagram.png)
+* [Shared Calendar](./docs/sprint-2/shared-calendar-sequence-diagram.png)
+
 ## How to run it:
 
 ### Front End AND Back End using Docker

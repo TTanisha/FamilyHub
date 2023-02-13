@@ -77,9 +77,10 @@ exports.addMemberToFamilyGroup = async (req, res) => {
         }
 
         //if new member, count should = 0 
-        const count = await FamilyGroups.findOne({ _id: groupId },
+        const count = await FamilyGroups.find (
             {
-                groupMembers: { $in: [member._id] },
+                _id: groupId,
+                "groupMembers._id": member._id
             }).count();
 
         if (count >= 1) {

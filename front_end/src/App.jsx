@@ -6,7 +6,8 @@ import { BrowserRouter as Router, Routes, Route}
 import Calendar from './pages/calendar';
 import Home from './pages';
 import FamilyGroups from './pages/familyGroups/familyGroups';
-  
+import SignIn from './pages/signIn/signIn';
+
 function App() {
 return (
     <Router>
@@ -15,6 +16,7 @@ return (
       <Route exact path='/' element={<Home />} />
       <Route path='/calendar' element={<Calendar/>} />
       <Route path='/familygroups' element={<FamilyGroups/>} />
+      <Route path='/sign-in' element={<SignIn/>} />
     </Routes>
     </Router>
 );

@@ -13,6 +13,9 @@ const Navbar = () => {
           <NavLink to="/calendar">
             Calendar
           </NavLink>
+          <NavLink to="/familygroups">
+            My Family Groups
+          </NavLink>
           <NavLink to="/sign-up">
             Sign Up
           </NavLink>

@@ -32,7 +32,7 @@ exports.registerUser = async(req, res) => {
 
 exports.getUserById = async(req, res) => {
   try {
-    const user = await Users.findById({_id: req.body.id});
+    const user = await Users.findById(req.body.id);
     if (user == null) {
       throw err;
     } else {

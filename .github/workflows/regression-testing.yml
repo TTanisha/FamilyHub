@@ -16,8 +16,9 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
-      - name: Use Node.js
+      - name: Regression Test
+        working-directory: ./back_end
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
-      - run: npm --prefix .\back_end\ test
+      - run: npm test

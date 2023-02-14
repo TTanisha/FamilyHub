@@ -77,9 +77,10 @@ exports.addMemberToFamilyGroup = async (req, res) => {
         }
 
         //if new member, count should = 0 
-        const count = await FamilyGroups.findOne({ _id: groupId },
+        const count = await FamilyGroups.find (
             {
-                groupMembers: { $in: [member._id] },
+                _id: groupId,
+                "groupMembers._id": member._id
             }).count();
 
         if (count >= 1) {
@@ -87,7 +88,14 @@ exports.addMemberToFamilyGroup = async (req, res) => {
             throw err;
         }
 
-        const result = await FamilyGroups.updateOne({ _id: groupId },
+        const updateUserGroups = await Users.updateOne({ _id: memberId },
+            {
+                $addToSet: {
+                    groups: group,
+                },
+            });
+        
+        const updateGroupMembers = await FamilyGroups.updateOne({ _id: groupId },
             {
                 $addToSet: {
                     groupMembers: member,

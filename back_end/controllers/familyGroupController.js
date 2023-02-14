@@ -88,7 +88,14 @@ exports.addMemberToFamilyGroup = async (req, res) => {
             throw err;
         }
 
-        const result = await FamilyGroups.updateOne({ _id: groupId },
+        const updateUserGroups = await Users.updateOne({ _id: memberId },
+            {
+                $addToSet: {
+                    groups: group,
+                },
+            });
+        
+        const updateGroupMembers = await FamilyGroups.updateOne({ _id: groupId },
             {
                 $addToSet: {
                     groupMembers: member,

@@ -30,9 +30,30 @@ exports.registerUser = async(req, res) => {
   };
 };
 
+exports.getUserById = async(req, res) => {
+  try {
+    const user = await Users.findById({_id: req.body.id});
+    if (user == null) {
+      throw err;
+    } else {
+      res.status(200).json({ // everything is OK
+        status: "success",
+        message: "User found",
+        data: {user}
+      });
+    };
+  } catch (err) {
+    res.status(400).json({ // bad request
+      status: "fail",
+      message: err.message,
+      description: "Failed to get the user"
+    });
+  };
+};
+
 exports.getUser = async(req, res) => {
   try {
-    const user = await Users.findOne({email: req.body.email});
+    const user = await Users.find({email: req.body.email});
     if (user == null) {
       throw err;
     }

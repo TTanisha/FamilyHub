@@ -7,9 +7,10 @@ const userSchema = new mongoose.Schema({
     unique: true,
     index: true
   },
-  passwordHash: {
+  password: {
     type: String,
-    required: [true, "Password required."]
+    required: [true, "Password required."],
+    minLength: [6, "Password must be at least six characters."]
   },
   firstName: {
     type: String,
@@ -49,14 +50,13 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: [false]
   },
-  groups: {
+  groups: { // one-to-many
     type: mongoose.Schema.Types.ObjectId,
     ref: 'FamilyGroup',
     required: [false]
   }
 });
 
-const User = mongoose.model("User", userSchema);
-const TestUser = mongoose.model("TestUser", userSchema);
+const User = mongoose.model("User", userSchema, collection = "Users");
 
-module.exports = TestUser;
+module.exports = User;

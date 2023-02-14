@@ -11,7 +11,7 @@ exports.createEvent = async(req, res) => {
         message: "New event created",
         data: {newEvent}
       });
-    }
+    };
   } catch (err) {
     res.status(400).json({ // bad request 
       status: "fail",
@@ -21,32 +21,76 @@ exports.createEvent = async(req, res) => {
   };
 };
 
-exports.getEvent = async(req, res) => {
-
+exports.getEventById = async(req, res) => {
+  try {
+    const events = await Events.findById(req.body.id);
+    if (events == null) {
+      throw err;
+    } else {
+      res.status(200).json({ // everything is OK
+        status: "success",
+        message: "Event found",
+        data: {events}
+      });
+    };
+  } catch (err) {
+    res.status(400).json({ // bad request 
+      status: "fail",
+      message: err.message,
+      description: "Failed to find the event",
+    });
+  };
 };
 
-exports.updateEventName = async(req, res) => {
-
+exports.getEvents = async(req, res) => {
+  try {
+    const events = await Events.find(req.body);
+    if (events == null) {
+      throw err;
+    } else {
+      res.status(200).json({ // everything is OK
+        status: "success",
+        message: "Events found",
+        data: {events}
+      });
+    };
+  } catch (err) {
+    res.status(400).json({ // bad request 
+      status: "fail",
+      message: err.message,
+      description: "Failed to find any events",
+    });
+  };
 };
 
-exports.updateEventBody = async(req, res) => {
-
-};
-
-exports.updateEventTime = async(req, res) => {
-
-};
-
-exports.updateEventLocation = async(req, res) => {
-
-};
-
-exports.updateEventTags = async(req, res) => {
-
-};
-
-exports.updateEventGroup = async(req, res) => {
-
+exports.updateEvent = async(req, res) => {
+  try {
+    let eventToUpdate = await Events.findById(req.body.id);
+    if (eventToUpdate == null) {
+      throw err;
+    };
+    if (req.body.creationUser == eventToUpdate.creationUser) {
+      eventToUpdate = await Events.findByIdAndUpdate(
+        req.body.id, req.body.updateFields, {new: true, runValidators: true});
+      if (eventToDelete == null) {
+        throw err;
+      } else {
+        res.status(200).json({ // everything is OK
+          status: "success",
+          message: "Event updated",
+          data: {eventToUpdate}
+        });
+      };
+    } else { // invalid user permissions 
+      throw err;
+    };
+  } catch (err) {
+    res.status(400).json({ // bad request 
+      status: "fail",
+      message: err.message,
+      description: "Failed to update the event",
+    });
+  };
 };
 
 exports.deleteEvent = async(req, res) => {
@@ -65,10 +109,10 @@ exports.deleteEvent = async(req, res) => {
           message: "Event deleted",
           data: {eventToDelete}
         });
-      }
+      };
     } else { // invalid user permissions 
       throw err;
-    }
+    };
   } catch (err) {
     res.status(400).json({ // bad request 
       status: "fail",

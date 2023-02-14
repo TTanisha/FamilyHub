@@ -3,13 +3,14 @@ const mongoose = require("mongoose");
 const eventSchema = new mongoose.Schema({
   title: { // event name
     type: String, 
-    required: [true, "The event must have a name."]
+    required: [true, "The event must have a name."],
+    minLength: [1, "The title must have at least one character."]
   },
   body: { // event description 
     type: String,
     required: [false]
   },
-  creationUser: { 
+  creationUser: { // one-to-one
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
     required: [true, "The event must be created by a user."]
@@ -40,13 +41,13 @@ const eventSchema = new mongoose.Schema({
     required: [false],
     minlength: [1, "The tag must have at least one character."]
   }],
-  familyGroup: { // calendarId
+  familyGroup: { // calendarId, one-to-many
     type: mongoose.Schema.Types.ObjectId,
     ref: 'FamilyGroup',
     required: [false, "The event must belong to a family group."]
-  } // TODO: can we have personal events not associated with group? 
+  }  
 });
 
-const Event = mongoose.model("Event", eventSchema);
+const Event = mongoose.model("Event", eventSchema, collection = "Events");
 
 module.exports = Event;

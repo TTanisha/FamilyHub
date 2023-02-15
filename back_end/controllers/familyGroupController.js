@@ -33,7 +33,7 @@ exports.getFamilyGroup = async(req, res) => {
   try {
     
     const { groupId } = req.body
-    const group = await FamilyGroups.findOne({ _id: groupId });
+    const group = await FamilyGroups.findById({ _id: groupId });
     reason = "";
 
     if (group == null) {

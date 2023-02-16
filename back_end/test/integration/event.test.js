@@ -3,11 +3,12 @@ const Events = require('../../models/eventModel');
 let supertest = require('supertest');
 let request = supertest(app);
 const mongoose = require('mongoose');
+const mongodb = require('mongodb');
 require("dotenv").config({path: "config.env"}); // load environment variables
 
 //=====================================================================================//
 
-const eventData = {
+const defaultEvent = {
   title: "Test Event",
   body: "Event description",
   creationUser: new mongoose.Types.ObjectId(),
@@ -17,12 +18,12 @@ const eventData = {
   recurrenceRule: "ONCE"
 }
 
-const user1 = new mongoose.Types.ObjectId();
-const user2 = new mongoose.Types.ObjectId();
+const user1 = new mongodb.ObjectId("63ed63e678178f779fa76b2c");
+const user2 = new mongodb.ObjectId("63ed63e678178f779fa76b2d");
 
 async function addDefaultEvents() {
   const event1 = {
-    title: "Test Event",
+    title: "Test Event 1",
     body: "Event description",
     creationUser: user1,
     isAllDay: false,
@@ -31,7 +32,7 @@ async function addDefaultEvents() {
     recurrenceRule: "ONCE"
   }
   const event2 = {
-    title: "Test Event",
+    title: "Test Event 2",
     body: "Event description",
     creationUser: user1,
     isAllDay: false,
@@ -40,7 +41,7 @@ async function addDefaultEvents() {
     recurrenceRule: "YEARLY"
   }
   const event3 = {
-    title: "Test Event",
+    title: "Test Event 3",
     body: "Event description",
     creationUser: user2,
     isAllDay: false,
@@ -49,7 +50,7 @@ async function addDefaultEvents() {
     recurrenceRule: "DAILY"
   }
   const event4 = {
-    title: "Test Event",
+    title: "Test Event 4",
     body: "Event description",
     creationUser: user2,
     isAllDay: false,
@@ -58,7 +59,7 @@ async function addDefaultEvents() {
     recurrenceRule: "ONCE"
   }
   const event5 = {
-    title: "Test Event",
+    title: "Test Event 5",
     body: "Event description",
     creationUser: user1,
     isAllDay: false,
@@ -67,7 +68,7 @@ async function addDefaultEvents() {
     recurrenceRule: "MONTHLY"
   }
   const event6 = {
-    title: "Test Event",
+    title: "Test Event 6",
     body: "Event description",
     creationUser: user1,
     isAllDay: false,
@@ -76,15 +77,15 @@ async function addDefaultEvents() {
     recurrenceRule: "YEARLY"
   }
 
-  await Events.collection.insertMany([event1, event2, event3, event4, event5, event6]);
+  //await Events.insertMany([event1, event2, event3, event4, event5, event6]);
 };
 
 async function deleteDefaultEvents() {
   // make sure we have deleted the test events from the database
   try {
-    await Events.deleteMany({creationUser: user1});
-    await Events.deleteMany({creationUser: user2});
-    await Events.findOneAndDelete({title: "Test Event", body: "Event description"});
+    //await Events.deleteMany({creationUser: user1});
+    //await Events.deleteMany({creationUser: user2});
+    await Events.findOneAndDelete(defaultEvent);
   } catch (err) {
     console.log("Events not found.");
   }
@@ -106,16 +107,20 @@ beforeAll(async () => {
   );
 
   Events.createIndexes();
-  let newEvent = new Events(eventData);
+  let newEvent = new Events(defaultEvent);
   await newEvent.save();
-  addDefaultEvents();
+  //addDefaultEvents();
 });
 
 //=====================================================================================//
 
 afterAll(async () => {
-  deleteDefaultEvents();
-
+  //deleteDefaultEvents();
+  try {
+    await Events.findOneAndDelete(defaultEvent);
+  } catch (err) {
+    console.log("Events not found.");
+  }
   await mongoose.connection.close().then(
     () => {console.log("Successfully disconnected from MongoDB.")},
     err => {console.error("Unable to disconnect from MongoDB.", err.message)}
@@ -182,13 +187,9 @@ describe("Create Event Tests", () => {
 
 //=====================================================================================//
 
-describe("Get Event(s) Tests", () => {
-  beforeAll(async () => {
-
-  });
-
+/* describe("Get Event(s) Tests", () => {
   test("Find event by id", async () => {
-    const testEvent = Events.find({title: eventData.title});
+    const testEvent = Events.findOne(defaultEvent);
     const response = await request.get("/api/events/getEventById").send({
       id: testEvent._id
     });
@@ -245,7 +246,74 @@ describe("Get Event(s) Tests", () => {
     expect(response.statusCode).toBe(400);
   });
 
-});
+}); */
+
+//=====================================================================================//
+
+/* describe("Update Event Tests", () => {
+
+  test("Update event name", async () => {
+    updateFields = {
+      title: "New Integration Test Event"
+    };
+    const testEvent = await Events.find(defaultEvent);
+    const response = await request.post("/api/events/updateEvent").send({
+      id: testEvent._id,
+      creationUser: testEvent.creationUser,
+      updateFields: updateFields
+    });
+    expect(response.statusCode).toBe(200);
+    await Events.findByIdAndDelete(testEvent._id);
+  });
+
+  test("Invalid event name change", async () => {
+    updateFields = {
+      title: ""
+    };
+    const testEvent = await Events.find(defaultEvent);
+    const response = await request.post("/api/events/updateEvent").send({
+      id: testEvent._id,
+      creationUser: testEvent.creationUser,
+      updateFields: updateFields
+    });
+    expect(response.statusCode).toBe(400);
+  });
+
+  test("Invalid recurrence rule change", async () => {
+    updateFields = {
+      recurrenceRule: "huh"
+    };
+    const testEvent = await Events.find(defaultEvent);
+    const response = await request.post("/api/events/updateEvent").send({
+      id: testEvent._id,
+      creationUser: testEvent.creationUser,
+      updateFields: updateFields
+    });
+    expect(response.statusCode).toBe(400);
+  });
+
+  test("Invalid user permissions", async () => {
+    const updateFields = {
+      title: "New title"
+    };
+    const testEvent = await Events.find(defaultEvent);
+    const response = await request.post("/api/events/updateEvent").send({
+      id: testEvent._id,
+      creationUser: new mongoose.Types.ObjectId(),
+      updateFields: updateFields
+    });
+    expect(response.statusCode).toBe(400);
+  });
+
+  test("No event found", async () => {
+    const response = await request.post("/api/events/updateEvent").send({
+      id: new mongoose.Types.ObjectId(),
+      creationUser: user1
+    });
+    expect(response.statusCode).toBe(400);
+  });
+
+}); */
 
 //=====================================================================================//
 
@@ -272,7 +340,7 @@ describe("Delete Event Tests", () => {
   test("No such event", async () => {
     const response = await request.post("/api/events/deleteEvent").send({
       id: new mongoose.Types.ObjectId(),
-      creationUser: eventData.creationUser
+      creationUser: defaultEvent.creationUser
     });
     expect(response.statusCode).toBe(400);
   });

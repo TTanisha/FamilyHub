@@ -12,9 +12,12 @@
 ---
 
 ## Sprint 2 Documentation
+
+Testing Plan: [Testing Plan for FamilyHub](./docs/sprint-2/Testing_Plan.md)
+
 Sequence Diagrams for:
-* [User Profile](../FamilyHub/docs/sprint-2/profile-page-sequence-diagram.png)
-* [Family Group](../FamilyHub/docs/sprint-2/family-group-sequence-diagram.png)
+* [User Profile](./docs/sprint-2/profile-page-sequence-diagram.png)
+* [Family Group](./docs/sprint-2/family-group-sequence-diagram.png)
 * [Shared Calendar](./docs/sprint-2/shared-calendar-sequence-diagram.png)
 
 ## How to run it:

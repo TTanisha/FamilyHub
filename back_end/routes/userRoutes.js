@@ -7,7 +7,8 @@ const userController = require("../controllers/userController");
 // send each request to corresponding controller function
 router.route("/registerUser").post(userController.registerUser);
 router.route("/getUser").get(userController.getUser);
-
-
+router.route("/getUserById").post(userController.getUserById);
+router.route("/updateUser").post(userController.updateUser);
+router.route("/deleteUser").post(userController.deleteUser);
 
 module.exports = router;

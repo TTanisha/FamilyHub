@@ -1,7 +1,7 @@
 const app = require("./app");
 const mongoose = require("mongoose");
 require("dotenv").config({path: "config.env"}); // load environment variables
-const PORT = process.env.PORT || 5000; // access the port variable from config.env
+const PORT = process.env.PORT; // access the port variable from config.env
 
 
 // Database connection

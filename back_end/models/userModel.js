@@ -50,11 +50,11 @@ const userSchema = new mongoose.Schema({
     type: Number,
     required: [false]
   },
-  groups: { // one-to-many
+  groups: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'FamilyGroup',
     required: [false]
-  }
+  }]
 });
 
 const User = mongoose.model("User", userSchema, collection = "Users");

@@ -51,6 +51,8 @@ This is our testing scope for Sprint 2:
     4. Register without passsword results in error.
     5. Register with an invalid password results in error.
     6. Register with an invalid first name results in error.
+    7. Register valid user with all required and non-required fields, results in success.
+
 - Logging in
     1. Find valid user by email and password.
     2. Valid email, invalid password
@@ -61,6 +63,7 @@ This is our testing scope for Sprint 2:
     2. Successfully update non-required user parameters
     3. Invalid update parameters
     4. Duplicate email update
+    5. Pass a non existent user.
 
 - Delete
     1. Successfully find and delete user
@@ -74,6 +77,8 @@ This is our testing scope for Sprint 2:
     4. Register without passsword results in error.
     5. Register with an invalid password results in error.
     6. Register with an invalid first name results in error.
+    7. Register with all required and non-required fields, results in success.
+
 - /getUserById
     1. Find valid user by ID.
 
@@ -87,10 +92,12 @@ This is our testing scope for Sprint 2:
     2. Successfully update non-required user parameters
     3. Invalid update parameters
     4. Duplicate email update
+    5. Pass a non existent user.
 
 - /deleteUser
     1. Successfully find and delete user
     2. No such user
+    3. Invalid user permissions
 
 #### Core Feature: Family Group: 
 

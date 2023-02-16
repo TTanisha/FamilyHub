@@ -18,79 +18,6 @@ const defaultEvent = {
   recurrenceRule: "ONCE"
 }
 
-const user1 = new mongodb.ObjectId("63ed63e678178f779fa76b2c");
-const user2 = new mongodb.ObjectId("63ed63e678178f779fa76b2d");
-
-async function addDefaultEvents() {
-  const event1 = {
-    title: "Test Event 1",
-    body: "Event description",
-    creationUser: user1,
-    isAllDay: false,
-    start: new Date("February 17, 2023 12:00:00"), 
-    end: new Date("February 17, 2023 15:00:00"),
-    recurrenceRule: "ONCE"
-  }
-  const event2 = {
-    title: "Test Event 2",
-    body: "Event description",
-    creationUser: user1,
-    isAllDay: false,
-    start: new Date("February 17, 2023 12:00:00"), 
-    end: new Date("February 17, 2023 15:00:00"),
-    recurrenceRule: "YEARLY"
-  }
-  const event3 = {
-    title: "Test Event 3",
-    body: "Event description",
-    creationUser: user2,
-    isAllDay: false,
-    start: new Date("February 17, 2023 12:00:00"), 
-    end: new Date("February 17, 2023 15:00:00"),
-    recurrenceRule: "DAILY"
-  }
-  const event4 = {
-    title: "Test Event 4",
-    body: "Event description",
-    creationUser: user2,
-    isAllDay: false,
-    start: new Date("February 17, 2023 12:00:00"), 
-    end: new Date("February 17, 2023 15:00:00"),
-    recurrenceRule: "ONCE"
-  }
-  const event5 = {
-    title: "Test Event 5",
-    body: "Event description",
-    creationUser: user1,
-    isAllDay: false,
-    start: new Date("February 17, 2023 12:00:00"), 
-    end: new Date("February 17, 2023 15:00:00"),
-    recurrenceRule: "MONTHLY"
-  }
-  const event6 = {
-    title: "Test Event 6",
-    body: "Event description",
-    creationUser: user1,
-    isAllDay: false,
-    start: new Date("February 17, 2023 12:00:00"), 
-    end: new Date("February 17, 2023 15:00:00"),
-    recurrenceRule: "YEARLY"
-  }
-
-  //await Events.insertMany([event1, event2, event3, event4, event5, event6]);
-};
-
-async function deleteDefaultEvents() {
-  // make sure we have deleted the test events from the database
-  try {
-    //await Events.deleteMany({creationUser: user1});
-    //await Events.deleteMany({creationUser: user2});
-    await Events.findOneAndDelete(defaultEvent);
-  } catch (err) {
-    console.log("Events not found.");
-  }
-};
-
 beforeAll(async () => {
   // Database connection
   const DB = process.env.FAMILYHUB_DB_URI;
@@ -109,13 +36,11 @@ beforeAll(async () => {
   Events.createIndexes();
   let newEvent = new Events(defaultEvent);
   await newEvent.save();
-  //addDefaultEvents();
 });
 
 //=====================================================================================//
 
 afterAll(async () => {
-  //deleteDefaultEvents();
   try {
     await Events.findOneAndDelete(defaultEvent);
   } catch (err) {
@@ -184,136 +109,6 @@ describe("Create Event Tests", () => {
   });
 
 });
-
-//=====================================================================================//
-
-/* describe("Get Event(s) Tests", () => {
-  test("Find event by id", async () => {
-    const testEvent = Events.findOne(defaultEvent);
-    const response = await request.get("/api/events/getEventById").send({
-      id: testEvent._id
-    });
-    expect(response.statusCode).toBe(200);
-  });
-
-  test("Find events by name", async () => {
-    
-    const response = await request.get("/api/events/getEvents").send({
-      
-    });
-    expect(response.statusCode).toBe(200);
-  });
-
-  test("Find events by date", async () => {
-    const response = await request.get("/api/events/getEvents").send({
-      
-    });
-    expect(response.statusCode).toBe(200);
-  });
-
-  test("Find events by user", async () => {
-    const response = await request.get("/api/events/getEvents").send({
-      creationUser: user1
-    });
-    expect(response.statusCode).toBe(200);
-  });
-
-  test("Find events by family group", async () => {
-    const response = await request.get("/api/events/getEvents").send({
-      
-    });
-    expect(response.statusCode).toBe(200);
-  });
-
-  test("Find events by location", async () => {
-    const response = await request.get("/api/events/getEvents").send({
-      
-    });
-    expect(response.statusCode).toBe(200);
-  });
-
-  test("No such event id", async () => {
-    const response = await request.get("/api/events/getEventById").send({
-      
-    });
-    expect(response.statusCode).toBe(400);
-  });
-
-  test("No such events", async () => {
-    const response = await request.get("/api/events/getEvents").send({
-      
-    });
-    expect(response.statusCode).toBe(400);
-  });
-
-}); */
-
-//=====================================================================================//
-
-/* describe("Update Event Tests", () => {
-
-  test("Update event name", async () => {
-    updateFields = {
-      title: "New Integration Test Event"
-    };
-    const testEvent = await Events.find(defaultEvent);
-    const response = await request.post("/api/events/updateEvent").send({
-      id: testEvent._id,
-      creationUser: testEvent.creationUser,
-      updateFields: updateFields
-    });
-    expect(response.statusCode).toBe(200);
-    await Events.findByIdAndDelete(testEvent._id);
-  });
-
-  test("Invalid event name change", async () => {
-    updateFields = {
-      title: ""
-    };
-    const testEvent = await Events.find(defaultEvent);
-    const response = await request.post("/api/events/updateEvent").send({
-      id: testEvent._id,
-      creationUser: testEvent.creationUser,
-      updateFields: updateFields
-    });
-    expect(response.statusCode).toBe(400);
-  });
-
-  test("Invalid recurrence rule change", async () => {
-    updateFields = {
-      recurrenceRule: "huh"
-    };
-    const testEvent = await Events.find(defaultEvent);
-    const response = await request.post("/api/events/updateEvent").send({
-      id: testEvent._id,
-      creationUser: testEvent.creationUser,
-      updateFields: updateFields
-    });
-    expect(response.statusCode).toBe(400);
-  });
-
-  test("Invalid user permissions", async () => {
-    const updateFields = {
-      title: "New title"
-    };
-    const testEvent = await Events.find(defaultEvent);
-    const response = await request.post("/api/events/updateEvent").send({
-      id: testEvent._id,
-      creationUser: new mongoose.Types.ObjectId(),
-      updateFields: updateFields
-    });
-    expect(response.statusCode).toBe(400);
-  });
-
-  test("No event found", async () => {
-    const response = await request.post("/api/events/updateEvent").send({
-      id: new mongoose.Types.ObjectId(),
-      creationUser: user1
-    });
-    expect(response.statusCode).toBe(400);
-  });
-
-}); */
 
 //=====================================================================================//
 

@@ -1,5 +1,4 @@
 const Events = require('../../../models/eventModel');
-const Users = require('../../../models/userModel');
 const mongoose = require('mongoose');
 const { ValidationError } = require('mongodb')
 const { ObjectId } = require('mongodb');

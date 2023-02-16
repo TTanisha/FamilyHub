@@ -3,7 +3,6 @@ const Users = require('../../models/userModel');
 let supertest = require('supertest');
 let request = supertest(app);
 const mongoose = require('mongoose');
-const { deleteOne } = require('../../models/userModel');
 require("dotenv").config({path: "config.env"}); // load environment variables
 
 //=====================================================================================//

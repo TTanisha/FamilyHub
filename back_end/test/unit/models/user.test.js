@@ -127,7 +127,7 @@ describe("User Registration Tests", () => {
 
   test("Register a new user with all fields", async () => {
     userData = {
-      email: "testemail@gmail.com",
+      email: "testmodelemail@gmail.com",
       password: "testPassword123",
       firstName: "testFirstName",
       lastName: "testLastName",

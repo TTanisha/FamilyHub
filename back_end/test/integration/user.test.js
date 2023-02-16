@@ -123,7 +123,7 @@ describe("User Registration Tests", () => {
 
   test("Register a new user with all fields", async () => {
     const response = await request.post("/api/users/registerUser").send({
-      email: "testemail@test.com",
+      email: "testintegrationemail@test.com",
       password: "testPassword123",
       firstName: "testFirstName",
       lastName: "testLastName",
@@ -136,7 +136,7 @@ describe("User Registration Tests", () => {
       homeNumber: 5555555
     }); 
     expect(response.statusCode).toBe(201);
-    await Users.findOneAndDelete({email: "testemail@test.com"});    
+    await Users.findOneAndDelete({email: "testintegrationemail@test.com"});    
   });
 
 }); 

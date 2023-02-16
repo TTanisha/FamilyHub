@@ -53,7 +53,7 @@ exports.getUserById = async(req, res) => {
 
 exports.getUser = async(req, res) => {
   try {
-    const user = await Users.find({email: req.body.email});
+    const user = await Users.findOne({email: req.body.email});
     if (user == null) {
       throw err;
     }

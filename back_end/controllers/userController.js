@@ -51,6 +51,30 @@ exports.getUser = async(req, res) => {
   };
 };
 
+exports.getUserById = async(req, res) => {
+
+  var ObjectId = require('mongodb').ObjectId; 
+  
+  try {
+    var id = req.body.userId;
+    const user = await Users.find({ _id: new ObjectId(id)});
+    if (user == null) {
+      throw err;
+    }
+    res.status(200).json({ // everything is OK
+      status: "success",
+      message: "User found",
+      data: {user}
+    });
+  } catch (err) {
+    res.status(400).json({ // bad request
+      status: "fail",
+      message: err.message,
+      description: "Failed to get the user"
+    });
+  };
+};
+
 exports.updateUser = async(req, res) => {
   try {
     // find user by email

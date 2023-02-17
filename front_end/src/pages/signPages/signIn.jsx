@@ -13,6 +13,8 @@ birthday: new Date(),
 const SignIn = () => {
     const[email, setEmail] = React.useState('');
     const[password, setPassword] = React.useState('');
+  
+  localStorage.setItem("loggedIn", "false");
 
   return (
     <div class="sign-in">
@@ -42,6 +44,7 @@ async function signUserIn(props) {
       {
         const newUser = response.data.data.user;
         localStorage.setItem("user", newUser);
+        localStorage.setItem("loggedIn", "true");
         return response.data;
       }
   }).catch(function (error) {

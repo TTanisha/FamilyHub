@@ -4,40 +4,31 @@ import { Nav, NavLink, NavMenu }
   
 const Navbar = () => {
 
-  if (window.location.pathname==='/')
-  {
-    return (
-      <></>
-    )
-  }
-  else if(window.location.pathname==='/sign-up' || window.location.pathname==='/signup-success')
-  {
-    return (
-      <>
-      <Nav>
-        <NavMenu>
-      <NavLink to="/">
-      Sign-in
-      </NavLink>
-      </NavMenu>
-      </Nav>
-    </>
-    )
-  }
+  let isLoggedIn = (localStorage.getItem("loggedIn") === "true");
 
   return ( 
     <>
       <Nav>
         <NavMenu>
-        {/* <NavLink to='/'>
-            Sign-Out
-          </NavLink> */}
+          {!isLoggedIn && 
+            <NavLink to="/">
+            Sign-in
+          </NavLink>
+          }
+          {isLoggedIn && 
           <NavLink to="/calendar">
             Calendar
           </NavLink>
+          }
+          {isLoggedIn && 
           <NavLink to="/familygroups">
             My Family Groups
           </NavLink>
+          }
+          {isLoggedIn &&
+            <NavLink to="/signout">
+            Sign-Out
+            </NavLink> }
         </NavMenu>
       </Nav>
     </>

@@ -103,14 +103,28 @@ This is our testing scope for Sprint 2:
 
 **Unit tests:**
 - Create
+    1. Create Family Group without name should result in error
+    2. Create Family Group with name should result in success
+    3. Create Family Group without groupmembers should result in success
+
 - Retrieve
-- Add Member
+    1. Get family group by ID that exists should return the family group
+    2. Get family group by ID that doesn't exists should result in failure
+
+- Add Group Member
+    1. Add group member to a group family
 
 **Integration test:**
 - /createFamilyGroup
+    1. Create Family Group without name should result in error
+    2. Create Family Group with name should result in success
+    3. Create Family Group without groupmembers should result in success
 - /getFamilyGroup
-- /getFamilyGroup
+    1. Get family group by ID that exists should return the family group
+    2. Get family group by ID that doesn't exists should result in failure
 - /addMemberToFamilyGroup
+    1. Add group member to a group family
+
 
 
 #### Core Feature: Shared Calendar: 

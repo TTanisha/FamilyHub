@@ -1,7 +1,7 @@
 const FamilyGroups = require('../../../models/familyGroupModel');
 const Users = require("../../../models/userModel");
 const mongoose = require('mongoose');
-const { ValidationError } = require('mongodb')
+const { ValidationError } = require('mongodb');
 require("dotenv").config({path: "config.env"}); // load environment variables
 
 //=====================================================================================//
@@ -92,23 +92,28 @@ describe("Family Group Creation Tests", () => {
 
 describe("Add Member to Family Group", () => {
     test("Add a family Member", async () => {
-        familygroupTest = {
+        let familygroupTest = {
           groupName: "test family group"
         };
+
         let newUser = new Users(defaultUser);
-        console.log(newUser._id);
 
+        const testGroup = await FamilyGroups.create(familygroupTest);
 
-        const fg = await FamilyGroups.create(familygroupTest);
-        FamilyGroups.updateOne({ _id: fg._id },
+        await FamilyGroups.updateOne({ _id: testGroup._id },
             {
                 $addToSet: {
-                    groupMembers: new mongoose.Types.ObjectId(),
+                    groupMembers: newUser,
                 },
             });
-        console.log(fg.groupMembers);
-        //expect(fg.groupMembers).toBe(result);
-        await FamilyGroups.findOneAndDelete({_id: fg._id});    
+
+        const updatedGroup = await FamilyGroups.findOne({ _id: testGroup._id });
+
+        let result = [newUser._id];
+
+        await Users.findOneAndDelete({_id: newUser._id});  
+        await FamilyGroups.findOneAndDelete({_id: testGroup._id}); 
+        expect(updatedGroup.groupMembers).toStrictEqual(result);
       });
 
       test("Add an empty family Member", async () => {
@@ -116,19 +121,18 @@ describe("Add Member to Family Group", () => {
           groupName: "test family group"
         };
 
-        let newUser = new Users(defaultUser);
-        console.log(newUser._id);
+        const testGroup = await FamilyGroups.create(familygroupTest);
 
-
-        const fg = await FamilyGroups.create(familygroupTest);
-        FamilyGroups.updateOne({ _id: fg._id },
+        FamilyGroups.updateOne({ _id: testGroup._id },
             {
                 $addToSet: {
                     groupMembers: new mongoose.Types.ObjectId(),
                 },
             });
-        console.log(fg.groupMembers);
-        //expect(fg.groupMembers).toBe(result);
-        await FamilyGroups.findOneAndDelete({_id: fg._id});    
+
+        result = [];
+        const updatedGroup = await FamilyGroups.findOne({ _id: testGroup._id });
+        expect(updatedGroup.groupMembers).toStrictEqual(result);
+        await FamilyGroups.findOneAndDelete({_id: testGroup._id});    
       });
 });

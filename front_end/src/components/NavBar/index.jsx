@@ -10,6 +10,20 @@ const Navbar = () => {
       <></>
     )
   }
+  else if(window.location.pathname==='/sign-up' || window.location.pathname==='/signup-success')
+  {
+    return (
+      <>
+      <Nav>
+        <NavMenu>
+      <NavLink to="/">
+      Sign-in
+      </NavLink>
+      </NavMenu>
+      </Nav>
+    </>
+    )
+  }
 
   return ( 
     <>

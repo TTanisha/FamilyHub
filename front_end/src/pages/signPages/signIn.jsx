@@ -25,6 +25,8 @@ const SignIn = () => {
         Password: <input value={password} onChange={p => setPassword(p.target.value)}/>
     </label>
       <button class="sign-in" onClick={()=>signUserIn({email: email, password:password})}>Sign-In</button>
+      <div>Don't have an account? Sign-up below!</div>
+      <button class="sign-in" onClick={()=>{window.location.href = '/sign-up'}}>Sign-Up</button>
     </div>
   );
 };

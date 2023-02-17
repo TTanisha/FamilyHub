@@ -32,7 +32,7 @@ This is our testing scope for Sprint 2:
 |Freyja Kristjanson  |kristjaf |@FreyjaKristjanson | Backend Developer, DB Manager |
 |Jasmine Tabuzo |tabuzoj |@jasmine-tabuzo  |Full-stack developer |
 |Juan Armijos  |armijosj | @armijos | Configuration Manager, Installation Team |
-|Tanisha Turner  |turnert1 | @TTanisha |Fronten Developer |
+|Tanisha Turner  |turnert1 | @TTanisha |Frontend Developer |
 
 
 --- 

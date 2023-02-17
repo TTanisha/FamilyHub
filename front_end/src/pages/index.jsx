@@ -1,6 +1,8 @@
 import React from 'react';
   
-const Home = () => {
+const Home = (props) => {
+  
+  props.funcNav(true);
   return (
     <div>
       <h1>Welcome to FamilyHub</h1>

@@ -1,0 +1,13 @@
+
+
+:root {
+    --background-colour: #00ff1e;
+    --button-colour: #ff00aa;
+}
+
+label {
+    display: grid;
+    grid-template-columns: auto;
+    grid-template-rows: auto auto;
+    align-items: center;
+}

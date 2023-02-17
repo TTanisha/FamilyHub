@@ -1,3 +1,7 @@
+.toastui-calendar-template-allday {
+    background-color:rgb(186 222 255);
+}
+
 .calendar {
     height: 70vh;
     width: 50vw;

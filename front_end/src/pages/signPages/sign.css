@@ -16,9 +16,16 @@ label {
     grid-template-columns: auto;
     grid-template-rows: auto auto;
     align-items: center;
+    width: 250px;
 }
 
 button.sign-in {
     margin-top: 10px;
     background-color: var(--button-colour);
+}
+
+div.sign-up, div.sign-in{
+    align-items: center;
+    display: flex;
+    flex-direction: column;
 }

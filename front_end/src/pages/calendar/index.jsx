@@ -11,6 +11,18 @@ let tuiCalendar = new TUICalendar('#calendar', {
   isReadOnly: true
 });
 
+let events = [
+  {
+    id: '1',
+    calendarId: '1',
+    title: 'Valentines Day',
+    category: 'allday',
+    start: '2023-02-14T22:30:00+09:00',
+    end: '2023-02-14T22:30:00+09:00',
+    isAllDay: true,
+  }
+];
+
 let currDate = new Date();
 
 function createCalendar() {
@@ -55,10 +67,17 @@ function setCalendarTitle() {
   document.getElementById("renderRange").innerHTML = string;
 }
 
+function setCalendarEvents() {
+  tuiCalendar.createEvents(events);
+
+  tuiCalendar.render();
+}
+
 const Calendar = () => {
   useEffect(() => {
     createCalendar();
     setCalendarTitle();
+    setCalendarEvents();
   });
 
   return (

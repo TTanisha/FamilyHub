@@ -22,7 +22,7 @@ const SignIn = () => {
         Email Address: <input value={email} onChange={e => setEmail(e.target.value)}/>
     </label>
     <label>
-        Password: <input value={password} onChange={p => setPassword(p.target.value)}/>
+        Password: <input type="password" value={password} onChange={p => setPassword(p.target.value)}/>
     </label>
       <button class="sign-in" onClick={()=>signUserIn({email: email, password:password})}>Sign-In</button>
     </div>

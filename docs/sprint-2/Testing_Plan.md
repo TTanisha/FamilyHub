@@ -103,14 +103,28 @@ This is our testing scope for Sprint 2:
 
 **Unit tests:**
 - Create
+    1. Create Family Group without name should result in error
+    2. Create Family Group with name should result in success
+    3. Create Family Group without groupmembers should result in success
+
 - Retrieve
-- Add Member
+    1. Get family group by ID that exists should return the family group
+    2. Get family group by ID that doesn't exists should result in failure
+
+- Add Group Member
+    1. Add group member to a group family
 
 **Integration test:**
 - /createFamilyGroup
+    1. Create Family Group without name should result in error
+    2. Create Family Group with name should result in success
+    3. Create Family Group without groupmembers should result in success
 - /getFamilyGroup
-- /getFamilyGroup
+    1. Get family group by ID that exists should return the family group
+    2. Get family group by ID that doesn't exists should result in failure
 - /addMemberToFamilyGroup
+    1. Add group member to a group family
+
 
 
 #### Core Feature: Shared Calendar: 
@@ -162,6 +176,16 @@ This is our testing scope for Sprint 2:
     1. Successfully find and delete event
     2. No such event
 
+
+#### Acceptance Testing:
+
+**Create Account**
+1. Navigate to First Name field and type your name.
+2. Navigate to Last Name field and type your last name.
+3. Navigate to E-mail field and type your e-mail.
+4. Navigate to password field and type your password.
+5. Navigate to birthday field and select your birthday.
+6. Navigate to the 'Create Account' and click on it.
 
 #### Regression Testing (Results):
 ![Regression-Test](./Regression%20Testing.png)

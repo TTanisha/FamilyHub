@@ -28,9 +28,14 @@ beforeAll(async () => {
     err => {console.error("Unable to connect to MongoDB.", err.message)}
   );
 
-  Users.createIndexes();
-  let newUser = new Users(defaultUser);
-  await newUser.save();
+  try {
+    Users.createIndexes();
+    let newUser = new Users(defaultUser);
+    await newUser.save();
+  } catch (err) {
+    console.log("Error creating User.");
+  }
+  
 
 });
 

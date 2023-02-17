@@ -4,10 +4,6 @@
     --button-colour: #006aff;
 }
 
-body {
-    background-color: var(--background-colour);
-}
-
 div.sign-in {
     display: grid;
     grid-template-columns: auto;

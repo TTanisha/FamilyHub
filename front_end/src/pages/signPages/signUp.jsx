@@ -18,9 +18,6 @@ const SignUp = () => {
         Password: <input value={password} onChange={p => setPassword(p.target.value)}/>
     </label>
     <DatePicker dateFormat="dd/MM/yyyy" selected={birthDate} onChange={(date)=> SetBirthDate(date)}/>
-    {/* {email !== '' &&
-        <p>Your name is {email}.</p>
-      } */}
       <button class="sign-in">Sign-In</button>
     </div>
   );

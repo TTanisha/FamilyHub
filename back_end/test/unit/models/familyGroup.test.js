@@ -12,7 +12,7 @@ const defaultFamilyGroup = {
 };
 
 const defaultUser = {
-    email: "test@model.com",
+    email: "testfamily@model.com",
     password: "testPassword123",
     firstName: "testFirstName",
     lastName: "testLastName",
@@ -76,15 +76,19 @@ describe("Family Group Creation Tests", () => {
     });
 
     test("Create a new Family Group with members", async () => {
+
+        let newUser = new Users(defaultUser);
         familygroupTest = {
           groupName: "test family group", 
           $addToSet: {
-            groupMembers:     "0000",
+            groupMembers: newUser,
         }
         };
         const fg = await FamilyGroups.create(familygroupTest);
         expect(fg.groupName).toBe(familygroupTest.groupName);
-        await FamilyGroups.findOneAndDelete({_id: fg._id});    
+        await FamilyGroups.findOneAndDelete({_id: fg._id}); 
+        await Users.findOneAndDelete({_id: newUser._id});  
+   
       });
 });
 
@@ -108,7 +112,6 @@ describe("Add Member to Family Group", () => {
             });
 
         const updatedGroup = await FamilyGroups.findOne({ _id: testGroup._id });
-
         let result = [newUser._id];
 
         await Users.findOneAndDelete({_id: newUser._id});  
@@ -126,7 +129,7 @@ describe("Add Member to Family Group", () => {
         FamilyGroups.updateOne({ _id: testGroup._id },
             {
                 $addToSet: {
-                    groupMembers: new mongoose.Types.ObjectId(),
+                    groupMembers: "",
                 },
             });
 

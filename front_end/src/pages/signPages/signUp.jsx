@@ -51,12 +51,14 @@ async function signUserUp(props) {
         window.location.href = '/signup-success';
         //  setSignedUp(true);
        } else {
+        window.alert('Invalid details. Please try again.');
          //console.log(response.data.message);
         //  setHasError(true);
         //  setErrorMessage(response.data.message);
        }
    }).catch(function (error) {
        console.log(error);
+       window.alert('Could not create account. Please try again.');
       //  setHasError(true);
       //  setErrorMessage(error);
    })};

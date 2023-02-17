@@ -177,6 +177,16 @@ This is our testing scope for Sprint 2:
     2. No such event
 
 
+#### Acceptance Testing:
+
+**Create Account**
+1. Navigate to First Name field and type your name.
+2. Navigate to Last Name field and type your last name.
+3. Navigate to E-mail field and type your e-mail.
+4. Navigate to password field and type your password.
+5. Navigate to birthday field and select your birthday.
+6. Navigate to the 'Create Account' and click on it.
+
 #### Regression Testing (Results):
 ![Regression-Test](./Regression%20Testing.png)
 

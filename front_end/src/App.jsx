@@ -9,11 +9,12 @@ import { Navigate } from 'react-router-dom';
 import SignUp from './pages/signPages/signUp';
 import SignUpSuccess from './pages/signPages/signUpSuccess';
 import { NextUIProvider, Navbar, Text, Avatar, Dropdown } from "@nextui-org/react";
+import profilePicture from './images/user.png';
 
 function App() {
 
   let isLoggedIn = (localStorage.getItem("loggedIn") === "true");
-
+  let currUser = JSON.parse(localStorage.getItem("user"));
 
   return (
     <NextUIProvider>
@@ -54,7 +55,7 @@ function App() {
                     as="button"
                     color="secondary"
                     size="md"
-                    src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
+                    src={profilePicture}
                   />
                 </Dropdown.Trigger>
               </Navbar.Item>
@@ -68,7 +69,7 @@ function App() {
                     Signed in as
                   </Text>
                   <Text b color="inherit" css={{ d: "flex" }}>
-                    zoey@example.com
+                    {currUser.email}
                   </Text>
                 </Dropdown.Item>
                 <Dropdown.Item key="viewProfile" withDivider>

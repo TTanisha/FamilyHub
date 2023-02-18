@@ -18,23 +18,18 @@ function App() {
 
   return (
     <NextUIProvider>
-      <Navbar isBordered maxWidth={"fluid"} variant={"floating"} >
+      <Navbar isBordered maxWidth={"fluid"} variant={"sticky"} >
+
         <Navbar.Content enableCursorHighlight>
           <Navbar.Brand>
-            <Text b color="inherit" hideIn="xs">
-              FamilyHub
-            </Text>
+            <Text b color="inherit" hideIn="xs"> FamilyHub </Text>
           </Navbar.Brand>
-          {isLoggedIn ? null : 
-          <Navbar.Link href="/" isActive={window.location.pathname ==="/"}>
-              Login </Navbar.Link>}
-          {!isLoggedIn ? null : 
-            <Navbar.Link href="/calendar"  isActive={window.location.pathname ==="/calendar"} >            
-            Calendar </Navbar.Link>}
-          {!isLoggedIn ? null : <Navbar.Link href="/familygroups" isActive={window.location.pathname ==="/familygroups"} >            
-            Family Groups</Navbar.Link>}
-          {isLoggedIn ? null : <Navbar.Link href="/sign-up" isActive={window.location.pathname ==="/sign-up"}>            
-            Sign up</Navbar.Link>}
+          {isLoggedIn ? null :
+            <Navbar.Link href="/" isActive={window.location.pathname === "/"}> Login </Navbar.Link>}
+          {!isLoggedIn ? null :
+            <Navbar.Link href="/calendar" isActive={window.location.pathname === "/calendar"}> Calendar </Navbar.Link>}
+          {!isLoggedIn ? null : <Navbar.Link href="/familygroups" isActive={window.location.pathname === "/familygroups"}> Family Groups </Navbar.Link>}
+          {isLoggedIn ? null : <Navbar.Link href="/sign-up" isActive={window.location.pathname === "/sign-up"}> Sign up </Navbar.Link>}
         </Navbar.Content>
 
         {/* profile */}
@@ -65,18 +60,12 @@ function App() {
                 onAction={(actionKey) => console.log({ actionKey })}
               >
                 <Dropdown.Item key="profile" css={{ height: "$18" }}>
-                  <Text b color="inherit" css={{ d: "flex" }}>
-                    Signed in as
-                  </Text>
-                  <Text b color="inherit" css={{ d: "flex" }}>
-                    {currUser.email}
-                  </Text>
+                  <Text b color="inherit" css={{ d: "flex" }}> Signed in as </Text>
+                  <Text b color="inherit" css={{ d: "flex" }}> {currUser.email} </Text>
                 </Dropdown.Item>
-                <Dropdown.Item key="viewProfile" withDivider>
-                  My Profile
-                </Dropdown.Item>
+                <Dropdown.Item key="viewProfile" withDivider> My Profile </Dropdown.Item>
                 <Dropdown.Item key="logout" withDivider color="error">
-                  <Navbar.Link href="/signout">Log Out</Navbar.Link>
+                  <Navbar.Link href="/signout"> Log Out </Navbar.Link>
                 </Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>

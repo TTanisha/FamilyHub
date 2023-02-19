@@ -18,7 +18,7 @@ function App() {
 
   return (
     <NextUIProvider>
-      <Navbar isBordered maxWidth={"fluid"} variant={"sticky"} >
+      <Navbar css={{backgroundColor: "#0b16e0"}}isBordered maxWidth={"fluid"} variant={"sticky"} >
 
         <Navbar.Content enableCursorHighlight>
           <Navbar.Brand>

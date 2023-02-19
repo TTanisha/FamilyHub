@@ -17,7 +17,7 @@ const SignIn = () => {
   localStorage.setItem("loggedIn", "false");
 
   return (
-    <div class="sign-in">
+    <div className="sign-in">
         <h1>Family Hub</h1>
         <h2>Sign-In</h2>
       <label>
@@ -26,9 +26,9 @@ const SignIn = () => {
     <label>
         Password: <input type="password" value={password} onChange={p => setPassword(p.target.value)}/>
     </label>
-      <button class="sign-in" onClick={()=>signUserIn({email: email, password:password})}>Sign-In</button>
+      <button className="sign-in" onClick={()=>signUserIn({email: email, password:password})}>Sign-In</button>
       <div>Don't have an account? Sign-up below!</div>
-      <button class="sign-in" onClick={()=>{window.location.href = '/sign-up'}}>Sign-Up</button>
+      <button className="sign-in" onClick={()=>{window.location.href = '/sign-up'}}>Sign-Up</button>
     </div>
   );
 };
@@ -43,7 +43,7 @@ async function signUserIn(props) {
       if(response.data.status === "success")
       {
         const newUser = response.data.data.user;
-        localStorage.setItem("user", newUser);
+        localStorage.setItem("user", JSON.stringify(newUser));
         localStorage.setItem("loggedIn", "true");
         return response.data;
       }

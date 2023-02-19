@@ -2,6 +2,7 @@ import React, {useEffect, useState} from 'react';
 import FamilyGroup from '../../components/familyGroup/familyGroup';
 import './familyGroups.css';
 import axios from 'axios';
+import { Collapse, Text, Card } from "@nextui-org/react";
   
 const FamilyGroups = () => {
   const [familyGroups, setFamilyGroups] = useState([]);
@@ -40,12 +41,20 @@ const FamilyGroups = () => {
   return (
     <div className="familyGroupContainer">
       <div className="content">
-      <div className="header"> My Family Groups </div>
-      { !loading && (
-        (data.length != 0) ? data.map(
-          (groupData) => (<FamilyGroup groupId={groupData.group?._id} groupName={groupData.group?.groupName} groupMembers={groupData.group?.groupMembers} />)
-        ) : <div> You are not part of any family groups  </div>)
-      }
+        <Card css={{ $$cardColor: '$colors$gradient' }}> 
+          <Text h3 color="#ffffff"> My Family Groups </Text> 
+        </Card>
+
+        <Collapse.Group splitted accordion={false}>
+          { !loading && (
+            (data.length != 0) ? data.map(
+              (groupData) => (
+              <Collapse key={groupData.group?._id} title={groupData.group?.groupName}> 
+                <FamilyGroup key={groupData.group?._id} groupId={groupData.group?._id} groupName={groupData.group?.groupName} groupMembers={groupData.group?.groupMembers}/>
+              </Collapse>)
+            ) : <Text> You are not part of any family groups  </Text>)
+          }
+        </Collapse.Group>
       </div>
     </div>
   );

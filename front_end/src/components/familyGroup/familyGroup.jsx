@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./familyGroup.css";
 import axios from 'axios';
+import {Text, Card, Spacer} from "@nextui-org/react";
   
 const FamilyGroup = (props) => {
   const [groupMembers, setGroupMembers] = useState([]);
@@ -37,10 +38,17 @@ const FamilyGroup = (props) => {
   }, [])
 
   return (
-    <div className="familyContainer">
-      <div className="familyName"> {props.groupName} </div>
+    <div>
       {
-        !loading && (groupMembers?.map((userData) => ( loading ? null : <div className="memberName"> {userData?.firstName} {userData?.lastName}</div>))) 
+        !loading && (groupMembers?.map((userData) => ( loading ? null : 
+          <div key={userData?._id}> 
+            <Card isPressable isHoverable variant="bordered" css={{ backgroundColor: "white"}}>
+              <Text h4 css={{textAlign: "left"}}> 
+                {userData?.firstName} {userData?.lastName}
+              </Text>
+            </Card>
+          <Spacer y={0.5} />
+          </div>))) 
       }
     </div>
   );

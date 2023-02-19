@@ -43,7 +43,7 @@ async function signUserIn(props) {
       if(response.data.status === "success")
       {
         const newUser = response.data.data.user;
-        localStorage.setItem("user", newUser);
+        localStorage.setItem("user", JSON.stringify(newUser));
         localStorage.setItem("loggedIn", "true");
         return response.data;
       }

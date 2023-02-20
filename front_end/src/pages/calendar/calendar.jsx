@@ -5,6 +5,8 @@ import { useEffect } from 'react';
 import './calendar.css';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import moment from 'moment';
+import { Modal, useModal, Button, Text, Input } from "@nextui-org/react";
+import CreateEventForm from '../../components/createEventForm';
 
 let tuiCalendar = new TUICalendar('#calendar', {
   defaultView: 'month',
@@ -74,11 +76,16 @@ function setCalendarEvents() {
 }
 
 const Calendar = () => {
+
   useEffect(() => {
     createCalendar();
     setCalendarTitle();
     setCalendarEvents();
   });
+
+  const reRenderCalendar = () => {
+    tuiCalendar.render();
+  }
 
   return (
     <div className="container">
@@ -99,7 +106,9 @@ const Calendar = () => {
         <div id="calendar" className="calendar"></div>
       </div>
       <div className="schedule-container"></div>
-      <div className="event-buttons-container"></div>
+      <div className="event-buttons-container">
+        <CreateEventForm reRenderCalendar={reRenderCalendar}/>
+      </div>
     </div>
   );
 };

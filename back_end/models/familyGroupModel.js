@@ -11,6 +11,11 @@ const familyGroupSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: [false]
+    }],
+    events: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Event',
+        required: [false]
     }]
 });
 

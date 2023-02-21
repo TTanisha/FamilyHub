@@ -1,4 +1,5 @@
 const Events = require("../models/eventModel");
+const FamilyGroups = require("../models/familyGroupModel");
 
 exports.createEvent = async(req, res) => {
   try {
@@ -11,7 +12,15 @@ exports.createEvent = async(req, res) => {
         message: "New event created",
         data: {newEvent}
       });
+
+      await FamilyGroups.updateOne({ _id: newEvent.familyGroup },
+        {
+            $addToSet: {
+                events: newEvent,
+            },
+        });
     };
+    
   } catch (err) {
     res.status(400).json({ // bad request 
       status: "fail",

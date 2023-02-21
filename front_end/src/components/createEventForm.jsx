@@ -39,14 +39,7 @@ const CreateEventForm = (props) => {
     }
   }, [dateInput, startTimeInput, endTimeInput]);
 
-
-  useEffect(() => {
-
-    console.log(startTimeDate);
-    console.log(endTimeDate);
-  });
-
-  const submitCreateEventForm = () => {
+  const submitCreateEventForm = (props) => {
     axios.post("http://localhost:8080/api/events/createEvent", 
     {
       title: titleInput, 
@@ -65,10 +58,10 @@ const CreateEventForm = (props) => {
         {
           console.log(response);
           setVisible(false);
+          props.updateEvents();
         }
     }).catch(function (error) {
     })
-
   }
 
   return (
@@ -79,6 +72,7 @@ const CreateEventForm = (props) => {
       <Modal
         scroll
         closeButton
+        preventClose
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
         {...bindings}
@@ -100,7 +94,7 @@ const CreateEventForm = (props) => {
           <Button flat auto color="error" onPress={() => setVisible(false)}>
             Close
           </Button>
-          <Button onPress={submitCreateEventForm}>Submit</Button>
+          <Button onPress={() => {submitCreateEventForm(props)}}>Submit</Button>
         </Modal.Footer>
       </Modal>
     </>

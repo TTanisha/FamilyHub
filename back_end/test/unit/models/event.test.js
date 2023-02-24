@@ -46,7 +46,7 @@ afterAll(async () => {
   try {
     await Events.findOneAndDelete(defaultEvent);
   } catch (err) {
-    console.log("User not found.");
+    console.log("Event not found.");
   }
 
   await mongoose.connection.close().then(
@@ -113,6 +113,24 @@ describe("Create Event Tests", () => {
     };
     const event = Events.create(eventData);
     await expect(event).rejects.toThrow();
+  });
+
+  test("Create an event associated with a family group", async () => {
+    const testGroup = new mongoose.Types.ObjectId();
+    const eventData = {
+      title: "Event with group",
+      body: "Event connected to a family group",
+      creationUser: user1,
+      isAllDay: true,
+      start: new Date("2023-02-23"),
+      end: new Date("2023-02-23"),
+      recurrenceRule: "ONCE",
+      familyGroup: testGroup
+    };
+    const event = await Events.create(eventData);
+    expect(event.title).toBe(eventData.title);
+    expect(event.familyGroup._id).toStrictEqual(testGroup);
+    await Events.findOneAndDelete({title: eventData.title});
   });
 
 });

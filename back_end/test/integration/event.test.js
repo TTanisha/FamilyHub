@@ -1,9 +1,10 @@
 const app = require('../../app');
 const Events = require('../../models/eventModel');
+const FamilyGroups = require('../../models/familyGroupModel');
 let supertest = require('supertest');
 let request = supertest(app);
 const mongoose = require('mongoose');
-const mongodb = require('mongodb');
+const { ObjectId } = require('mongodb');
 require("dotenv").config({path: "config.env"}); // load environment variables
 
 //=====================================================================================//
@@ -17,6 +18,9 @@ const defaultEvent = {
   end: new Date("February 17, 2023 15:00:00"),
   recurrenceRule: "ONCE"
 }
+
+const user1 = new ObjectId("63ed63e678178f779fa76b2c");
+const user2 = new ObjectId("63ed63e678178f779fa76b2d");
 
 beforeAll(async () => {
   // Database connection
@@ -106,6 +110,32 @@ describe("Create Event Tests", () => {
       recurrenceRule: "huh"
     });
     expect(response.statusCode).toBe(400);
+  });
+
+  test("Create an event associated with a family group", async () => {
+    const groupData = {
+      groupName: "Event Test Group", 
+      groupMembers: user1
+    }
+    let testGroup = new FamilyGroups(groupData);
+    await testGroup.save();
+
+    const eventData = {
+      title: "Event with group",
+      body: "Event connected to a family group",
+      creationUser: user1,
+      isAllDay: true,
+      start: new Date("2023-02-23"),
+      end: new Date("2023-02-23"),
+      recurrenceRule: "ONCE",
+      familyGroup: testGroup._id
+    };
+    const event = await Events.create(eventData);
+    expect(event.title).toBe(eventData.title);
+    expect(event.familyGroup._id).toStrictEqual(testGroup._id);
+    
+    await Events.findOneAndDelete({title: eventData.title});
+    await FamilyGroups.findByIdAndDelete(testGroup._id);
   });
 
 });

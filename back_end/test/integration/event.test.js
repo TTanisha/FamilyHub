@@ -1,26 +1,26 @@
 const app = require('../../app');
 const Events = require('../../models/eventModel');
-const FamilyGroups = require('../../models/familyGroupModel');
 let supertest = require('supertest');
 let request = supertest(app);
 const mongoose = require('mongoose');
-const { ObjectId } = require('mongodb');
 require("dotenv").config({path: "config.env"}); // load environment variables
 
 //=====================================================================================//
 
+const user1 = new mongoose.Types.ObjectId();
+const user2 = new mongoose.Types.ObjectId();
+const familyGroup = new mongoose.Types.ObjectId();
+
 const defaultEvent = {
   title: "Test Event",
   body: "Event description",
-  creationUser: new mongoose.Types.ObjectId(),
+  creationUser: user1,
   isAllDay: false,
   start: new Date("February 17, 2023 12:00:00"), 
   end: new Date("February 17, 2023 15:00:00"),
-  recurrenceRule: "ONCE"
+  recurrenceRule: "ONCE",
+  familyGroup: familyGroup
 }
-
-const user1 = new ObjectId("63ed63e678178f779fa76b2c");
-const user2 = new ObjectId("63ed63e678178f779fa76b2d");
 
 beforeAll(async () => {
   // Database connection
@@ -64,11 +64,12 @@ describe("Create Event Tests", () => {
     const response = await request.post("/api/events/createEvent").send({
       title: "Test Event 2",
       body: "Event description",
-      creationUser: new mongoose.Types.ObjectId(),
+      creationUser: user1,
       isAllDay: true,
       start: new Date("2023-01-17"), // year,month,day
       end: new Date("2023-01-17"),
-      recurrenceRule: "ONCE"
+      recurrenceRule: "ONCE",
+      familyGroup: familyGroup
     });
     expect(response.statusCode).toBe(201);
     await Events.findOneAndDelete({title: "Test Event 2"});
@@ -77,11 +78,12 @@ describe("Create Event Tests", () => {
   test("Create an event with no title", async () => {
     const response = await request.post("/api/events/createEvent").send({
       body: "Event description",
-      creationUser: new mongoose.Types.ObjectId(),
+      creationUser: user1,
       isAllDay: true,
       start: new Date("2023-01-17"), // year,month,day
       end: new Date("2023-01-17"),
-      recurrenceRule: "ONCE"
+      recurrenceRule: "ONCE",
+      familyGroup: familyGroup
     });
     expect(response.statusCode).toBe(400);
   });
@@ -90,11 +92,12 @@ describe("Create Event Tests", () => {
     const response = await request.post("/api/events/createEvent").send({
       title: "",
       body: "Event description",
-      creationUser: new mongoose.Types.ObjectId(),
+      creationUser: user2,
       isAllDay: true,
       start: new Date("2023-01-17"), // year,month,day
       end: new Date("2023-01-17"),
-      recurrenceRule: "ONCE"
+      recurrenceRule: "ONCE",
+      familyGroup: familyGroup
     });
     expect(response.statusCode).toBe(400);
   });
@@ -103,39 +106,27 @@ describe("Create Event Tests", () => {
     const response = await request.post("/api/events/createEvent").send({
       title: "Test Event 2",
       body: "Event description",
-      creationUser: new mongoose.Types.ObjectId(),
+      creationUser: user2,
       isAllDay: true,
       start: new Date("2023-01-17"), // year,month,day
       end: new Date("2023-01-17"),
-      recurrenceRule: "huh"
+      recurrenceRule: "huh",
+      familyGroup: familyGroup
     });
     expect(response.statusCode).toBe(400);
   });
 
-  test("Create an event associated with a family group", async () => {
-    const groupData = {
-      groupName: "Event Test Group", 
-      groupMembers: user1
-    }
-    let testGroup = new FamilyGroups(groupData);
-    await testGroup.save();
-
-    const eventData = {
-      title: "Event with group",
-      body: "Event connected to a family group",
+  test("Create an event without a family group", async () => {
+    const response = await request.post("/api/events/createEvent").send({
+      title: "Event without group",
+      body: "Event not connected to a family group",
       creationUser: user1,
       isAllDay: true,
       start: new Date("2023-02-23"),
       end: new Date("2023-02-23"),
-      recurrenceRule: "ONCE",
-      familyGroup: testGroup._id
-    };
-    const event = await Events.create(eventData);
-    expect(event.title).toBe(eventData.title);
-    expect(event.familyGroup._id).toStrictEqual(testGroup._id);
-    
-    await Events.findOneAndDelete({title: eventData.title});
-    await FamilyGroups.findByIdAndDelete(testGroup._id);
+      recurrenceRule: "ONCE"
+    });
+    expect(response.statusCode).toBe(400);
   });
 
 });
@@ -151,7 +142,8 @@ describe("Delete Event Tests", () => {
       isAllDay: true,
       start: new Date(), 
       end: new Date(),
-      recurrenceRule: "YEARLY"
+      recurrenceRule: "YEARLY",
+      familyGroup: familyGroup
     }
     let newEvent = new Events(newEventData);
     await newEvent.save();

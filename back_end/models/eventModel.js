@@ -44,7 +44,7 @@ const eventSchema = new mongoose.Schema({
   familyGroup: { // calendarId, one-to-many
     type: mongoose.Schema.Types.ObjectId,
     ref: 'FamilyGroup',
-    required: [false, "The event must belong to a family group."]
+    required: [true, "The event must belong to a family group."]
   }  
 });
 

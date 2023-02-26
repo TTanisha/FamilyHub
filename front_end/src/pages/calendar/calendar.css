@@ -93,8 +93,10 @@
 .event-buttons-container {
     grid-area: event-buttons-container;
     width: 100%;
-    border-style: dashed;
+    /* border-style: dashed; */
     border-color: lightgray;
+    display: flex;
+    flex-direction: row-reverse;
 }
 
 .select-date {

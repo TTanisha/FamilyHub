@@ -9,5 +9,5 @@ router.route("/createFamilyGroup").post(familyGroupController.createFamilyGroup)
 router.route("/getFamilyGroup").get(familyGroupController.getFamilyGroup);
 router.route("/getFamilyGroup").post(familyGroupController.getFamilyGroup);
 router.route("/addMemberToFamilyGroup").post(familyGroupController.addMemberToFamilyGroup);
-
+router.route("/getFamilyGroupEvents").post(familyGroupController.getFamilyGroupEvents);
 module.exports = router;

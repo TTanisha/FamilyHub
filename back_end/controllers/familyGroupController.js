@@ -117,3 +117,31 @@ exports.addMemberToFamilyGroup = async (req, res) => {
     }
 };
 
+exports.getFamilyGroupEvents = async (req, res) => {
+    try {
+    
+        const { groupId } = req.body
+        const group = await FamilyGroups.findById({ _id: groupId }).populate('events');
+        reason = "";
+    
+        if (group == null) {
+          reason = "Family Group not found";
+          throw err;
+        }
+    
+        res.status(200).json({
+            status: "success",
+            message: "Found group",
+            data: {
+                groupEvents: group.events,
+            },
+        });
+      } catch (err) {
+    
+        res.status(404).json({
+            status: "fail",
+            message: "Group not found",
+        });
+      }
+};
+

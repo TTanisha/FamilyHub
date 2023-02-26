@@ -11,8 +11,13 @@ const familyGroupSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'User',
         required: [false]
+    }],
+    events: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Event',
+        required: [false]
     }]
 });
 
-const FamilyGroups = mongoose.model("FamilyGroups", familyGroupSchema);
+const FamilyGroups = mongoose.model("FamilyGroups", familyGroupSchema, collection = "Family Groups");
 module.exports = FamilyGroups;

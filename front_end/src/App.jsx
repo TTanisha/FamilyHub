@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Calendar from './pages/calendar';
+import Calendar from './pages/calendar/calendar';
 import FamilyGroups from './pages/familyGroups/familyGroups';
 import SignIn from './pages/signPages/signIn';
 import SignOut from './pages/signPages/signOut';

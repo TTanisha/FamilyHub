@@ -19,5 +19,5 @@ const familyGroupSchema = mongoose.Schema({
     }]
 });
 
-const FamilyGroups = mongoose.model("FamilyGroups", familyGroupSchema);
+const FamilyGroups = mongoose.model("FamilyGroups", familyGroupSchema, collection = "Family Groups");
 module.exports = FamilyGroups;

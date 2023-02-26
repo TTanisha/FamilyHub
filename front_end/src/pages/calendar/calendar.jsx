@@ -6,10 +6,14 @@ import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import moment from 'moment';
 import CreateEventForm from '../../components/createEventForm';
 import axios from 'axios';
+import ViewEvent from '../../components/viewEvent';
 
 let tuiCalendar = new TUICalendar('#calendar', {
   defaultView: 'month',
-  isReadOnly: true
+  useFormPopup: false,
+  useCreationPopup: false,
+  useDetailPopup: false,
+  isReadOnly: true,
 });
 
 let currDate = new Date();
@@ -17,7 +21,10 @@ let currDate = new Date();
 function createCalendar() {
   tuiCalendar = new TUICalendar('#calendar', {
     defaultView: 'month',
-    isReadOnly: true
+    useFormPopup: false,
+    useCreationPopup: false,
+    useDetailPopup: false,
+    isReadOnly: true,
   });
   return tuiCalendar;
 }
@@ -29,6 +36,7 @@ function getNext() {
   tuiCalendar.setDate(currDate);
   setCalendarTitle();
 
+  tuiCalendar.getStoreDispatchers().popup.hideSeeMorePopup();
   tuiCalendar.render();
 }
 
@@ -39,6 +47,7 @@ function getPrev() {
   tuiCalendar.setDate(currDate);
   setCalendarTitle();
 
+  tuiCalendar.getStoreDispatchers().popup.hideSeeMorePopup();
   tuiCalendar.render();
 }
 
@@ -48,11 +57,12 @@ function getToday() {
   currDate = new Date();
   setCalendarTitle();
 
+  tuiCalendar.getStoreDispatchers().popup.hideSeeMorePopup();
   tuiCalendar.render();
 }
 
 function setCalendarTitle() {
-  let string = moment(tuiCalendar.getDate().toString()).format("MMMM YYYY");
+  let string = moment(tuiCalendar.getDate().toString(), "ddd MMM DD YYYY HH:mm:ss").format("MMMM YYYY");
   document.getElementById("renderRange").innerHTML = string;
 }
 
@@ -67,11 +77,13 @@ const Calendar = () => {
   const [usersEvents, setUsersEvents] = useState([]);
   const [tuiCalendarEvents, setTUICalendarEvents] = useState([]);
   const [data, setData] = useState(null);
-  
+  const [visible, setVisible] = useState(false);
+  const [clickedEvent, setClickedEvent] = useState({});
 
   useEffect(() => {
     createCalendar();
     setCalendarTitle();
+    bindEventHandlers();
   }, []);
 
   useEffect(() => {
@@ -85,16 +97,31 @@ const Calendar = () => {
           id: event._id,
           calendarId: event.familyGroup,
           title: event.title,
+          body: event.body,
           category: 'time',
           start: event.start,
           end: event.end,
           isAllDay: false,
+          location: event.location,
         };
         setTUICalendarEvents(tuiCalendarEvents => [...tuiCalendarEvents, tuiEvent]);
       });
     }
   }, [data]);
 
+  function bindEventHandlers() {
+    tuiCalendar.on({
+      clickMoreEventsBtn: function (btnInfo) {
+        tuiCalendar.getStoreDispatchers().popup.hideAllPopup();
+        tuiCalendar.clearGridSelections();
+      },
+      clickEvent: function (eventInfo) {
+        setVisible(true);
+        setClickedEvent(eventInfo);
+      },
+    });
+  }
+    
   async function getUsersEvents(controller) {
       const promises = await Promise.all(currUser.groups?.map(async (id) => {
       return await axios.post("http://localhost:8080/api/familyGroups/getFamilyGroupEvents", 
@@ -156,6 +183,7 @@ const Calendar = () => {
           </button>
         </span>
         <div id="calendar" className="calendar"></div>
+        <ViewEvent visible={visible} setVisible={setVisible} eventInfo={clickedEvent}/>
       </div>
       <div className="schedule-container"></div>
       <div className="event-buttons-container">

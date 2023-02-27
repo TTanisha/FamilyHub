@@ -80,8 +80,8 @@ exports.updateEvent = async(req, res) => {
     };
     if (req.body.creationUser == eventToUpdate.creationUser) {
       eventToUpdate = await Events.findByIdAndUpdate(
-        req.body.id, req.body.updateFields, {new: true, runValidators: true});
-      if (eventToDelete == null) {
+        req.body.id, {$set: req.body}, {new: true, runValidators: true});
+      if (eventToUpdate == null) {
         throw err;
       } else {
         res.status(200).json({ // everything is OK

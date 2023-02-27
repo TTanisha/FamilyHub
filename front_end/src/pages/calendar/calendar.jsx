@@ -183,7 +183,7 @@ const Calendar = () => {
           </button>
         </span>
         <div id="calendar" className="calendar"></div>
-        <ViewEvent visible={visible} setVisible={setVisible} eventInfo={clickedEvent}/>
+        <ViewEvent visible={visible} setVisible={setVisible} eventInfo={clickedEvent} updateEvents={updateEvents}/>
       </div>
       <div className="schedule-container"></div>
       <div className="event-buttons-container">

@@ -58,19 +58,16 @@ function App() {
               <Dropdown.Menu
                 aria-label="User menu actions"
                 color="secondary"
-                onAction={(actionKey) => {
-                  console.log({ actionKey });
-                  }
-                }
+                
               >
                 <Dropdown.Item as={Text} key="profile" css={{ height: "$18" }} textValue>
                   Signed in as {currUser.email}
                 </Dropdown.Item>
-                <Dropdown.Item as={Navbar} key="viewProfile" withDivider textValue css={{ height: "$18" }}> 
-                  <Navbar.Link href="/profile"> My Profile </Navbar.Link> 
+                <Dropdown.Item as={Text} key="viewProfile" withDivider textValue css={{height: "$18" }}> 
+                  <Navbar.Link href="/profile" isActive={window.location.pathname === "/profile"}> My Profile </Navbar.Link> 
                 </Dropdown.Item>
-                <Dropdown.Item as={Navbar} key="logout" withDivider textValue color="error" css={{ height: "$18" }}> 
-                  <Navbar.Link href="/signout"> Log Out </Navbar.Link> 
+                <Dropdown.Item as={Text} key="logout" withDivider textValue color="error" css={{height: "$18" }}> 
+                  <Navbar.Link href="/signout" isActive={window.location.pathname === "/signout"} color="error"> Log Out </Navbar.Link> 
                 </Dropdown.Item>
                 
               </Dropdown.Menu>

@@ -29,3 +29,7 @@ div.sign-up, div.sign-in{
     display: flex;
     flex-direction: column;
 }
+
+input, textarea {
+    background-color : #d1d1d1; 
+}

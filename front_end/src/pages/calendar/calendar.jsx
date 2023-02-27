@@ -93,15 +93,17 @@ const Calendar = () => {
   useEffect(() => {
     if(data) {
       usersEvents?.map((event) => {
+        let category = event.isAllDay ? 'allday' : 'time';
+
         let tuiEvent = {
           id: event._id,
           calendarId: event.familyGroup,
           title: event.title,
           body: event.body,
-          category: 'time',
+          category: category,
           start: event.start,
           end: event.end,
-          isAllDay: false,
+          isAllDay: event.isAllDay,
           location: event.location,
         };
         setTUICalendarEvents(tuiCalendarEvents => [...tuiCalendarEvents, tuiEvent]);

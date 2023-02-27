@@ -175,26 +175,17 @@ describe("Get User Tests", () => {
 describe("Update User Tests", () => {
 
   test("Successfully update required user parameters", async () => {
-    filter = {email: defaultUser.email};
-    updateFields = {
-      updateFirst: "newFirst"
-    };
     const response = await request.post("/api/users/updateUser").send({
-      filter: filter,
-      updateFields: updateFields
+      email: defaultUser.email,
+      firstName: "newFirst"
     });
     expect(response.statusCode).toBe(200);
   });
 
   test("Successfully update non-required user parameters", async () => {
-    filter = {email: defaultUser.email};
-    updateFields = {
-      updateCell: 1237654,
-      updateAddress: "new address, Winnipeg, MB, Canada",
-    }
     const response = await request.post("/api/users/updateUser").send({
-      filer: filter,
-      updateFields: updateFields
+      email: defaultUser.email,
+      cellNumber: 1237654
     });
     expect(response.statusCode).toBe(200);
   });

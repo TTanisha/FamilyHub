@@ -80,15 +80,41 @@ exports.updateUser = async(req, res) => {
     // find user by email
     // update user with req and run validation on the update parameters
     // return the updated user
-    if (req.body.updateFields.email != null) { // check for duplicates first
-      const checkDuplicate = await Users.find(req.body.updateFields.email);
+    if (req.body.newEmail != null) { // check for duplicates first
+      const checkDuplicate = await Users.find(req.body.newEmail);
       if (checkDuplicate == null || checkDuplicate.length != 0) { // email already exists
         throw err;
       } 
     }  // either not updating email, or email is unique
-    const user = await Users.findOneAndUpdate(req.body.filter, req.body.updateFields,
+    
+    const filter = {};
+    const updateFields = {};
+
+    if (req.body.id != null) {
+      filter["_id"] = req.body.id;
+
+    } else if (req.body.email != null) {
+      filter["email"] = req.body.email;
+
+    } else { // should pass at least email or id.
+      throw err;
+    }
+
+    const names = [ "email", "firstName", "lastName", "birthday", "nickname", 
+                    "pronouns", "displayEmail", "address", "cellNumber", "homeNumber"];
+    const inputValues = [ req.body.newEmail, req.body.firstName, req.body.lastName, req.body.birthday, req.body.nickname, 
+                          req.body.pronouns, req.body.displayEmail, req.body.address, req.body.cellNumber, req.body.homeNumber];
+
+    for ( var i = 0; i< names.length; i++){
+      if (inputValues[i] != null) { 
+        updateFields[names[i]] = inputValues[i]; 
+      };
+    };
+
+    const user = await Users.findOneAndUpdate( filter, {$set: updateFields},
       {new: true, runValidators: true}
     );
+    
     if (user == null) {
       throw err;
     } else {

@@ -5,6 +5,7 @@ import Calendar from './pages/calendar/calendar';
 import FamilyGroups from './pages/familyGroups/familyGroups';
 import SignIn from './pages/signPages/signIn';
 import SignOut from './pages/signPages/signOut';
+import Profile from './pages/profile/profile';
 import { Navigate } from 'react-router-dom';
 import SignUp from './pages/signPages/signUp';
 import SignUpSuccess from './pages/signPages/signUpSuccess';
@@ -57,16 +58,18 @@ function App() {
               <Dropdown.Menu
                 aria-label="User menu actions"
                 color="secondary"
-                onAction={(actionKey) => console.log({ actionKey })}
+                
               >
-                <Dropdown.Item key="profile" css={{ height: "$18" }}>
-                  <Text b color="inherit" css={{ d: "flex" }}> Signed in as </Text>
-                  <Text b color="inherit" css={{ d: "flex" }}> {currUser.email} </Text>
+                <Dropdown.Item as={Text} key="profile" css={{ height: "$18" }} textValue>
+                  Signed in as {currUser.email}
                 </Dropdown.Item>
-                <Dropdown.Item key="viewProfile" withDivider> My Profile </Dropdown.Item>
-                <Dropdown.Item key="logout" withDivider color="error">
-                  <Navbar.Link href="/signout"> Log Out </Navbar.Link>
+                <Dropdown.Item as={Text} key="viewProfile" withDivider textValue css={{height: "$18" }}> 
+                  <Navbar.Link href="/profile" isActive={window.location.pathname === "/profile"}> My Profile </Navbar.Link> 
                 </Dropdown.Item>
+                <Dropdown.Item as={Text} key="logout" withDivider textValue color="error" css={{height: "$18" }}> 
+                  <Navbar.Link href="/signout" isActive={window.location.pathname === "/signout"} color="error"> Log Out </Navbar.Link> 
+                </Dropdown.Item>
+                
               </Dropdown.Menu>
             </Dropdown>
           </Navbar.Content>
@@ -79,6 +82,7 @@ function App() {
           <Route path='/calendar' element={isLoggedIn ? <Calendar /> : <Navigate to='/' />} />
           <Route path='/familygroups' element={isLoggedIn ? <FamilyGroups /> : <Navigate to='/' />} />
           <Route path='/signout' element={isLoggedIn ? <SignOut /> : <Navigate to='/' />} />
+          <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate to='/' />} />
           <Route path='/sign-up' element={<SignUp />} />
           <Route path='/signup-success' element={<SignUpSuccess />} />
         </Routes>

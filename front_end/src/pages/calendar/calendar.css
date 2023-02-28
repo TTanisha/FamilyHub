@@ -20,6 +20,10 @@
     font-size: larger;
 }
 
+.prev-button, .next-button, .today-button {
+    background-color : #d1d1d1; 
+}
+
 .prev-button, .next-button {
     width: 20%;
 }

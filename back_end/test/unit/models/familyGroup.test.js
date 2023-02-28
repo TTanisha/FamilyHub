@@ -34,10 +34,8 @@ beforeAll(async () => {
     err => {console.error("Unable to connect to MongoDB.", err.message)}
   );
 
-  FamilyGroups.createIndexes();
   newFamilyGroup = new FamilyGroups(defaultFamilyGroup);
   await newFamilyGroup.save();
-
 });
 
 //=====================================================================================//
@@ -45,7 +43,7 @@ beforeAll(async () => {
 afterAll(async () => {
   // make sure we have deleted the test FamilyGroups from the database
   try {
-    await FamilyGroups.findOneAndDelete({_id: newFamilyGroup._id});
+    await FamilyGroups.findOneAndDelete(newFamilyGroup);
   } catch (err) {
     console.log("Family Group not found.");
   }
@@ -76,7 +74,6 @@ describe("Family Group Creation Tests", () => {
     });
 
     test("Create a new Family Group with members", async () => {
-
         let newUser = new Users(defaultUser);
         familygroupTest = {
           groupName: "test family group", 
@@ -101,7 +98,7 @@ describe("Add Member to Family Group", () => {
         };
 
         let newUser = new Users(defaultUser);
-
+        await newUser.save();
         const testGroup = await FamilyGroups.create(familygroupTest);
 
         await FamilyGroups.updateOne({ _id: testGroup._id },
@@ -113,7 +110,6 @@ describe("Add Member to Family Group", () => {
 
         const updatedGroup = await FamilyGroups.findOne({ _id: testGroup._id });
         let result = [newUser._id];
-
         await Users.findOneAndDelete({_id: newUser._id});  
         await FamilyGroups.findOneAndDelete({_id: testGroup._id}); 
         expect(updatedGroup.groupMembers).toStrictEqual(result);
@@ -123,16 +119,13 @@ describe("Add Member to Family Group", () => {
         familygroupTest = {
           groupName: "test family group"
         };
-
         const testGroup = await FamilyGroups.create(familygroupTest);
-
         FamilyGroups.updateOne({ _id: testGroup._id },
             {
                 $addToSet: {
                     groupMembers: "",
                 },
             });
-
         result = [];
         const updatedGroup = await FamilyGroups.findOne({ _id: testGroup._id });
         expect(updatedGroup.groupMembers).toStrictEqual(result);

@@ -81,7 +81,7 @@ exports.updateUser = async(req, res) => {
     // update user with req and run validation on the update parameters
     // return the updated user
     if (req.body.newEmail != null) { // check for duplicates first
-      const checkDuplicate = await Users.find(req.body.newEmail);
+      const checkDuplicate = await Users.find( {"email": req.body.newEmail} );
       if (checkDuplicate == null || checkDuplicate.length != 0) { // email already exists
         throw err;
       } 

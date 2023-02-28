@@ -95,7 +95,7 @@ describe("Add group member to Family Group", () => {
 
     const response = await request.post("/api/familyGroups/addMemberToFamilyGroup").send({
       groupId: testGroup._id, 
-      memberId: newUser._id
+      memberEmail: defaultUser.email
   });
     expect(response.statusCode).toBe(200);
     await FamilyGroups.findOneAndDelete({_id: testGroup._id}); 

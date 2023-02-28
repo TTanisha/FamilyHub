@@ -60,9 +60,9 @@ exports.getFamilyGroup = async(req, res) => {
 exports.addMemberToFamilyGroup = async (req, res) => {
     try {
 
-        const { groupId, memberId } = req.body
+        const { groupId, memberEmail } = req.body
         const group = await FamilyGroups.findOne({ _id: groupId });
-        const member = await Users.findOne({ _id: memberId });
+        const member = await Users.findOne({ email: memberEmail });
 
         reason = "";
 
@@ -88,7 +88,7 @@ exports.addMemberToFamilyGroup = async (req, res) => {
             throw err;
         }
 
-        const updateUserGroups = await Users.updateOne({ _id: memberId },
+        const updateUserGroups = await Users.updateOne({ _id: member._id },
             {
                 $addToSet: {
                     groups: group,

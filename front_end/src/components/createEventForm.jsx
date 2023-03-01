@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Radio} from "@nextui-org/react";
+import FamilyGroupSelector from './familyGroup/familyGroupSelector';
 
 const CreateEventForm = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));
@@ -25,42 +26,14 @@ const CreateEventForm = (props) => {
   const [startTimeDate, setStartTimeDate] = useState(); 
   const [endTimeDate, setEndTimeDate] = useState(); 
 
-  const [familyGroups, setFamilyGroups] = useState([]);
-  const [data, setData] = useState([]);
-
-  const familyGroupArray = currUser.groups;
-
-  useEffect(() => {
-    setFamilyGroups(familyGroupArray);
-  }, []);
-
-  //retrieve family groups to get the group names
-  useEffect(() => {
-    if(familyGroups.length != 0) {
-      Promise.all(familyGroups.map(async (familyGroupId) => (
-      //retrieve group objects using ID 
-      await axios.post("http://localhost:8080/api/familyGroups/getFamilyGroup", {groupId: familyGroupId})
-      .then(function(response)
-      {
-          if(response.data.status === "success")
-          {       
-            setData(prev => [...prev, response.data.data]);
-          }
-      })
-      .catch(function (error) {
-        if(error.message!='canceled') {
-          console.log(error)
-        }})
-      )))
-    }
-}, [familyGroups]);
-
   //update start date/time if input is updated
   useEffect(() => {
     if(startDateInput) {
       setStartDate(new Date(startDateInput));
     }
+  }, [isAllDay, startDateInput, startTimeInput]);
 
+  useEffect(() => {
     if(startDate) {
       if(!isAllDay) {
         if(startTimeInput) {
@@ -70,15 +43,16 @@ const CreateEventForm = (props) => {
         setStartTimeDate(new Date(startDateInput));
       }
     }
-
-  }, [startDateInput, startTimeInput]);
+  }, [startDate, startTimeInput])
 
   //update end date/time if input is updated
   useEffect(() => {
     if(endDateInput) {
       setEndDate(new Date(endDateInput)); 
     }
+  }, [isAllDay, endDateInput, endTimeInput])
 
+  useEffect(() => {
     if(endDate) {
       if(!isAllDay) {
         if(endTimeInput) {
@@ -88,7 +62,7 @@ const CreateEventForm = (props) => {
         setEndTimeDate(new Date(endDateInput));
       }
     }
-  }, [endDateInput, endTimeInput])
+  }, [endDate, endTimeInput])
 
   //reset time inputs if 'All Day' is toggled off 
   useEffect(() => {
@@ -123,6 +97,10 @@ const CreateEventForm = (props) => {
         }
     }).catch(function (error) {
     })
+  }
+
+  const setFamilyGroupFromSelector = (id) => {
+    setFamilyGroup(id);
   }
 
   // reset the form states on close and successful submit
@@ -199,16 +177,7 @@ const CreateEventForm = (props) => {
           </Grid.Container>
           <Checkbox size="sm" onChange={setIsAllDay}> All day </Checkbox>
 
-          {/* Family group input */}
-          <Radio.Group label="Family Group:" defaultValue={familyGroup} onChange={setFamilyGroup}>
-            {
-              (data.length != 0) ? data.map((groupData) => (
-                <div key={groupData.group?._id}>
-                  <Radio size="sm" value={groupData.group?._id}> {groupData.group?.groupName} </Radio>
-                </div>
-              )) : null
-            }
-          </Radio.Group>
+          <FamilyGroupSelector initialGroup={familyGroup} setFamilyGroup={setFamilyGroupFromSelector}/>
 
           <Textarea minRows={3} maxRows={10} label='Description' onChange={e => setDescriptionInput(e.target.value)}/>
           <Input label='Location' onChange={e => setLocationInput(e.target.value)}/>

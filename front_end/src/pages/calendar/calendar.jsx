@@ -79,6 +79,7 @@ const Calendar = () => {
   const [data, setData] = useState(null);
   const [visible, setVisible] = useState(false);
   const [clickedEvent, setClickedEvent] = useState({});
+  const [selectedFamilyGroupName, setSelectedFamilyGroupName] = useState();
 
   useEffect(() => {
     createCalendar();
@@ -118,10 +119,30 @@ const Calendar = () => {
         tuiCalendar.clearGridSelections();
       },
       clickEvent: function (eventInfo) {
-        setVisible(true);
         setClickedEvent(eventInfo);
+        getFamilyGroupName(eventInfo.event.calendarId);
+        setVisible(true);
       },
     });
+  }
+
+  async function getFamilyGroupName(groupId) {
+    let res = Promise.resolve(
+    await axios.post("http://localhost:8080/api/familyGroups/getFamilyGroup", {groupId: groupId})
+      .then(function(response)
+      {
+          if(response.data.status === "success")
+          {       
+            setSelectedFamilyGroupName(response.data.data.group.groupName);
+          }
+      })
+      .catch(function (error) {
+        if(error.message!='canceled') {
+          console.log(error)
+        }})
+    );
+
+    return res;
   }
     
   async function getUsersEvents(controller) {
@@ -168,6 +189,10 @@ const Calendar = () => {
     return () => controller.abort();
   }
 
+  function clearGroupName() {
+    setSelectedFamilyGroupName(null);
+  }
+
   return (
     <div className="container">
       <div className="filters-container"></div>
@@ -185,7 +210,15 @@ const Calendar = () => {
           </button>
         </span>
         <div id="calendar" className="calendar"></div>
-        <ViewEvent visible={visible} setVisible={setVisible} eventInfo={clickedEvent} updateEvents={updateEvents}/>
+        { selectedFamilyGroupName ? 
+          <ViewEvent 
+            visible={visible} 
+            setVisible={setVisible} 
+            eventInfo={clickedEvent} 
+            groupName={selectedFamilyGroupName}
+            clearGroupName={() => clearGroupName()}
+            updateEvents={updateEvents} 
+        />  : ''}
       </div>
       <div className="schedule-container"></div>
       <div className="event-buttons-container">

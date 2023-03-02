@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Text, Modal, useModal, Button, Card, Spacer, Input} from "@nextui-org/react";
+import {Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Radio} from "@nextui-org/react";
+import FamilyGroupSelector from './familyGroup/familyGroupSelector';
 
 const CreateEventForm = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));
@@ -10,7 +11,8 @@ const CreateEventForm = (props) => {
   //form input
   const [titleInput, setTitleInput] = useState("");
   const [descriptionInput, setDescriptionInput] = useState("");
-  const [dateInput, setDateInput] = useState("");
+  const [startDateInput, setStartDateInput] = useState("");
+  const [endDateInput, setEndDateInput] = useState("");
   const [startTimeInput, setStartTimeInput] = useState(""); 
   const [endTimeInput, setEndTimeInput] = useState(""); 
   const [locationInput, setLocationInput] = useState("");
@@ -19,25 +21,58 @@ const CreateEventForm = (props) => {
   const [familyGroup, setFamilyGroup] = useState(currUser.groups[0]);
 
   //transformed data 
-  const [date, setDate] = useState();
+  const [startDate, setStartDate] = useState();
+  const [endDate, setEndDate] = useState();
   const [startTimeDate, setStartTimeDate] = useState(); 
   const [endTimeDate, setEndTimeDate] = useState(); 
 
+  //update start date/time if input is updated
   useEffect(() => {
-    if(dateInput) {
-      setDate(new Date(dateInput));
+    if(startDateInput) {
+      setStartDate(new Date(startDateInput));
     }
+  }, [isAllDay, startDateInput, startTimeInput]);
 
-    if(date) {
-      if(startTimeInput) {
-        setStartTimeDate(new Date(dateInput + " " + startTimeInput));
-      }
-
-      if(endTimeInput) {
-        setEndTimeDate(new Date(dateInput + " " + endTimeInput))
+  useEffect(() => {
+    if(startDate) {
+      if(!isAllDay) {
+        if(startTimeInput) {
+          setStartTimeDate(new Date(startDateInput + " " + startTimeInput));
+        }
+      } else {
+        setStartTimeDate(new Date(startDateInput));
       }
     }
-  }, [dateInput, startTimeInput, endTimeInput]);
+  }, [startDate, startTimeInput])
+
+  //update end date/time if input is updated
+  useEffect(() => {
+    if(endDateInput) {
+      setEndDate(new Date(endDateInput)); 
+    }
+  }, [isAllDay, endDateInput, endTimeInput])
+
+  useEffect(() => {
+    if(endDate) {
+      if(!isAllDay) {
+        if(endTimeInput) {
+          setEndTimeDate(new Date(endDateInput + " " + endTimeInput));
+        }
+      } else {
+        setEndTimeDate(new Date(endDateInput));
+      }
+    }
+  }, [endDate, endTimeInput])
+
+  //reset time inputs if 'All Day' is toggled off 
+  useEffect(() => {
+    if(!isAllDay) {
+      setStartTimeDate(null);
+      setEndTimeDate(null);
+      setEndTimeInput(null);
+      setStartTimeInput(null);
+    }
+  }, [isAllDay])
 
   const submitCreateEventForm = (props) => {
     axios.post("http://localhost:8080/api/events/createEvent", 
@@ -57,11 +92,33 @@ const CreateEventForm = (props) => {
         if(response.data.status === "success")
         {
           console.log(response);
-          setVisible(false);
+          resetFormState();
           props.updateEvents();
         }
     }).catch(function (error) {
     })
+  }
+
+  const setFamilyGroupFromSelector = (id) => {
+    setFamilyGroup(id);
+  }
+
+  // reset the form states on close and successful submit
+  const resetFormState = () => {
+    setVisible(false); 
+    setIsAllDay(false);
+    setFamilyGroup(currUser.groups[0]);
+    setTitleInput(null);
+    setDescriptionInput(null);
+    setStartDateInput(null);
+    setEndDateInput(null);
+    setStartTimeInput(null);
+    setEndTimeInput(null);
+    setLocationInput(null);
+    setStartDate(null);
+    setEndDate(null);
+    setStartTimeDate(null);
+    setEndTimeDate(null);
   }
 
   return (
@@ -72,6 +129,7 @@ const CreateEventForm = (props) => {
       <Modal
         scroll
         closeButton
+        width={650}
         preventClose
         aria-labelledby="modal-title"
         aria-describedby="modal-description"
@@ -84,17 +142,54 @@ const CreateEventForm = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Input required label='Title' onChange={e => setTitleInput(e.target.value)}/>
-          <Input required label='Description' onChange={e => setDescriptionInput(e.target.value)}/>
-          <Input required label='Date' type='date' onChange={e => setDateInput(e.target.value)}/>
-          <Input required label='Start Time' type='time' onChange={e => setStartTimeInput(e.target.value)}/>
-          <Input required label='End Time' type='time' onChange={e => setEndTimeInput(e.target.value)}/>
+
+          {/* Date input */}
+          <Grid.Container>
+            <Grid> 
+              <Grid.Container direction='column'> 
+                <Grid>
+                  <Input required label='Start Date' type='date' onChange={e => setStartDateInput(e.target.value)}/>
+                </Grid>
+                { !isAllDay &&
+                  <Grid>
+                    <Input required label='Start Time' type='time' onChange={e => setStartTimeInput(e.target.value)}/>
+                  </Grid>
+                }  
+              </Grid.Container>
+            </Grid>
+            <Spacer y={3} x={1}/>
+            <Grid> 
+              <Spacer y={isAllDay? 1.5 : 3 } x={2}/>
+              <Text> To </Text>
+            </Grid>
+            <Grid xs={3}> 
+              <Grid.Container direction='column'>
+                <Grid>
+                  <Input required label='End Date' type='date' onChange={e => setEndDateInput(e.target.value)}/>
+                  </Grid>
+                { !isAllDay &&
+                  <Grid>
+                    <Input required label='End Time' type='time' onChange={e => setEndTimeInput(e.target.value)}/>
+                  </Grid>
+                }
+              </Grid.Container>
+            </Grid>
+          </Grid.Container>
+          <Checkbox size="sm" onChange={setIsAllDay}> All day </Checkbox>
+
+          <FamilyGroupSelector initialGroup={familyGroup} setFamilyGroup={setFamilyGroupFromSelector}/>
+
+          <Textarea minRows={3} maxRows={10} label='Description' onChange={e => setDescriptionInput(e.target.value)}/>
           <Input label='Location' onChange={e => setLocationInput(e.target.value)}/>
+
         </Modal.Body>
         <Modal.Footer>
-          <Button flat auto color="error" onPress={() => setVisible(false)}>
+          <Button flat auto color="error" onPress={() => resetFormState()}>
             Close
           </Button>
-          <Button onPress={() => {submitCreateEventForm(props)}}>Submit</Button>
+          <Button onPress={() => {submitCreateEventForm(props)}}>
+            Submit
+          </Button>
         </Modal.Footer>
       </Modal>
     </>

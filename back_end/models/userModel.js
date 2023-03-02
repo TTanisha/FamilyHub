@@ -52,7 +52,7 @@ const userSchema = new mongoose.Schema({
   },
   groups: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'FamilyGroup',
+    ref: 'FamilyGroups',
     required: [false]
   }]
 });

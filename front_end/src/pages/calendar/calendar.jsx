@@ -7,16 +7,9 @@ import moment from 'moment';
 import CreateEventForm from '../../components/createEventForm';
 import axios from 'axios';
 import ViewEvent from '../../components/viewEvent';
+import {Text, Grid, Dropdown} from "@nextui-org/react";
 
-let tuiCalendar = new TUICalendar('#calendar', {
-  defaultView: 'month',
-  useFormPopup: false,
-  useCreationPopup: false,
-  useDetailPopup: false,
-  isReadOnly: true,
-});
-
-let currDate = new Date();
+let tuiCalendar = new TUICalendar('#calendar');
 
 function createCalendar() {
   tuiCalendar = new TUICalendar('#calendar', {
@@ -24,51 +17,28 @@ function createCalendar() {
     useFormPopup: false,
     useCreationPopup: false,
     useDetailPopup: false,
+    taskView: false,
     isReadOnly: true,
   });
   return tuiCalendar;
 }
 
-function getNext() {
-  tuiCalendar.next();
+function setCalendarTitle(view) {
+  let string;
+  
+  if(view == 'Monthly') {
+    string = moment(tuiCalendar.getDate().toString(), "ddd MMM DD YYYY HH:mm:ss").format("MMMM YYYY");
+  } else if (view == 'Daily') {
+    string = moment(tuiCalendar.getDate().toString(), "ddd MMM DD YYYY HH:mm:ss").format("ddd MMMM DD YYYY");
+  }
 
-  currDate.setMonth(currDate.getMonth() + 1);
-  tuiCalendar.setDate(currDate);
-  setCalendarTitle();
-
-  tuiCalendar.getStoreDispatchers().popup.hideSeeMorePopup();
-  tuiCalendar.render();
-}
-
-function getPrev() {
-  tuiCalendar.prev();
-
-  currDate.setMonth(currDate.getMonth() - 1);
-  tuiCalendar.setDate(currDate);
-  setCalendarTitle();
-
-  tuiCalendar.getStoreDispatchers().popup.hideSeeMorePopup();
-  tuiCalendar.render();
-}
-
-function getToday() {
-  tuiCalendar.today();
-
-  currDate = new Date();
-  setCalendarTitle();
-
-  tuiCalendar.getStoreDispatchers().popup.hideSeeMorePopup();
-  tuiCalendar.render();
-}
-
-function setCalendarTitle() {
-  let string = moment(tuiCalendar.getDate().toString(), "ddd MMM DD YYYY HH:mm:ss").format("MMMM YYYY");
   document.getElementById("renderRange").innerHTML = string;
 }
 
 function renderTUICalendarEvents(tuiCalendarEvents) {
   tuiCalendar.clear();
   tuiCalendar.createEvents(tuiCalendarEvents);
+  tuiCalendar.render();
 }
 
 const Calendar = () => {
@@ -80,12 +50,52 @@ const Calendar = () => {
   const [visible, setVisible] = useState(false);
   const [clickedEvent, setClickedEvent] = useState({});
   const [selectedFamilyGroupName, setSelectedFamilyGroupName] = useState();
+  const [selectedView, setSelectedView] = useState("Monthly");
 
   useEffect(() => {
     createCalendar();
-    setCalendarTitle();
+    setCalendarTitle("Monthly");
     bindEventHandlers();
   }, []);
+
+  function navigateCalendar(option) {
+    if(option == 1) {
+      tuiCalendar.next();
+    } else if (option == -1) {
+      tuiCalendar.prev();
+    } else if (option == 0) {
+      tuiCalendar.today();
+    }
+  
+    if(selectedView != "Monthly") {
+      setCalendarTitle(selectedView.currentKey);
+    } else {
+      setCalendarTitle("Monthly");
+    }
+  
+    tuiCalendar.getStoreDispatchers().popup.hideSeeMorePopup();
+    tuiCalendar.render();
+  }
+
+  useEffect(() => {
+    navigateCalendar(0); 
+
+    if(selectedView != 'Monthly') {
+      if(selectedView.currentKey == 'Monthly') {
+        tuiCalendar.changeView('month');
+      } else if(selectedView.currentKey == 'Daily') {
+        tuiCalendar.changeView('day');
+        tuiCalendar.setOptions({
+          week: {
+            taskView: false,
+          }
+        })
+      }
+      setCalendarTitle(selectedView.currentKey);
+    } 
+    
+    tuiCalendar.render();
+  }, [selectedView])
 
   useEffect(() => {
     renderTUICalendarEvents(tuiCalendarEvents);
@@ -179,7 +189,7 @@ const Calendar = () => {
     return () => controller.abort();
   }, []);
 
-  const updateEvents = () => {
+  function updateEvents() {
     const controller = new AbortController();
     setUsersEvents([]);
     setTUICalendarEvents([]);
@@ -195,17 +205,36 @@ const Calendar = () => {
 
   return (
     <div className="container">
-      <div className="filters-container"></div>
+      <div className="filters-container">
+        <Grid.Container justify='center' direction='column'>
+          <Text> Select View: </Text>  
+          <Dropdown>
+          <Dropdown.Button flat>{selectedView}</Dropdown.Button>
+            <Dropdown.Menu 
+              aria-label="Static Actions" 
+              disallowEmptySelection
+              selectionMode="single"
+              defaultSelectedKeys={"monthly"}
+              selectedKeys={selectedView}
+              onSelectionChange={setSelectedView}
+            >
+              <Dropdown.Item key="Monthly">Monthly</Dropdown.Item>
+              <Dropdown.Item key="Daily">Daily</Dropdown.Item>
+
+            </Dropdown.Menu>
+          </Dropdown>
+        </Grid.Container> 
+      </div>
       <div>
         <span className="calendar-navi">
-          <button className="prev-button" type="button" onClick={getPrev}>
+          <button className="prev-button" type="button" onClick={()=>navigateCalendar((-1))}>
             <FaArrowLeft />
           </button>
           <div className="calendar-center-header">
             <div id="renderRange" className="calendar-title"></div>
-            <button type="button" className="today-button" onClick={getToday}>Today</button>
+            <button type="button" className="today-button" onClick={()=>navigateCalendar(0)}>Today</button>
           </div>
-          <button type="button" className="next-button" onClick={getNext}>
+          <button type="button" className="next-button" onClick={()=>navigateCalendar(1)}>
             <FaArrowRight />
           </button>
         </span>

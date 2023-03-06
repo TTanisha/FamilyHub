@@ -8,19 +8,46 @@ const UserProfile = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));
 
   //form input
+  const [newEmail, setNewEmail] = useState(currUser.email);
   const [firstName, setFirstName] = useState(currUser.firstName);
   const [lastName, setLastName] = useState(currUser.lastName);
   const [birthday, setBirthday] = useState(currUser.birthday);
-  const [nickname, setNickname] = useState(""); 
-  const [pronouns, setPronouns] = useState(""); 
+  const [nickname, setNickname] = useState(currUser.nickname); 
+  const [pronouns, setPronouns] = useState(currUser.pronouns); 
   const [displayEmail, setDisplayEmail] = useState(currUser.email);
-  const [address, setaddress] = useState(""); 
-  const [cellNumber, setCellNumber] = useState(""); 
-  const [homeNumber, setHomeNumber] = useState("");
+  const [address, setaddress] = useState(currUser.address); 
+  const [cellNumber, setCellNumber] = useState(currUser.cellNumber); 
+  const [homeNumber, setHomeNumber] = useState(currUser.homeNumber);
 
+  // Logic
+  var clickable = {"pointerEvents": "auto"};
+
+  //Need to update local storage: localStorage.setItem("user", JSON.stringify(newUser));
+
+  
+
+    async function submitEditUserInfo() {
+      var data = { "email" : newEmail, 
+                   "firstName": firstName, 
+                   "lastName": lastName, 
+                   "birthday": birthday, 
+                   "nickname": nickname, 
+                   "pronouns": pronouns, 
+                   "displayEmail": displayEmail, 
+                   "address": address, 
+                   "cellNumber": cellNumber, 
+                   "homeNumber": homeNumber
+                  }
+      console.log(data);
+
+    }
+
+    const editUserInfo = (props) => {
+
+    } 
 
     useEffect(() => {
-        //console.log(firstName);
+        //console.log(currUser.pronouns);
     }, [])
 
     /*
@@ -40,68 +67,73 @@ const UserProfile = (props) => {
         console.log("Error in User Profile");
       })
     }
+        pointer-events: none;
+
 */
     return (
-        <div>
+      <div>
+        <div style={clickable}>
+        <Input 
+            aria-label="Email"
+            label="Email"
+            initialValue={newEmail} 
+            onChange={e => setNewEmail(e.target.value)}/>
           <Input 
             aria-label="First Name"
-            
             label="First Name"
             initialValue={firstName} 
             onChange={e => setFirstName(e.target.value)}/>
           <Input 
             aria-label='Last Name'
-            readOnly
             label="Last Name"
             initialValue={lastName} 
             onChange={e => setLastName(e.target.value)}/>
           <Input 
             aria-label="Birthday"
-            readOnly 
             label='Birthday' 
             type='date' 
             initialValue={birthday} 
             onChange={e => setBirthday(e.target.value)}/>
           <Input 
             aria-label="Nickname"
-            readOnly 
             label='Nickname'  
             initialValue={nickname} 
             onChange={e => setNickname(e.target.value)}/>
           <Input 
             aria-label="Pronouns"
-            readOnly 
             label='Pronouns' 
             initialValue={pronouns} 
             onChange={e => setPronouns(e.target.value)}/>
           <Input 
             aria-label="Display Email"
-            readOnly
             label='Display Email' 
             initialValue={displayEmail} 
             onChange={e => setDisplayEmail(e.target.value)}/>
           <Input 
             aria-label="Address"
-            readOnly
             label='Address' 
             initialValue={address} 
             onChange={e => setaddress(e.target.value)}/>
           <Input 
             aria-label="Cell Number"
-            readOnly
             label='Cell Number' 
             initialValue={cellNumber} 
             onChange={e => setCellNumber(e.target.value)}/>
           <Input
             aria-label='Home Number' 
-            readOnly 
             label='Home Number' 
             initialValue={homeNumber} 
             onChange={e => setHomeNumber(e.target.value)}/>
+        </div>
+        <span>
           <Button flat auto color="error" onPress={() => setVisible(false)}> Discard changes</Button>
           <Button onPress={() => {updateUserInfo(props)}}>Update</Button>
+        </span>
 
-        </div>
+
+      </div>
+
+        
     );
 };
 

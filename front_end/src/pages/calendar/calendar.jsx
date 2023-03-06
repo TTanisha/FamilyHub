@@ -8,7 +8,6 @@ import CreateEventForm from '../../components/createEventForm';
 import axios from 'axios';
 import ViewEvent from '../../components/viewEvent';
 import {Text, Grid, Spacer, Dropdown} from "@nextui-org/react";
-import 'react-modern-calendar-datepicker/lib/DatePicker.css';
 import { Calendar as ReactCalendar } from 'react-calendar';
 
 let tuiCalendar = new TUICalendar('#calendar');

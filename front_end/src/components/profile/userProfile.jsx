@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./userProfile.css";
 import axios from 'axios';
-import {Text, useModal, Button, Card, Spacer, Input} from "@nextui-org/react";
+import {Text, useModal, Button, Grid, Card, Spacer, Input} from "@nextui-org/react";
 
 
 const UserProfile = (props) => {
@@ -19,8 +19,9 @@ const UserProfile = (props) => {
   const [cellNumber, setCellNumber] = useState(currUser.cellNumber); 
   const [homeNumber, setHomeNumber] = useState(currUser.homeNumber);
 
-  // Logic
-  var clickable = {"pointerEvents": "auto"};
+  // Logic variables
+  const [clickable, setClickable] = useState({"pointerEvents": "none"});
+  const [editing, setEditing] = useState(false);
 
   //Need to update local storage: localStorage.setItem("user", JSON.stringify(newUser));
 
@@ -37,22 +38,18 @@ const UserProfile = (props) => {
                   "homeNumber": homeNumber
                 }
     console.log(data);
-
-  }
-
-  const editUserInfo = (props) => {
-
-  } 
-
-  useEffect(() => {
-      //console.log(currUser.pronouns);
-  }, [])
-
     /*
-    const updateUserInfo = (props) => {
-      axios.post("http://localhost:8080/api/users/updateUser", 
-      {
-        
+    axios.post("http://localhost:8080/api/users/updateUser", 
+      { "email" : newEmail, 
+        "firstName": firstName, 
+        "lastName": lastName, 
+        "birthday": birthday, 
+        "nickname": nickname, 
+        "pronouns": pronouns, 
+        "displayEmail": displayEmail, 
+        "address": address, 
+        "cellNumber": cellNumber, 
+        "homeNumber": homeNumber
       })
       .then(function(response)
       {
@@ -64,10 +61,8 @@ const UserProfile = (props) => {
       }).catch(function (error) {
         console.log("Error in User Profile");
       })
-    }
-        pointer-events: none;
-
-*/
+      */
+  }
   return (
     <div>
       <div className='inputWrapper' style={clickable}>
@@ -133,10 +128,22 @@ const UserProfile = (props) => {
           onChange={e => setHomeNumber(e.target.value)}/>
         <Spacer y={1}/>
       </div>
-      <span>
-        <Button flat auto color="error" onPress={() => setVisible(false)}> Discard changes</Button>
-        <Button onPress={() => {updateUserInfo(props)}}>Update</Button>
-      </span>
+      <div>
+      <Grid.Container gap={2} justify="center" direction = 'row'>
+        { !editing &&
+          <Grid>
+            <Button onPress={() => {setEditing(true); setClickable({"pointerEvents": "auto"})}}>Edit</Button>
+          </Grid>
+        }  
+        { editing &&
+          <Grid xs={3}  >
+            <Button flat auto color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}) }}> Discard changes</Button>
+            <Button onPress={() => {submitEditUserInfo(props)}}>Update</Button>
+          </Grid>
+        }
+      </Grid.Container>
+
+      </div>
     </div>
 
       

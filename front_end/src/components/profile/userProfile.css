@@ -9,7 +9,6 @@
 }
 
 .inputWrapper {
-    border: thin solid; border-color: black;
     margin: auto;
     width: 50%;
     display: flex; 

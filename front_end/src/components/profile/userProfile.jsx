@@ -24,31 +24,29 @@ const UserProfile = (props) => {
 
   //Need to update local storage: localStorage.setItem("user", JSON.stringify(newUser));
 
-  
+  async function submitEditUserInfo() {
+    var data = { "email" : newEmail, 
+                  "firstName": firstName, 
+                  "lastName": lastName, 
+                  "birthday": birthday, 
+                  "nickname": nickname, 
+                  "pronouns": pronouns, 
+                  "displayEmail": displayEmail, 
+                  "address": address, 
+                  "cellNumber": cellNumber, 
+                  "homeNumber": homeNumber
+                }
+    console.log(data);
 
-    async function submitEditUserInfo() {
-      var data = { "email" : newEmail, 
-                   "firstName": firstName, 
-                   "lastName": lastName, 
-                   "birthday": birthday, 
-                   "nickname": nickname, 
-                   "pronouns": pronouns, 
-                   "displayEmail": displayEmail, 
-                   "address": address, 
-                   "cellNumber": cellNumber, 
-                   "homeNumber": homeNumber
-                  }
-      console.log(data);
+  }
 
-    }
+  const editUserInfo = (props) => {
 
-    const editUserInfo = (props) => {
+  } 
 
-    } 
-
-    useEffect(() => {
-        //console.log(currUser.pronouns);
-    }, [])
+  useEffect(() => {
+      //console.log(currUser.pronouns);
+  }, [])
 
     /*
     const updateUserInfo = (props) => {
@@ -70,71 +68,79 @@ const UserProfile = (props) => {
         pointer-events: none;
 
 */
-    return (
-      <div>
-        <div style={clickable}>
+  return (
+    <div>
+      <div className='inputWrapper' style={clickable}>
+      `<Input 
+          aria-label="Email"
+          labelLeft="Email"
+          initialValue={newEmail} 
+          onChange={e => setNewEmail(e.target.value)}/>
+        <Spacer y={1}/>
         <Input 
-            aria-label="Email"
-            label="Email"
-            initialValue={newEmail} 
-            onChange={e => setNewEmail(e.target.value)}/>
-          <Input 
-            aria-label="First Name"
-            label="First Name"
-            initialValue={firstName} 
-            onChange={e => setFirstName(e.target.value)}/>
-          <Input 
-            aria-label='Last Name'
-            label="Last Name"
-            initialValue={lastName} 
-            onChange={e => setLastName(e.target.value)}/>
-          <Input 
-            aria-label="Birthday"
-            label='Birthday' 
-            type='date' 
-            initialValue={birthday} 
-            onChange={e => setBirthday(e.target.value)}/>
-          <Input 
-            aria-label="Nickname"
-            label='Nickname'  
-            initialValue={nickname} 
-            onChange={e => setNickname(e.target.value)}/>
-          <Input 
-            aria-label="Pronouns"
-            label='Pronouns' 
-            initialValue={pronouns} 
-            onChange={e => setPronouns(e.target.value)}/>
-          <Input 
-            aria-label="Display Email"
-            label='Display Email' 
-            initialValue={displayEmail} 
-            onChange={e => setDisplayEmail(e.target.value)}/>
-          <Input 
-            aria-label="Address"
-            label='Address' 
-            initialValue={address} 
-            onChange={e => setaddress(e.target.value)}/>
-          <Input 
-            aria-label="Cell Number"
-            label='Cell Number' 
-            initialValue={cellNumber} 
-            onChange={e => setCellNumber(e.target.value)}/>
-          <Input
-            aria-label='Home Number' 
-            label='Home Number' 
-            initialValue={homeNumber} 
-            onChange={e => setHomeNumber(e.target.value)}/>
-        </div>
-        <span>
-          <Button flat auto color="error" onPress={() => setVisible(false)}> Discard changes</Button>
-          <Button onPress={() => {updateUserInfo(props)}}>Update</Button>
-        </span>
-
-
+          aria-label="First Name"
+          labelLeft="First Name"
+          initialValue={firstName} 
+          onChange={e => setFirstName(e.target.value)}/>
+        <Spacer y={1}/>
+        <Input 
+          aria-label='Last Name'
+          labelLeft="Last Name"
+          initialValue={lastName} 
+          onChange={e => setLastName(e.target.value)}/>
+        <Spacer y={1}/>
+        <Input 
+          aria-label="Birthday"
+          labelLeft='Birthday' 
+          type='date' 
+          initialValue={birthday} 
+          onChange={e => setBirthday(e.target.value)}/>
+        <Spacer y={1}/>
+        <Input 
+          aria-label="Nickname"
+          labelLeft='Nickname'  
+          initialValue={nickname} 
+          onChange={e => setNickname(e.target.value)}/>
+        <Spacer y={1}/>
+        <Input 
+          aria-label="Pronouns"
+          labelLeft='Pronouns' 
+          initialValue={pronouns} 
+          onChange={e => setPronouns(e.target.value)}/>
+        <Spacer y={1}/>
+        <Input 
+          aria-label="Display Email"
+          labelLeft='Display Email' 
+          initialValue={displayEmail} 
+          onChange={e => setDisplayEmail(e.target.value)}/>
+        <Spacer y={1}/>
+        <Input 
+          aria-label="Address"
+          labelLeft='Address' 
+          initialValue={address} 
+          onChange={e => setaddress(e.target.value)}/>
+        <Spacer y={1}/>
+        <Input 
+          aria-label="Cell Number"
+          labelLeft='Cell Number' 
+          initialValue={cellNumber} 
+          onChange={e => setCellNumber(e.target.value)}/>
+        <Spacer y={1}/>
+        <Input
+          aria-label='Home Number' 
+          labelLeft='Home Number' 
+          initialValue={homeNumber} 
+          onChange={e => setHomeNumber(e.target.value)}/>
+        <Spacer y={1}/>
       </div>
+      <span>
+        <Button flat auto color="error" onPress={() => setVisible(false)}> Discard changes</Button>
+        <Button onPress={() => {updateUserInfo(props)}}>Update</Button>
+      </span>
+    </div>
 
-        
-    );
+      
+  );
 };
 
 export default UserProfile;

@@ -53,7 +53,7 @@ const UserProfile = (props) => {
     window.location.reload(false);
 }
 
-  const submitUpdateUser = (props) => {    //console.log(data);
+  const submitUpdateUser = (props) => {    
     axios.post("http://localhost:8080/api/users/updateUser", 
     { 
       id : currUser._id,
@@ -170,7 +170,7 @@ const UserProfile = (props) => {
         { editing &&
           <Grid xs={3}  >
             <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(); }}> Discard changes</Button>
-            <Button auto size="lg" onPress={() => {submitUpdateUser(props)}}>Update</Button>
+            <Button auto size="lg" onPress={() => {setEditing(false); submitUpdateUser(props)}}>Update</Button>
           </Grid>
         }
       </Grid.Container>

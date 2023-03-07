@@ -6,13 +6,14 @@ import {Text, useModal, Button, Grid, Card, Spacer, Input} from "@nextui-org/rea
 
 const UserProfile = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));
-
+  let date = new Date(currUser.birthday);
+  date = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
 
   //form input
   const [newEmail, setNewEmail] = useState(null);
   const [firstName, setFirstName] = useState(currUser.firstName);
   const [lastName, setLastName] = useState(currUser.lastName);
-  const [birthday, setBirthday] = useState(currUser.birthday);
+  const [birthday, setBirthday] = useState(date);
   const [nickname, setNickname] = useState(currUser.nickname); 
   const [pronouns, setPronouns] = useState(currUser.pronouns); 
   const [displayEmail, setDisplayEmail] = useState(currUser.email);
@@ -24,9 +25,12 @@ const UserProfile = (props) => {
   const [clickable, setClickable] = useState({"pointerEvents": "none"});
   const [editing, setEditing] = useState(false);
 
+
   //Update local storage: localStorage.setItem("user", JSON.stringify(newUser));
   const updateLocalStorage = (props) => {
-    currUser.email = newEmail;
+    if (newEmail != null){
+      currUser.email = newEmail;
+    }
     currUser.firstName = firstName;
     currUser.lastName = lastName;
     currUser.birthday = birthday;
@@ -60,7 +64,7 @@ const UserProfile = (props) => {
       newEmail : newEmail, 
       firstName: firstName, 
       lastName: lastName, 
-      birthday: birthday, 
+      birthday: new Date (birthday), 
       nickname: nickname, 
       pronouns: pronouns, 
       displayEmail: displayEmail, 
@@ -113,7 +117,6 @@ const UserProfile = (props) => {
           size="xl"
           aria-label="Birthday"
           labelLeft='Birthday' 
-          type='date' 
           initialValue={birthday} 
           onChange={e => setBirthday(e.target.value)}/>
         <Spacer y={1}/>
@@ -170,7 +173,7 @@ const UserProfile = (props) => {
         { editing &&
           <Grid xs={3}  >
             <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(); }}> Discard changes</Button>
-            <Button auto size="lg" onPress={() => {setEditing(false); submitUpdateUser(props)}}>Update</Button>
+            <Button auto size="lg" onPress={() => { setClickable({"pointerEvents": "none"}); setEditing(false); submitUpdateUser(props)}}>Update</Button>
           </Grid>
         }
       </Grid.Container>

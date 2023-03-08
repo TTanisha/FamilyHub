@@ -40,6 +40,7 @@ const CreateFamilyGroup = (props) => {
     {
         if(response.data.status === "success")
         {
+          updateLocalStorage()
           console.log(response);
         }
     }).catch(function (error) {
@@ -47,6 +48,19 @@ const CreateFamilyGroup = (props) => {
     })
   }
 
+  const updateLocalStorage = () => {
+    axios.post("http://localhost:8080/api/users/getUserById", {id: currUser._id})
+    .then(function(response)
+    {
+        if(response.data.status === "success")
+        {
+          const newUser = response.data.data.user;
+          localStorage.setItem("user", JSON.stringify(newUser));
+          location.reload();
+        }
+    }).catch(function (error) {
+    })
+  }
 
   // reset the form states on close and successful submit
   const resetFormState = () => {

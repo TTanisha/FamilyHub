@@ -134,6 +134,45 @@ exports.updateUser = async(req, res) => {
   }
 };
 
+exports.addFamilyGroup = async(req, res) => {
+  try {
+    const user = await Users.findOne({email: req.body.email});
+    if (user == null) {
+      throw err;
+    }
+    if (user.newFamilyGroup == null) {
+      throw err;
+    }
+
+    filter = {_id : user._id};
+    let currUserGroups = user.groups;
+    currUserGroups.push(req.body.newFamilyGroup);
+    updateFields = { groups: currUserGroups };
+
+    user = await Users.findOneAndUpdate( filter, {$set: updateFields},
+      {new: true, runValidators: true}
+    );
+
+    if (user == null) {
+      throw err;
+    } else {
+      res.json({ // everything is OK
+        code: 200,
+        status: "success",
+        message: "User updated",
+        data: {user}
+      });
+    }
+    
+  } catch (err) {
+    res.status(400).json({ // bad request
+      status: "fail",
+      message: err.message,
+      description: "Failed to get the user"
+    });
+  };
+}
+
 exports.deleteUser = async(req, res) => {
   try {
     const user = await Users.findOneAndDelete({email: req.body.email});

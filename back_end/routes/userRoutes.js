@@ -12,5 +12,6 @@ router.route("/getUser").post(userController.getUser);
 router.route("/getUserById").post(userController.getUserById);
 router.route("/updateUser").post(userController.updateUser);
 router.route("/deleteUser").post(userController.deleteUser);
+router.route("/addFamilyGroup").post(userController.addFamilyGroup);
 
 module.exports = router;

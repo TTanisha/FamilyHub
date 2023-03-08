@@ -11,7 +11,7 @@ const CreateFamilyGroup = (props) => {
   const [groupName, setGroupName] = useState(null);
   const [groupId, setGroupId] = useState(null);
   
-  const submitCreateEventForm = (props) => {
+  const submitCreateFamilyGroup = (props) => {
     axios.post("http://localhost:8080/api/familyGroups/createFamilyGroup", 
     {
         groupName: groupName, 
@@ -96,7 +96,7 @@ const CreateFamilyGroup = (props) => {
           <Button flat auto color="error" onPress={() => resetFormState()}>
             Close
           </Button>
-          <Button onPress={() => {submitCreateEventForm(props)}}>
+          <Button onPress={() => {submitCreateFamilyGroup(props)}}>
             Submit
           </Button>
         </Modal.Footer>

@@ -21,7 +21,7 @@ const Profile = () => {
     return (
       <div className="familyGroupContainer">
         <div className="content">
-          <UserProfile />
+          <UserProfile currUser={true} />
         </div>
       </div>
     );

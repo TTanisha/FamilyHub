@@ -8,8 +8,7 @@ import { useSearchParams } from 'react-router-dom';
 const FamilyMemberProfile = () => {
   const [loading, setLoading] = useState(true);
   const [searchparams] = useSearchParams();
-  const userId = searchparams.get("id");
-  console.log(userId);
+  const [userId] = useState(searchparams.get("id"));
 
     useEffect(() => {
       if(0 != 0) {
@@ -23,7 +22,7 @@ const FamilyMemberProfile = () => {
     return (
       <div className="familyGroupContainer">
         <div className="content">
-          <UserProfile />
+          <UserProfile currUser={false} userId={userId}/>
         </div>
       </div>
     );

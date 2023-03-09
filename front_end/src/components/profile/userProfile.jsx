@@ -99,7 +99,7 @@ const UserProfile = (props) => {
           aria-label="Email"
           labelLeft="Email"
           initialValue={currUser.email} 
-          onChange={e => setNewEmail(e.target.value)}/>
+          readOnly/>
         <Spacer y={1}/>
         <Input 
           size="xl"
@@ -135,13 +135,6 @@ const UserProfile = (props) => {
           labelLeft='Pronouns' 
           initialValue={pronouns} 
           onChange={e => setPronouns(e.target.value)}/>
-        <Spacer y={1}/>
-        <Input 
-          size="xl"
-          aria-label="Display Email"
-          labelLeft='Display Email' 
-          initialValue={displayEmail} 
-          onChange={e => setDisplayEmail(e.target.value)}/>
         <Spacer y={1}/>
         <Input 
           size="xl"

@@ -7,7 +7,8 @@ import {Text, useModal, Button, Grid, Card, Spacer, Input} from "@nextui-org/rea
 const UserProfile = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));
   let date = new Date(currUser.birthday);
-  date = ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '/' + ((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())) + '/' + date.getFullYear();
+  date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+  date = date.getFullYear() + '-' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())));
 
   //form input
   const [newEmail, setNewEmail] = useState(null);
@@ -119,6 +120,7 @@ const UserProfile = (props) => {
           size="xl"
           aria-label="Birthday"
           labelLeft='Birthday' 
+          type={"date"}
           initialValue={birthday} 
           onChange={e => setBirthday(e.target.value)}/>
         <Spacer y={1}/>

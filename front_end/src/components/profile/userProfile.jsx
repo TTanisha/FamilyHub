@@ -45,6 +45,7 @@ const UserProfile = (props) => {
     let date = new Date(currUser.birthday);
     date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
     date = date.getFullYear() + '-' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())));
+    
     setEmail(iputUser.email);
     setFirstName(iputUser.firstName);
     setLastName(iputUser.lastName);
@@ -58,35 +59,36 @@ const UserProfile = (props) => {
   
 
   //Update local storage: localStorage.setItem("user", JSON.stringify(newUser));
-  const updateLocalStorage = (props) => {
-    currUser.firstName = firstName;
-    currUser.lastName = lastName;
-    currUser.birthday = birthday;
-    currUser.nickname = nickname;
-    currUser.pronouns = pronouns;
-    currUser.cellNumber = cellNumber;
-    currUser.homeNumber = homeNumber;
+  const updateLocalStorage = (iputUser) => {
+    iputUser.firstName = firstName;
+    iputUser.lastName = lastName;
+    iputUser.birthday = birthday;
+    iputUser.nickname = nickname;
+    iputUser.pronouns = pronouns;
+    iputUser.cellNumber = cellNumber;
+    iputUser.homeNumber = homeNumber;
     // update
-    localStorage.setItem("user", JSON.stringify(currUser));
+    localStorage.setItem("user", JSON.stringify(iputUser));
   }
 
-  const restoreValue = (props) => {
-    setEmail(currUser.email);
-    setFirstName(currUser.firstName);
-    setLastName(currUser.lastName);
-    setBirthday(currUser.birthday);
-    setNickname(currUser.nickname);
-    setPronouns(currUser.pronouns);
-    setaddress(currUser.firstName);
-    setCellNumber(currUser.cellNumber);
-    setHomeNumber(currUser.homeNumber);
+  const restoreValue = (iputUser) => {
+
+    console.log(iputUser.firstName);
+    setFirstName(iputUser.firstName);
+    setLastName(iputUser.lastName);
+    setBirthday(iputUser.birthday);
+    setNickname(iputUser.nickname);
+    setPronouns(iputUser.pronouns);
+    setaddress(iputUser.firstName);
+    setCellNumber(iputUser.cellNumber);
+    setHomeNumber(iputUser.homeNumber);
     window.location.reload(false);
 }
 
   const submitUpdateUser = (props) => {    
     axios.post("http://localhost:8080/api/users/updateUser", 
     { 
-      id : currUser._id,
+      email : email,
       firstName: firstName, 
       lastName: lastName, 
       birthday: new Date (birthday), 
@@ -101,23 +103,26 @@ const UserProfile = (props) => {
           if(response.data.status === "success")
           {
             console.log(response);
-            updateLocalStorage();
+            updateLocalStorage(JSON.parse(localStorage.getItem("user")));
             setEditing(false);
             setClickable({"pointerEvents": "none"});
           }
       }).catch(function (error) {
         console.log("Error in User Profile");
+        console.log(error);
+
       })
   }
 
+  useEffect(()=>{
+    if (props.currUser == false) {
+      GetMemberData();
+    } else {
+      currUser = JSON.parse(localStorage.getItem("user"));
+      setIsLoggedUser(true);
+      setUserInfo(currUser);
+    }}, [])
   
-  if (props.currUser == false) {
-    GetMemberData();
-  } else {
-    currUser = JSON.parse(localStorage.getItem("user"));
-    setIsLoggedUser(true);
-    setUserInfo(currUser);
-  }
 
 
   return (
@@ -207,7 +212,7 @@ const UserProfile = (props) => {
           }  
           { editing &&
             <Grid xs={3}  >
-              <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(); }}> Discard changes</Button>
+              <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(JSON.parse(localStorage.getItem("user"))); }}> Discard changes</Button>
               <Button auto size="lg" onPress={() => { submitUpdateUser(props)}}>Update</Button>
             </Grid>
           }

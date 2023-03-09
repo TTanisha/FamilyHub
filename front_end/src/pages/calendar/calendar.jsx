@@ -7,7 +7,8 @@ import moment from 'moment';
 import CreateEventForm from '../../components/createEventForm';
 import axios from 'axios';
 import ViewEvent from '../../components/viewEvent';
-import {Text, Grid, Dropdown} from "@nextui-org/react";
+import {Text, Grid, Spacer, Dropdown} from "@nextui-org/react";
+import { Calendar as ReactCalendar } from 'react-calendar';
 
 let tuiCalendar = new TUICalendar('#calendar');
 
@@ -51,12 +52,22 @@ const Calendar = () => {
   const [clickedEvent, setClickedEvent] = useState({});
   const [selectedFamilyGroupName, setSelectedFamilyGroupName] = useState();
   const [selectedView, setSelectedView] = useState("Monthly");
+  const [pickerDate, setPickerDate] = useState();
 
   useEffect(() => {
     createCalendar();
     setCalendarTitle("Monthly");
+    setPickerDate(tuiCalendar.getDate().toDate());
     bindEventHandlers();
   }, []);
+
+  function handleSetCalendarTitle() {
+    if(selectedView != "Monthly") {
+      setCalendarTitle(selectedView.currentKey);
+    } else {
+      setCalendarTitle("Monthly");
+    }
+  }
 
   function navigateCalendar(option) {
     if(option == 1) {
@@ -67,19 +78,21 @@ const Calendar = () => {
       tuiCalendar.today();
     }
   
-    if(selectedView != "Monthly") {
-      setCalendarTitle(selectedView.currentKey);
-    } else {
-      setCalendarTitle("Monthly");
-    }
-  
+    handleSetCalendarTitle();
     tuiCalendar.getStoreDispatchers().popup.hideSeeMorePopup();
     tuiCalendar.render();
   }
 
   useEffect(() => {
-    navigateCalendar(0); 
+    if(pickerDate) {
+      tuiCalendar.setDate(pickerDate);
+      handleSetCalendarTitle(); 
+      tuiCalendar.render();
+    }
+  }, [pickerDate])
+   
 
+  useEffect(() => {
     if(selectedView != 'Monthly') {
       if(selectedView.currentKey == 'Monthly') {
         tuiCalendar.changeView('month');
@@ -223,6 +236,10 @@ const Calendar = () => {
 
             </Dropdown.Menu>
           </Dropdown>
+          <Spacer/>
+          <ReactCalendar
+            onChange={(date) => setPickerDate(date)}  value={pickerDate} calendarType="Hebrew"
+          />
         </Grid.Container> 
       </div>
       <div>

@@ -7,3 +7,11 @@
 .userProfileName {
     text-decoration: underline;
 }
+
+.inputWrapper {
+    margin: auto;
+    width: 75%;
+    display: flex; 
+    flex-direction: column;
+}
+

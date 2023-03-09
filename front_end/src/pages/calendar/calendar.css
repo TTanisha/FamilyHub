@@ -56,7 +56,7 @@
     top: 0px;
     display: grid;
     height: 100vh;
-    grid-template-columns: 0.7fr 1.7fr 0.6fr;
+    grid-template-columns: 0.7fr 1.7fr 0.3fr;
     grid-template-rows: 1fr 1fr 10fr;
     gap: 0px 50px;
     grid-template-areas:
@@ -69,7 +69,6 @@
     grid-area: filters-container;
     width: 80%;
     justify-self: right;
-    border-style: dashed;
     border-color: lightgray;
 }
 
@@ -90,14 +89,12 @@
     grid-area: schedule-container;
     width: 80%;
     justify-self: left;
-    border-style: dashed;
     border-color: lightgray;
 }
 
 .event-buttons-container {
     grid-area: event-buttons-container;
     width: 100%;
-    /* border-style: dashed; */
     border-color: lightgray;
     display: flex;
     flex-direction: row-reverse;

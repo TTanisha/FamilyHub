@@ -322,7 +322,7 @@ const ViewEvent = (props) => {
                 setIsAllDay(allDay);
                 setStartTimeStringState(startTimeString);
                 setEndTimeStringState(endTimeString);
-                props.clearGroupName();
+                setFamilyGroupName(props.groupName);
               }}>
               Cancel
             </Button>

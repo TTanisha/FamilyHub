@@ -1,5 +1,8 @@
 import React, {useEffect, useState} from 'react';
 import FamilyGroup from '../../components/familyGroup/familyGroup';
+import CreateFamilyGroup from '../../components/familyGroup/createFamilyGroup';
+import AddMemberFamilyGroup from '../../components/familyGroup/addMemberFamilyGroup';
+
 import './familyGroups.css';
 import axios from 'axios';
 import { Collapse, Text, Card } from "@nextui-org/react";
@@ -53,10 +56,13 @@ const FamilyGroups = () => {
               (groupData) => (
               <Collapse key={groupData.group?._id} title={groupData.group?.groupName}> 
                 <FamilyGroup key={groupData.group?._id} groupId={groupData.group?._id} groupName={groupData.group?.groupName} groupMembers={groupData.group?.groupMembers}/>
+                <AddMemberFamilyGroup groupId={groupData.group?._id} />
               </Collapse>)
             ) : <Text> You are not part of any family groups  </Text>)
           }
         </Collapse.Group>
+        <CreateFamilyGroup/>
+
       </div>
     </div>
   );

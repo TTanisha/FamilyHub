@@ -78,6 +78,8 @@ const UserProfile = (props) => {
           {
             console.log(response);
             updateLocalStorage();
+            setEditing(false);
+            setClickable({"pointerEvents": "none"});
           }
       }).catch(function (error) {
         console.log("Error in User Profile");
@@ -173,7 +175,7 @@ const UserProfile = (props) => {
         { editing &&
           <Grid xs={3}  >
             <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(); }}> Discard changes</Button>
-            <Button auto size="lg" onPress={() => { setClickable({"pointerEvents": "none"}); setEditing(false); submitUpdateUser(props)}}>Update</Button>
+            <Button auto size="lg" onPress={() => { submitUpdateUser(props)}}>Update</Button>
           </Grid>
         }
       </Grid.Container>

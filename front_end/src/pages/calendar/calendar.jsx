@@ -129,6 +129,9 @@ const Calendar = () => {
           end: event.end,
           isAllDay: event.isAllDay,
           location: event.location,
+          raw: {
+            creationUser: event.creationUser
+          }
         };
         setTUICalendarEvents(tuiCalendarEvents => [...tuiCalendarEvents, tuiEvent]);
       });

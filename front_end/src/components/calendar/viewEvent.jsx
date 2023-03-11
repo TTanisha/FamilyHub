@@ -15,6 +15,7 @@ const ViewEvent = (props) => {
   const allDay = currEvent?.isAllday;
   const groupId = currEvent?.calendarId;
   const groupName = props.groupName;
+  const creationUser = currEvent?.raw?.creationUser;
 
   //parse start date to get the proper string format 
   const startDateObject = currEvent?.start.d;
@@ -52,6 +53,7 @@ const ViewEvent = (props) => {
   const [recurrenceRule, setRecurrenceRule] = useState("ONCE"); 
   const [familyGroup, setFamilyGroup] = useState(groupId);
   const [familyGroupName, setFamilyGroupName] = useState("");
+  const [isCreationUser, setIsCreationUser] = useState(false);
 
   //transformed data 
   const [startTimeDate, setStartTimeDate] = useState(); 
@@ -73,6 +75,7 @@ const ViewEvent = (props) => {
     setFamilyGroup(groupId);
     setIsAllDay(allDay);
     setFamilyGroupName(groupName);
+    setIsCreationUser(currUser._id == creationUser);
   }, [currEvent]);
 
   //update start date/time if input is updated
@@ -149,6 +152,24 @@ const ViewEvent = (props) => {
           props.clearGroupName();
           props.updateEvents();
 
+        }
+    }).catch(function (error) {
+    })
+  }
+
+  const deleteEvent = (props) => {
+    axios.post("http://localhost:8080/api/events/deleteEvent", 
+    {
+      id: currEvent?.id,
+      creationUser: currUser._id, 
+    })
+    .then(function(response)
+    {
+        if(response.data.status === "success")
+        {
+          props.setVisible(false);
+          props.clearGroupName();
+          props.updateEvents();
         }
     }).catch(function (error) {
     })
@@ -303,39 +324,56 @@ const ViewEvent = (props) => {
         </Modal.Body>
 
         <Modal.Footer>
-          <Button auto flat color="default"
-            onPress={() => {
-              if (editMode) {
-                
-                submitUpdateEventForm(props)
-              } else {
-                setEditMode(true)
-              }
-            }}>
-            {editMode ? "Save" : "Edit"}
-          </Button>
+          <Grid.Container direction='row'>
 
-          {editMode &&
-            <Button auto flat color="error"
-              onPress={() => { 
-                setEditMode(false); 
-                setIsAllDay(allDay);
-                setStartTimeStringState(startTimeString);
-                setEndTimeStringState(endTimeString);
-                setFamilyGroupName(props.groupName);
+            <Grid xs={3}>
+              { isCreationUser && <Button auto flat color="error"
+              onPress={() => {
+                deleteEvent(props)
               }}>
-              Cancel
-            </Button>
-          }
+                Delete
+              </Button>}
+            </Grid>
 
-          <Button auto flat color="error"
-            onPress={() => {
-              props.setVisible(false);
-              setEditMode(false);
-              props.clearGroupName();
-            }}>
-            Close
-          </Button>
+            <Grid xs={6}></Grid>
+
+            <Grid xs={3} justify="right">
+              { isCreationUser && <Button auto flat color="default"
+                onPress={() => {
+                  if (editMode) {
+                    
+                    submitUpdateEventForm(props)
+                  } else {
+                    setEditMode(true)
+                  }
+                }}>
+                {editMode ? "Save" : "Edit"}
+              </Button>
+              }
+
+              {editMode &&
+                <Button auto flat color="error"
+                  onPress={() => { 
+                    setEditMode(false); 
+                    setIsAllDay(allDay);
+                    setStartTimeStringState(startTimeString);
+                    setEndTimeStringState(endTimeString);
+                    setFamilyGroupName(props.groupName);
+                  }}>
+                  Cancel
+                </Button>
+              }
+
+              <Button auto flat color="error"
+                onPress={() => {
+                  props.setVisible(false);
+                  setEditMode(false);
+                  props.clearGroupName();
+                }}>
+                Close
+              </Button>
+            </Grid>
+          </Grid.Container>
         </Modal.Footer>
       </Modal>
     </div>

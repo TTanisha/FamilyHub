@@ -338,7 +338,7 @@ const ViewEvent = (props) => {
             <Grid xs={6}></Grid>
 
             <Grid xs={3} justify="right">
-              <Button auto flat color="default"
+              { isCreationUser && <Button auto flat color="default"
                 onPress={() => {
                   if (editMode) {
                     
@@ -349,6 +349,7 @@ const ViewEvent = (props) => {
                 }}>
                 {editMode ? "Save" : "Edit"}
               </Button>
+              }
 
               {editMode &&
                 <Button auto flat color="error"

@@ -262,6 +262,7 @@ const Calendar = () => {
                 onSelectionChange={setSelectedView}
               >
                 <Dropdown.Item key="Monthly">Monthly</Dropdown.Item>
+                <Dropdown.Item key="Weekly">Weekly</Dropdown.Item>
                 <Dropdown.Item key="Daily">Daily</Dropdown.Item>
 
               </Dropdown.Menu>

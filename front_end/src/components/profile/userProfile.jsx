@@ -41,51 +41,52 @@ const UserProfile = (props) => {
   }
 
   
-  const setUserInfo = (iputUser) => {
+  const setUserInfo = (inputUser) => {
     let date = new Date(currUser.birthday);
     date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
     date = date.getFullYear() + '-' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())));
     
-    setEmail(iputUser.email);
-    setFirstName(iputUser.firstName);
-    setLastName(iputUser.lastName);
+    setEmail(inputUser.email);
+    setFirstName(inputUser.firstName);
+    setLastName(inputUser.lastName);
     setBirthday(date);
-    setNickname(iputUser.nickname);
-    setPronouns(iputUser.pronouns);
-    setaddress(iputUser.firstName);
-    setCellNumber(iputUser.cellNumber);
-    setHomeNumber(iputUser.homeNumber);
+    setNickname(inputUser.nickname);
+    setPronouns(inputUser.pronouns);
+    setaddress(inputUser.address);
+    setCellNumber(inputUser.cellNumber);
+    setHomeNumber(inputUser.homeNumber);
   }
   
 
   //Update local storage: localStorage.setItem("user", JSON.stringify(newUser));
-  const updateLocalStorage = (iputUser) => {
-    iputUser.firstName = firstName;
-    iputUser.lastName = lastName;
-    iputUser.birthday = birthday;
-    iputUser.nickname = nickname;
-    iputUser.pronouns = pronouns;
-    iputUser.cellNumber = cellNumber;
-    iputUser.homeNumber = homeNumber;
+  const updateLocalStorage = (inputUser) => {
+    inputUser.firstName = firstName;
+    inputUser.lastName = lastName;
+    inputUser.birthday = birthday;
+    inputUser.nickname = nickname;
+    inputUser.pronouns = pronouns;
+    inputUser.address = address;
+    inputUser.cellNumber = cellNumber;
+    inputUser.homeNumber = homeNumber;
     // update
-    localStorage.setItem("user", JSON.stringify(iputUser));
+    localStorage.setItem("user", JSON.stringify(inputUser));
   }
 
-  const restoreValue = (iputUser) => {
+  const restoreValue = (inputUser) => {
 
-    console.log(iputUser.firstName);
-    setFirstName(iputUser.firstName);
-    setLastName(iputUser.lastName);
-    setBirthday(iputUser.birthday);
-    setNickname(iputUser.nickname);
-    setPronouns(iputUser.pronouns);
-    setaddress(iputUser.firstName);
-    setCellNumber(iputUser.cellNumber);
-    setHomeNumber(iputUser.homeNumber);
+    console.log(inputUser.firstName);
+    setFirstName(inputUser.firstName);
+    setLastName(inputUser.lastName);
+    setBirthday(inputUser.birthday);
+    setNickname(inputUser.nickname);
+    setPronouns(inputUser.pronouns);
+    setaddress(inputUser.firstName);
+    setCellNumber(inputUser.cellNumber);
+    setHomeNumber(inputUser.homeNumber);
     window.location.reload(false);
 }
 
-  const submitUpdateUser = (props) => {    
+  const submitUpdateUser = (props) => {
     axios.post("http://localhost:8080/api/users/updateUser", 
     { 
       email : email,

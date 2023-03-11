@@ -64,6 +64,10 @@ const ViewEvent = (props) => {
 
   //set input data once current event is loaded
   useEffect(() => {
+    setDefaultValues();
+  }, [currEvent]);
+
+  const setDefaultValues = () => {
     setStartDateInput(startDateString);
     setStartTimeInput(startTimeString);
     setEndDateInput(endDateString);
@@ -76,7 +80,8 @@ const ViewEvent = (props) => {
     setIsAllDay(allDay);
     setFamilyGroupName(groupName);
     setIsCreationUser(currUser._id == creationUser);
-  }, [currEvent]);
+    setLocationInput(location);
+  }
 
   //update start date/time if input is updated
   useEffect(() => {
@@ -179,6 +184,11 @@ const ViewEvent = (props) => {
     setFamilyGroup(id);
   }
 
+  const resetEventDetails = () => {
+    setEditMode(false); 
+    setDefaultValues();
+  }
+
   return (
     <div>
       <Modal
@@ -204,6 +214,7 @@ const ViewEvent = (props) => {
             label={editMode ? "Event Title" : ""}
             labelLeft={editMode ? "" : "Event Title"}
             initialValue={title}
+            value={titleInput}
             onChange={e => setTitleInput(e.target.value)}
           />
 
@@ -310,6 +321,7 @@ const ViewEvent = (props) => {
             readOnly={!editMode}
             label="Description"
             initialValue={description}
+            value={descriptionInput}
             onChange={e => setDescriptionInput(e.target.value)}
           />
 
@@ -319,6 +331,7 @@ const ViewEvent = (props) => {
             label={editMode ? "Location" : ""}
             labelLeft={editMode ? "" : "Location"}
             initialValue={location}
+            value={locationInput}
             onChange={e => setLocationInput(e.target.value)}
           />
         </Modal.Body>
@@ -354,11 +367,7 @@ const ViewEvent = (props) => {
               {editMode &&
                 <Button auto flat color="error"
                   onPress={() => { 
-                    setEditMode(false); 
-                    setIsAllDay(allDay);
-                    setStartTimeStringState(startTimeString);
-                    setEndTimeStringState(endTimeString);
-                    setFamilyGroupName(props.groupName);
+                    resetEventDetails();
                   }}>
                   Cancel
                 </Button>

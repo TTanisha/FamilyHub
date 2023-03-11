@@ -6,6 +6,7 @@ import FamilyGroups from './pages/familyGroups/familyGroups';
 import SignIn from './pages/signPages/signIn';
 import SignOut from './pages/signPages/signOut';
 import Profile from './pages/profile/profile';
+import FamilyMemberProfile from './pages/profile/familyMemberProfile';
 import { Navigate } from 'react-router-dom';
 import SignUp from './pages/signPages/signUp';
 import SignUpSuccess from './pages/signPages/signUpSuccess';
@@ -83,6 +84,7 @@ function App() {
           <Route path='/familygroups' element={isLoggedIn ? <FamilyGroups /> : <Navigate to='/' />} />
           <Route path='/signout' element={isLoggedIn ? <SignOut /> : <Navigate to='/' />} />
           <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate to='/' />} />
+          <Route path='/familymemberprofile' element={isLoggedIn ? <FamilyMemberProfile /> : <Navigate to='/' />} />
           <Route path='/sign-up' element={<SignUp />} />
           <Route path='/signup-success' element={<SignUpSuccess />} />
         </Routes>

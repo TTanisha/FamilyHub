@@ -31,6 +31,10 @@ function setCalendarTitle(view) {
     string = moment(tuiCalendar.getDate().toString(), "ddd MMM DD YYYY HH:mm:ss").format("MMMM YYYY");
   } else if (view == 'Daily') {
     string = moment(tuiCalendar.getDate().toString(), "ddd MMM DD YYYY HH:mm:ss").format("ddd MMMM DD YYYY");
+  } else if (view == 'Weekly') {
+    let weekStart = moment(tuiCalendar.getDateRangeStart().toString(), "ddd MMM DD YYYY HH:mm:ss").format("ddd MMMM DD YYYY");
+    let weekEnd = moment(tuiCalendar.getDateRangeEnd().toString(), "ddd MMM DD YYYY HH:mm:ss").format("ddd MMMM DD YYYY");
+    string = weekStart + " - " + weekEnd;
   }
 
   document.getElementById("renderRange").innerHTML = string;
@@ -98,6 +102,13 @@ const Calendar = () => {
         tuiCalendar.changeView('month');
       } else if(selectedView.currentKey == 'Daily') {
         tuiCalendar.changeView('day');
+        tuiCalendar.setOptions({
+          week: {
+            taskView: false,
+          }
+        })
+      } else if(selectedView.currentKey == 'Weekly') {
+        tuiCalendar.changeView('week');
         tuiCalendar.setOptions({
           week: {
             taskView: false,
@@ -235,6 +246,7 @@ const Calendar = () => {
               onSelectionChange={setSelectedView}
             >
               <Dropdown.Item key="Monthly">Monthly</Dropdown.Item>
+              <Dropdown.Item key="Weekly">Weekly</Dropdown.Item>
               <Dropdown.Item key="Daily">Daily</Dropdown.Item>
 
             </Dropdown.Menu>

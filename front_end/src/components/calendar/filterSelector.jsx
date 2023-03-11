@@ -46,7 +46,7 @@ const FilterSelector = (props) => {
             {/* Family group input */}
             <Spacer/>
             <Text h4 css={{display: "flex"}}>Filter by Family Group:</Text>
-            <Checkbox.Group value={selected} onChange={setSelected}>
+            <Checkbox.Group aria-label="familyGroupFilter" value={selected} onChange={setSelected}>
             {
                 (data.length != 0) ? data.map((groupData) => (
                     <div key={groupData.group?._id}>

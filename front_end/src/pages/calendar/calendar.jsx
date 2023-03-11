@@ -4,11 +4,12 @@ import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 import './calendar.css';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import moment from 'moment';
-import CreateEventForm from '../../components/createEventForm';
+import CreateEventForm from '../../components/calendar/createEventForm';
 import axios from 'axios';
-import ViewEvent from '../../components/viewEvent';
+import ViewEvent from '../../components/calendar/viewEvent';
 import {Text, Grid, Spacer, Dropdown} from "@nextui-org/react";
 import { Calendar as ReactCalendar } from 'react-calendar';
+import FilterSelector from '../../components/calendar/filterSelector';
 
 let tuiCalendar = new TUICalendar('#calendar');
 
@@ -216,31 +217,48 @@ const Calendar = () => {
     setSelectedFamilyGroupName(null);
   }
 
+  function setFilter(selected) {
+    currUser.groups?.map((groupId) => {
+      tuiCalendar.setCalendarVisibility(groupId, false);
+    })
+
+    selected.map((calendarId) => {
+      tuiCalendar.setCalendarVisibility(calendarId, true);
+      
+    })
+
+    tuiCalendar.render();
+  }
+
   return (
     <div className="container">
       <div className="filters-container">
+      
         <Grid.Container justify='center' direction='column'>
-          <Text> Select View: </Text>  
-          <Dropdown>
-          <Dropdown.Button flat>{selectedView}</Dropdown.Button>
-            <Dropdown.Menu 
-              aria-label="Static Actions" 
-              disallowEmptySelection
-              selectionMode="single"
-              defaultSelectedKeys={"monthly"}
-              selectedKeys={selectedView}
-              onSelectionChange={setSelectedView}
-            >
-              <Dropdown.Item key="Monthly">Monthly</Dropdown.Item>
-              <Dropdown.Item key="Daily">Daily</Dropdown.Item>
 
-            </Dropdown.Menu>
-          </Dropdown>
-          <Spacer/>
-          <ReactCalendar
-            onChange={(date) => setPickerDate(date)}  value={pickerDate} calendarType="Hebrew"
-          />
+            <Text h4> Select View: </Text>  
+            <Dropdown>
+            <Dropdown.Button flat>{selectedView}</Dropdown.Button>
+              <Dropdown.Menu 
+                aria-label="Static Actions" 
+                disallowEmptySelection
+                selectionMode="single"
+                defaultSelectedKeys={"monthly"}
+                selectedKeys={selectedView}
+                onSelectionChange={setSelectedView}
+              >
+                <Dropdown.Item key="Monthly">Monthly</Dropdown.Item>
+                <Dropdown.Item key="Daily">Daily</Dropdown.Item>
+
+              </Dropdown.Menu>
+            </Dropdown>
+            <Spacer/>
+            <ReactCalendar
+              onChange={(date) => setPickerDate(date)}  value={pickerDate} calendarType="Hebrew"
+            />
+            <FilterSelector setFilter={setFilter}/>
         </Grid.Container> 
+        
       </div>
       <div>
         <span className="calendar-navi">

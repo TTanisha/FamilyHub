@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import {Text, Modal, Button, Input, Grid, Spacer, Checkbox, Textarea} from "@nextui-org/react";
-import FamilyGroupSelector from './familyGroup/familyGroupSelector';
+import FamilyGroupSelector from '../familyGroup/familyGroupSelector';
 
 const ViewEvent = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));

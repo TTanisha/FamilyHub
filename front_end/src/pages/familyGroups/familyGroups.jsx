@@ -2,10 +2,11 @@ import React, {useEffect, useState} from 'react';
 import FamilyGroup from '../../components/familyGroup/familyGroup';
 import CreateFamilyGroup from '../../components/familyGroup/createFamilyGroup';
 import AddMemberFamilyGroup from '../../components/familyGroup/addMemberFamilyGroup';
+import LeaveFamilyGroup from '../../components/familyGroup/LeaveFamilyGroup';
 
 import './familyGroups.css';
 import axios from 'axios';
-import { Collapse, Text, Card } from "@nextui-org/react";
+import { Collapse, Text, Card, Grid, Spacer} from "@nextui-org/react";
   
 const FamilyGroups = () => {
   const [familyGroups, setFamilyGroups] = useState([]);
@@ -56,7 +57,15 @@ const FamilyGroups = () => {
               (groupData) => (
               <Collapse key={groupData.group?._id} title={groupData.group?.groupName}> 
                 <FamilyGroup key={groupData.group?._id} groupId={groupData.group?._id} groupName={groupData.group?.groupName} groupMembers={groupData.group?.groupMembers}/>
-                <AddMemberFamilyGroup groupId={groupData.group?._id} />
+                <Grid.Container gap={2} justify="center">
+                  <Grid xs={4}>
+                    <AddMemberFamilyGroup groupId={groupData.group?._id} />
+                  </Grid>
+                  <Spacer x={2} />
+                  <Grid xs={4}>
+                    <LeaveFamilyGroup  groupId={groupData.group?._id} />
+                  </Grid>
+                </Grid.Container>
               </Collapse>)
             ) : <Text> You are not part of any family groups  </Text>)
           }

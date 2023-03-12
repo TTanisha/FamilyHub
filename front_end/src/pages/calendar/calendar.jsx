@@ -268,9 +268,11 @@ const Calendar = () => {
               </Dropdown.Menu>
             </Dropdown>
             <Spacer/>
-            <ReactCalendar
-              onChange={(date) => setPickerDate(date)}  value={pickerDate} calendarType="Hebrew"
-            />
+            <div className="datePicker">
+              <ReactCalendar
+                onChange={(date) => setPickerDate(date)}  value={pickerDate} calendarType="Hebrew"
+              />
+            </div>
             <FilterSelector setFilter={setFilter}/>
         </Grid.Container> 
         

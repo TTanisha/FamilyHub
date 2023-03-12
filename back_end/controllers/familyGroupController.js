@@ -88,19 +88,19 @@ exports.addMemberToFamilyGroup = async (req, res) => {
             throw err;
         }
 
-        const updateUserGroups = await Users.updateOne({ _id: member._id },
-            {
-                $addToSet: {
-                    groups: group,
-                },
-            });
+        await Users.updateOne({ _id: member._id },
+        {
+            $addToSet: {
+                groups: group,
+            },
+        });
         
-        const updateGroupMembers = await FamilyGroups.updateOne({ _id: groupId },
-            {
-                $addToSet: {
-                    groupMembers: member,
-                },
-            });
+        await FamilyGroups.updateOne({ _id: groupId },
+        {
+            $addToSet: {
+                groupMembers: member,
+            },
+        });
 
         res.status(200).json({
             status: "success",
@@ -141,6 +141,49 @@ exports.getFamilyGroupEvents = async (req, res) => {
         res.status(404).json({
             status: "fail",
             message: "Group not found",
+        });
+      }
+};
+
+exports.leaveFamilyGroup = async (req, res) => {
+    try {
+        const { groupId, memberId } = req.body
+        const group = await FamilyGroups.findOne({ _id: groupId });
+        const member = await Users.findOne({_id: memberId});
+        reason = "";
+    
+        if (group == null) {
+          reason = "Family Group not found";
+          throw err;
+        }
+
+        if (member == null) {
+            reason = "User not found";
+            throw err;
+        }
+
+        await FamilyGroups.updateOne({ _id: groupId },
+        {
+            $pull: {
+                groupMembers: memberId,
+            },
+        });
+
+        await Users.updateOne({ _id: memberId },
+        {
+            $pull: {
+                groups: groupId,
+            },
+        });
+    
+        res.status(200).json({
+            status: "success",
+            message: "User has successfully left the family group"
+        });
+      } catch (err) {
+        res.status(404).json({
+            status: "fail",
+            message: "User was not removed from the group",
         });
       }
 };

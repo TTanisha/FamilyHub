@@ -6,31 +6,36 @@ const LeaveFamilyGroup = (props) => {
 
   const { setVisible, bindings } = useModal();
   //form input
-  const [newMemberEmail, setNewMemberEmail] = useState(null);
-  
-  const submitAddMember = (props) => {
-    axios.post("http://localhost:8080/api/familyGroups/addMemberToFamilyGroup", 
+  var currUser = JSON.parse(localStorage.getItem("user"));
+
+  const leaveGroup = () => {
+    axios.post("http://localhost:8080/api/familyGroups/leaveFamilyGroup", 
     {
         groupId: props.groupId, 
-        memberEmail: newMemberEmail
+        memberId: currUser._id
     })
     .then(function(response)
     {
         if(response.data.status === "success")
         {
-            location.reload();
-            console.log(response);
+          updateLocalStorage(currUser, props.groupId);
+          location.reload();
+          console.log(response);
         }
     }).catch(function (error) {
         console.log("Error in Family Group");
     })
   }
 
-  
-  // reset the form states on close and successful submit
-  const resetFormState = () => {
-    setVisible(false); 
-    setNewMemberEmail(null);
+  const updateLocalStorage = ( inputUser, groupId ) => {
+    let updatedGroups = currUser.groups;
+    for (let i = 0; i < updatedGroups.length; i++){
+      if (updatedGroups[i] == groupId){
+        updatedGroups.splice(i, 1); 
+      }
+    }
+    currUser.groups = updatedGroups;
+    localStorage.setItem("user", JSON.stringify(inputUser));   
   }
 
   return (
@@ -53,13 +58,13 @@ const LeaveFamilyGroup = (props) => {
           </Text>
         </Modal.Header>
         <Modal.Body> 
-          <Text size="$md" > Family Group: Juan's Group  </Text> 
+          <Text size="$md" > Family Group: {props.groupName} </Text> 
         </Modal.Body>
         <Modal.Footer>
-          <Button flat auto color="error" onPress={() => resetFormState()}>
+          <Button flat auto color="error" onPress={() => leaveGroup()}>
             Leave this group
           </Button>
-          <Button onPress={() => {submitAddMember(props)}}>
+          <Button onPress={() => { {setVisible(false);}}}>
             Stay in this group
           </Button>
         </Modal.Footer>

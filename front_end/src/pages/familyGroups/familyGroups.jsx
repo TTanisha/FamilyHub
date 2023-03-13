@@ -63,7 +63,7 @@ const FamilyGroups = () => {
                   </Grid>
                   <Spacer x={2} />
                   <Grid xs={4}>
-                    <LeaveFamilyGroup  groupId={groupData.group?._id} />
+                    <LeaveFamilyGroup  groupId={groupData.group?._id} groupName={groupData.group?.groupName} />
                   </Grid>
                 </Grid.Container>
               </Collapse>)

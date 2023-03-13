@@ -21,7 +21,7 @@ const defaultUser = {
 
 beforeAll(async () => {
   // Database connection
-  const DB = process.env.FAMILYHUB_DB_URI;
+  const DB = process.env.TEST_DB;
   mongoose.set('strictQuery', false); // Preparation for deprecation 
   const connectionOptions = {
     // Required due to changes in the MongoDB Node.js driver
@@ -43,7 +43,7 @@ beforeAll(async () => {
 afterAll(async () => {
   // make sure we have deleted the test FamilyGroups from the database
   try {
-    await FamilyGroups.findOneAndDelete(newFamilyGroup);
+    await FamilyGroups.findOneAndDelete(defaultFamilyGroup);
   } catch (err) {
     console.log("Family Group not found.");
   }

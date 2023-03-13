@@ -1,9 +1,22 @@
 const Events = require("../models/eventModel");
 const FamilyGroups = require("../models/familyGroupModel");
 
+exports.validateEventDates = function(event) {
+  if (event.start !== null && event.end !== null) {
+    if (event.end.toISOString() < event.start.toISOString()) {
+      throw "Start date must be before end date.";
+    } 
+    else {
+      return true;
+    }
+  };
+};
+
 exports.createEvent = async(req, res) => {
+  console.log("REQUEST: " + req.title);
   try {
-    const newEvent = await Events.create(req.body);
+    this.validateEventDates(req);
+    const newEvent = await Events.create(req);
     if (newEvent === null) {
       throw err;
     } else {
@@ -22,6 +35,7 @@ exports.createEvent = async(req, res) => {
     };
     
   } catch (err) {
+    console.log("FAIL: " + err.message);
     res.status(400).json({ // bad request 
       status: "fail",
       message: err.message,

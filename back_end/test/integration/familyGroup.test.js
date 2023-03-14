@@ -70,34 +70,51 @@ const defaultUser = {
 //=====================================================================================//
 
 describe("Family Group Creation Tests", () => {
-    test("Successfully Create a Family Group", async () => {
-        const response = await request.post("/api/familyGroups/createFamilyGroup").send({
-            groupName: "test family group"
-        });
-        createdGroupID = response._body.group._id;
-        expect(response.statusCode).toBe(200);
-        await FamilyGroups.findOneAndDelete({_id: createdGroupID}); 
+  test("Successfully Create a Family Group", async () => {
+    const response = await request.post("/api/familyGroups/createFamilyGroup").send({
+        groupName: "test family group"
+    });
+    createdGroupID = response._body.group._id;
+    expect(response.statusCode).toBe(200);
+    await FamilyGroups.findOneAndDelete({_id: createdGroupID}); 
 
-      });
+  });
 });
 
 //=====================================================================================//
 
 describe("Add group member to Family Group", () => {
   test("Successfully add a family member to a group.", async () => {
-    let familygroupTest = {
-      groupName: "test family group"
-    };
-
-    let newUser = await Users.findOne({email: defaultUser.email});
-
-    const testGroup = await FamilyGroups.create(familygroupTest);
-
+   
     const response = await request.post("/api/familyGroups/addMemberToFamilyGroup").send({
-      groupId: testGroup._id, 
+      groupId: newFamilyGroup._id, 
       memberEmail: defaultUser.email
-  });
+    });
     expect(response.statusCode).toBe(200);
-    await FamilyGroups.findOneAndDelete({_id: testGroup._id}); 
+  });
+});
+
+
+//=====================================================================================//
+
+describe("Remove member from Family Group", () => {
+
+  test("Successfully remove a family member from a group.", async () => {
+  
+    // First add a member
+    let response = await request.post("/api/familyGroups/addMemberToFamilyGroup").send({
+      groupId: newFamilyGroup._id, 
+      memberEmail: defaultUser.email
+    });
+    expect(response.statusCode).toBe(200);
+
+    //Now remove that member
+    let newUser = await Users.findOne({email: defaultUser.email});
+    response = await request.post("/api/familyGroups/leaveFamilyGroup").send({
+      groupId: newFamilyGroup._id, 
+      memberId: newUser._id
+    });
+
+    expect(response.statusCode).toBe(200);
   });
 });

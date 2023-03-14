@@ -70,15 +70,15 @@ const defaultUser = {
 //=====================================================================================//
 
 describe("Family Group Creation Tests", () => {
-    test("Successfully Create a Family Group", async () => {
-      const response = await request.post("/api/familyGroups/createFamilyGroup").send({
-          groupName: "test family group"
-      });
-      createdGroupID = response._body.group._id;
-      expect(response.statusCode).toBe(200);
-      await FamilyGroups.findOneAndDelete({_id: createdGroupID}); 
-
+  test("Successfully Create a Family Group", async () => {
+    const response = await request.post("/api/familyGroups/createFamilyGroup").send({
+        groupName: "test family group"
     });
+    createdGroupID = response._body.group._id;
+    expect(response.statusCode).toBe(200);
+    await FamilyGroups.findOneAndDelete({_id: createdGroupID}); 
+
+  });
 });
 
 //=====================================================================================//

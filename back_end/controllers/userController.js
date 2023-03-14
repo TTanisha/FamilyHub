@@ -4,32 +4,19 @@ const Users = require("../models/userModel");
 exports.registerUser = async (req, res) => {
   try {
     const newUser = await Users.create(req.body);
-    if (newUser == null) {
-      throw err;
-    } else {
-      res.status(201).send({
-        // created successfully
-        status: "success",
-        message: "New user created",
-        data: { newUser },
-      });
-    }
+    res.status(201).send({
+      // created successfully
+      status: "success",
+      message: "New user created",
+      data: { newUser },
+    });
   } catch (err) {
-    if (err instanceof MongoServerError) {
-      res.status(409).send({
-        // bad request
-        status: "fail",
-        message: err.message,
-        description: "Failed to register a new user",
-      });
-    } else {
-      res.status(400).send({
-        // bad request
-        status: "fail",
-        message: err.message,
-        description: "Failed to register a new user",
-      });
-    }
+    res.status(400).send({
+      // bad request
+      status: "fail",
+      message: err.message,
+      description: "Failed to register a new user",
+    });
   }
 };
 

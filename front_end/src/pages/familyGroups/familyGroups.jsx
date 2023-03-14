@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import FamilyGroup from '../../components/familyGroup/familyGroup';
 import CreateFamilyGroup from '../../components/familyGroup/createFamilyGroup';
 import AddMemberFamilyGroup from '../../components/familyGroup/addMemberFamilyGroup';
-import LeaveFamilyGroup from '../../components/familyGroup/LeaveFamilyGroup';
+import LeaveFamilyGroup from '../../components/familyGroup/leaveFamilyGroup';
 
 import './familyGroups.css';
 import axios from 'axios';

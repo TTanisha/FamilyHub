@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import "./userProfile.css";
 import axios from 'axios';
 import {Text, useModal, Button, Grid, Card, Spacer, Input} from "@nextui-org/react";
+import DeleteAccount from './deleteAccount';
 
 
 const UserProfile = (props) => {
@@ -207,9 +208,14 @@ const UserProfile = (props) => {
       { isLoggedUser &&
         <Grid.Container gap={2} justify="center" direction = 'row'>
           { !editing &&
+            <>
             <Grid>
               <Button auto  size="lg" onPress={() => {setEditing(true); setClickable({"pointerEvents": "auto"})}}>Edit</Button>
             </Grid>
+            <Grid>
+              <DeleteAccount/>
+            </Grid>
+            </>
           }  
           { editing &&
             <Grid xs={3}  >

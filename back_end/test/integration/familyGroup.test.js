@@ -100,10 +100,7 @@ describe("Add group member to Family Group", () => {
 describe("Remove member from Family Group", () => {
 
   test("Successfully remove a family member from a group.", async () => {
-    let familygroupTest = {
-      groupName: "test remove family group"
-    };
-
+  
     // First add a member
     let response = await request.post("/api/familyGroups/addMemberToFamilyGroup").send({
       groupId: newFamilyGroup._id, 

@@ -96,6 +96,7 @@ const CreateEventForm = (props) => {
           props.updateEvents();
         }
     }).catch(function (error) {
+      alert("Please enter an end date that is after the start date.");
     })
   }
 

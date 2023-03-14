@@ -60,7 +60,6 @@ afterAll(async () => {
 
 describe("Create Event Tests", () => {
 
-  // TODO: This test currently fails, request is undefined 
   test("Create a new event", async () => {
     const response = await request.post("/api/events/createEvent").send({
       title: "Test New Event",

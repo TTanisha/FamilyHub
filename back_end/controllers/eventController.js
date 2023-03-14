@@ -3,20 +3,21 @@ const FamilyGroups = require("../models/familyGroupModel");
 
 exports.validateEventDates = function(event) {
   if (event.start !== null && event.end !== null) {
-    if (event.end.toISOString() < event.start.toISOString()) {
-      throw "Start date must be before end date.";
+    const start = new Date(event.start); 
+    const end = new Date(event.end); 
+    if (end < start) { 
+      throw "Start date must be before end date."; 
     } 
-    else {
-      return true;
-    }
+    else { 
+      return true; 
+    };
   };
 };
 
 exports.createEvent = async(req, res) => {
-  console.log("REQUEST: " + req.title);
   try {
-    this.validateEventDates(req);
-    const newEvent = await Events.create(req);
+    this.validateEventDates(req.body);
+    const newEvent = await Events.create(req.body);
     if (newEvent === null) {
       throw err;
     } else {
@@ -35,7 +36,6 @@ exports.createEvent = async(req, res) => {
     };
     
   } catch (err) {
-    console.log("FAIL: " + err.message);
     res.status(400).json({ // bad request 
       status: "fail",
       message: err.message,
@@ -93,6 +93,7 @@ exports.updateEvent = async(req, res) => {
       throw err;
     };
     if (req.body.creationUser == eventToUpdate.creationUser) {
+      this.validateEventDates(req.body);
       eventToUpdate = await Events.findByIdAndUpdate(
         req.body.id, {$set: req.body}, {new: true, runValidators: true});
       if (eventToUpdate == null) {

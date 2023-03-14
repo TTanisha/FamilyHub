@@ -21,7 +21,7 @@ const defaultUser = {
 
 beforeAll(async () => {
   // Database connection
-  const DB = process.env.FAMILYHUB_DB_URI;
+  const DB = process.env.TEST_DB;
   mongoose.set('strictQuery', false); // Preparation for deprecation 
   const connectionOptions = {
     // Required due to changes in the MongoDB Node.js driver

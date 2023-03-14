@@ -43,7 +43,7 @@ beforeAll(async () => {
 afterAll(async () => {
   // make sure we have deleted the test FamilyGroups from the database
   try {
-    await FamilyGroups.findOneAndDelete(defaultFamilyGroup);
+    await FamilyGroups.findByIdAndDelete(newFamilyGroup._id);
   } catch (err) {
     console.log("Family Group not found.");
   }

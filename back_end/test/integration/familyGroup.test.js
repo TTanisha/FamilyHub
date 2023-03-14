@@ -54,7 +54,7 @@ const defaultUser = {
   afterAll(async () => {
     // make sure we have deleted the test FamilyGroups from the database
     try {
-      await FamilyGroups.findOneAndDelete({_id: newFamilyGroup._id});
+      await FamilyGroups.findByIdAndDelete(newFamilyGroup._id);
       await Users.findOneAndDelete({email: defaultUser.email});    
     } catch (err) {
       console.log("Family Group not found.");

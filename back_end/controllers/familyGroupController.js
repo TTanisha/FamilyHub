@@ -88,19 +88,19 @@ exports.addMemberToFamilyGroup = async (req, res) => {
             throw err;
         }
 
-        const updateUserGroups = await Users.updateOne({ _id: member._id },
-            {
-                $addToSet: {
-                    groups: group,
-                },
-            });
+        await Users.updateOne({ _id: member._id },
+        {
+            $addToSet: {
+                groups: group,
+            },
+        });
         
-        const updateGroupMembers = await FamilyGroups.updateOne({ _id: groupId },
-            {
-                $addToSet: {
-                    groupMembers: member,
-                },
-            });
+        await FamilyGroups.updateOne({ _id: groupId },
+        {
+            $addToSet: {
+                groupMembers: member,
+            },
+        });
 
         res.status(200).json({
             status: "success",
@@ -141,6 +141,85 @@ exports.getFamilyGroupEvents = async (req, res) => {
         res.status(404).json({
             status: "fail",
             message: "Group not found",
+        });
+      }
+};
+
+exports.leaveFamilyGroup = async (req, res) => {
+    try {
+        const { groupId, memberId } = req.body
+        const group = await FamilyGroups.findOne({ _id: groupId });
+        const member = await Users.findOne({_id: memberId});
+        let updatedGroup = null;
+        reason = "";
+        successMessage = "";
+    
+        //check if group and user are null
+        if (group == null) {
+          reason = "Family Group not found";
+          throw err;
+        }
+
+        if (member == null) {
+            reason = "User not found";
+            throw err;
+        }
+
+        //check if member array is empty
+        const initialMemberCount = group.groupMembers.length; 
+        if(initialMemberCount <= 0) {
+            reason = "Group does not have any members to remove";
+            throw err;
+        }
+
+        //remove member from the group's member array
+        try {
+            await FamilyGroups.updateOne({ _id: groupId },
+            {
+                $pull: {
+                    groupMembers: memberId,
+                },
+            });            
+        } catch (err) {
+            reason = "Member could not be removed from the group"
+            throw err;
+        }
+
+        //if member array is now empty, delete the group
+        try {
+            updatedGroup = await FamilyGroups.findOne({ _id: groupId });
+
+            if(updatedGroup.groupMembers.length == 0) {
+                await FamilyGroups.findOneAndRemove({ _id: groupId });
+
+                successMessage = " User was the last member of the group, so the group has been deleted"
+            } 
+        } catch (err) {
+            reason = "The last member of the group was removed, but the group could not be deleted"
+            throw err; 
+        }     
+
+        //remove the group from the user's groups array
+        try {
+            await Users.updateOne({ _id: memberId },
+            {
+                $pull: {
+                    groups: groupId,
+                },
+            });
+        } catch (err) {
+            reason = "Group could not be removed from the member"
+            throw err;
+        }
+    
+        res.status(200).json({
+            status: "success",
+            message: "User has successfully left the family group." + successMessage,
+        });
+      } catch (err) {
+        res.status(404).json({
+            status: "fail",
+            message: reason,
         });
       }
 };

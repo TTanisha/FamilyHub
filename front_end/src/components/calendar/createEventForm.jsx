@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import {Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Radio} from "@nextui-org/react";
-import FamilyGroupSelector from './familyGroup/familyGroupSelector';
+import FamilyGroupSelector from '../familyGroup/familyGroupSelector';
 
 const CreateEventForm = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));

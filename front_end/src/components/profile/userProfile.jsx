@@ -5,70 +5,96 @@ import {Text, useModal, Button, Grid, Card, Spacer, Input} from "@nextui-org/rea
 
 
 const UserProfile = (props) => {
-  let currUser = JSON.parse(localStorage.getItem("user"));
-  let date = new Date(currUser.birthday);
-  date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
-  date = date.getFullYear() + '-' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())));
 
   //form input
-  const [newEmail, setNewEmail] = useState(null);
-  const [firstName, setFirstName] = useState(currUser.firstName);
-  const [lastName, setLastName] = useState(currUser.lastName);
-  const [birthday, setBirthday] = useState(date);
-  const [nickname, setNickname] = useState(currUser.nickname); 
-  const [pronouns, setPronouns] = useState(currUser.pronouns); 
-  const [displayEmail, setDisplayEmail] = useState(currUser.email);
-  const [address, setaddress] = useState(currUser.address); 
-  const [cellNumber, setCellNumber] = useState(currUser.cellNumber); 
-  const [homeNumber, setHomeNumber] = useState(currUser.homeNumber);
+  const [email, setEmail] = useState(null);
+  const [firstName, setFirstName] = useState(null);
+  const [lastName, setLastName] = useState(null);
+  const [birthday, setBirthday] = useState(null);
+  const [nickname, setNickname] = useState(null);
+  const [pronouns, setPronouns] = useState(null);
+  const [address, setaddress] = useState(null);
+  const [cellNumber, setCellNumber] = useState(null);
+  const [homeNumber, setHomeNumber] = useState(null);
 
   // Logic variables
   const [clickable, setClickable] = useState({"pointerEvents": "none"});
   const [editing, setEditing] = useState(false);
+  const [isLoggedUser, setIsLoggedUser] = useState(true);
+  let currUser;
+  
 
-
-  //Update local storage: localStorage.setItem("user", JSON.stringify(newUser));
-  const updateLocalStorage = (props) => {
-    if (newEmail != null){
-      currUser.email = newEmail;
-    }
-    currUser.firstName = firstName;
-    currUser.lastName = lastName;
-    currUser.birthday = birthday;
-    currUser.nickname = nickname;
-    currUser.pronouns = pronouns;
-    currUser.displayEmail = displayEmail;
-    currUser.cellNumber = cellNumber;
-    currUser.homeNumber = homeNumber;
-    // update
-    localStorage.setItem("user", JSON.stringify(currUser));
+  // Get other member profile data given the ID.
+  const GetMemberData = () => {
+    axios.post("http://localhost:8080/api/users/getUserById", {id: props.userId})
+    .then(function(response)
+    {
+        if(response.data.status === "success")
+        {          
+          currUser = response.data.data.user;
+          setIsLoggedUser(false);
+          setUserInfo(currUser);
+        }
+    }).catch(function (error) {
+        console.log(error)
+    })
   }
 
-  const restoreValue = (props) => {
-    setNewEmail(currUser.email);
-    setFirstName(currUser.firstName);
-    setLastName(currUser.lastName);
-    setBirthday(currUser.birthday);
-    setNickname(currUser.nickname);
-    setPronouns(currUser.pronouns);
-    setDisplayEmail(currUser.displayEmail);
-    setaddress(currUser.firstName);
-    setCellNumber(currUser.cellNumber);
-    setHomeNumber(currUser.homeNumber);
+  
+  const setUserInfo = (inputUser) => {
+    let date = new Date(currUser.birthday);
+    date = new Date(date.getTime() + date.getTimezoneOffset() * 60000);
+    date = date.getFullYear() + '-' + ((date.getMonth() > 8) ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))) + '-' + (((date.getDate() > 9) ? date.getDate() : ('0' + date.getDate())));
+    
+    setEmail(inputUser.email);
+    setFirstName(inputUser.firstName);
+    setLastName(inputUser.lastName);
+    setBirthday(date);
+    setNickname(inputUser.nickname);
+    setPronouns(inputUser.pronouns);
+    setaddress(inputUser.address);
+    setCellNumber(inputUser.cellNumber);
+    setHomeNumber(inputUser.homeNumber);
+  }
+  
+
+  //Update local storage: localStorage.setItem("user", JSON.stringify(newUser));
+  const updateLocalStorage = (inputUser) => {
+    inputUser.firstName = firstName;
+    inputUser.lastName = lastName;
+    inputUser.birthday = birthday;
+    inputUser.nickname = nickname;
+    inputUser.pronouns = pronouns;
+    inputUser.address = address;
+    inputUser.cellNumber = cellNumber;
+    inputUser.homeNumber = homeNumber;
+    // update
+    localStorage.setItem("user", JSON.stringify(inputUser));
+  }
+
+  const restoreValue = (inputUser) => {
+
+    console.log(inputUser.firstName);
+    setFirstName(inputUser.firstName);
+    setLastName(inputUser.lastName);
+    setBirthday(inputUser.birthday);
+    setNickname(inputUser.nickname);
+    setPronouns(inputUser.pronouns);
+    setaddress(inputUser.firstName);
+    setCellNumber(inputUser.cellNumber);
+    setHomeNumber(inputUser.homeNumber);
     window.location.reload(false);
 }
 
-  const submitUpdateUser = (props) => {    
+  const submitUpdateUser = (props) => {
     axios.post("http://localhost:8080/api/users/updateUser", 
     { 
-      id : currUser._id,
-      newEmail : newEmail, 
+      email : email,
       firstName: firstName, 
       lastName: lastName, 
       birthday: new Date (birthday), 
       nickname: nickname, 
       pronouns: pronouns, 
-      displayEmail: displayEmail, 
       address: address, 
       cellNumber: cellNumber, 
       homeNumber: homeNumber
@@ -78,20 +104,37 @@ const UserProfile = (props) => {
           if(response.data.status === "success")
           {
             console.log(response);
-            updateLocalStorage();
+            updateLocalStorage(JSON.parse(localStorage.getItem("user")));
             setEditing(false);
             setClickable({"pointerEvents": "none"});
           }
       }).catch(function (error) {
         console.log("Error in User Profile");
+        console.log(error);
+
       })
   }
+
+  useEffect(()=>{
+    if (props.currUser == false) {
+      GetMemberData();
+    } else {
+      currUser = JSON.parse(localStorage.getItem("user"));
+      setIsLoggedUser(true);
+      setUserInfo(currUser);
+    }}, [])
+  
 
 
   return (
     <div>
       <Card css={{ $$cardColor: '$colors$gradient' }}> 
+      { isLoggedUser &&
           <Text h3 color="#ffffff"> My Profile</Text> 
+      }
+      { !isLoggedUser &&
+          <Text h3 color="#ffffff"> Family Member Profile</Text> 
+      }
       </Card>
       <div className='inputWrapper' style={clickable}>
       <Spacer y={2}/>
@@ -99,7 +142,7 @@ const UserProfile = (props) => {
           size="xl" 
           aria-label="Email"
           labelLeft="Email"
-          initialValue={currUser.email} 
+          initialValue={email} 
           readOnly/>
         <Spacer y={1}/>
         <Input 
@@ -161,19 +204,21 @@ const UserProfile = (props) => {
         <Spacer y={1}/>
       </div>
       <div>
-      <Grid.Container gap={2} justify="center" direction = 'row'>
-        { !editing &&
-          <Grid>
-            <Button auto  size="lg" onPress={() => {setEditing(true); setClickable({"pointerEvents": "auto"})}}>Edit</Button>
-          </Grid>
-        }  
-        { editing &&
-          <Grid xs={3}  >
-            <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(); }}> Discard changes</Button>
-            <Button auto size="lg" onPress={() => { submitUpdateUser(props)}}>Update</Button>
-          </Grid>
-        }
-      </Grid.Container>
+      { isLoggedUser &&
+        <Grid.Container gap={2} justify="center" direction = 'row'>
+          { !editing &&
+            <Grid>
+              <Button auto  size="lg" onPress={() => {setEditing(true); setClickable({"pointerEvents": "auto"})}}>Edit</Button>
+            </Grid>
+          }  
+          { editing &&
+            <Grid xs={3}  >
+              <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(JSON.parse(localStorage.getItem("user"))); }}> Discard changes</Button>
+              <Button auto size="lg" onPress={() => { submitUpdateUser(props)}}>Update</Button>
+            </Grid>
+          }
+        </Grid.Container>
+      }
       </div>
     </div>
   );

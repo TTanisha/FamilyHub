@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import {Text, Modal, Button, Input, Grid, Spacer, Checkbox, Textarea} from "@nextui-org/react";
-import FamilyGroupSelector from './familyGroup/familyGroupSelector';
+import FamilyGroupSelector from '../familyGroup/familyGroupSelector';
 
 const ViewEvent = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));
@@ -15,6 +15,7 @@ const ViewEvent = (props) => {
   const allDay = currEvent?.isAllday;
   const groupId = currEvent?.calendarId;
   const groupName = props.groupName;
+  const creationUser = currEvent?.raw?.creationUser;
 
   //parse start date to get the proper string format 
   const startDateObject = currEvent?.start.d;
@@ -52,6 +53,7 @@ const ViewEvent = (props) => {
   const [recurrenceRule, setRecurrenceRule] = useState("ONCE"); 
   const [familyGroup, setFamilyGroup] = useState(groupId);
   const [familyGroupName, setFamilyGroupName] = useState("");
+  const [isCreationUser, setIsCreationUser] = useState(false);
 
   //transformed data 
   const [startTimeDate, setStartTimeDate] = useState(); 
@@ -62,6 +64,10 @@ const ViewEvent = (props) => {
 
   //set input data once current event is loaded
   useEffect(() => {
+    setDefaultValues();
+  }, [currEvent]);
+
+  const setDefaultValues = () => {
     setStartDateInput(startDateString);
     setStartTimeInput(startTimeString);
     setEndDateInput(endDateString);
@@ -73,7 +79,9 @@ const ViewEvent = (props) => {
     setFamilyGroup(groupId);
     setIsAllDay(allDay);
     setFamilyGroupName(groupName);
-  }, [currEvent]);
+    setIsCreationUser(currUser._id == creationUser);
+    setLocationInput(location);
+  }
 
   //update start date/time if input is updated
   useEffect(() => {
@@ -154,8 +162,31 @@ const ViewEvent = (props) => {
     })
   }
 
+  const deleteEvent = (props) => {
+    axios.post("http://localhost:8080/api/events/deleteEvent", 
+    {
+      id: currEvent?.id,
+      creationUser: currUser._id, 
+    })
+    .then(function(response)
+    {
+        if(response.data.status === "success")
+        {
+          props.setVisible(false);
+          props.clearGroupName();
+          props.updateEvents();
+        }
+    }).catch(function (error) {
+    })
+  }
+
   const setFamilyGroupFromSelector = (id) => {
     setFamilyGroup(id);
+  }
+
+  const resetEventDetails = () => {
+    setEditMode(false); 
+    setDefaultValues();
   }
 
   return (
@@ -183,6 +214,7 @@ const ViewEvent = (props) => {
             label={editMode ? "Event Title" : ""}
             labelLeft={editMode ? "" : "Event Title"}
             initialValue={title}
+            value={titleInput}
             onChange={e => setTitleInput(e.target.value)}
           />
 
@@ -289,6 +321,7 @@ const ViewEvent = (props) => {
             readOnly={!editMode}
             label="Description"
             initialValue={description}
+            value={descriptionInput}
             onChange={e => setDescriptionInput(e.target.value)}
           />
 
@@ -298,44 +331,58 @@ const ViewEvent = (props) => {
             label={editMode ? "Location" : ""}
             labelLeft={editMode ? "" : "Location"}
             initialValue={location}
+            value={locationInput}
             onChange={e => setLocationInput(e.target.value)}
           />
         </Modal.Body>
 
         <Modal.Footer>
-          <Button auto flat color="default"
-            onPress={() => {
-              if (editMode) {
-                
-                submitUpdateEventForm(props)
-              } else {
-                setEditMode(true)
-              }
-            }}>
-            {editMode ? "Save" : "Edit"}
-          </Button>
+          <Grid.Container direction='row'>
 
-          {editMode &&
-            <Button auto flat color="error"
-              onPress={() => { 
-                setEditMode(false); 
-                setIsAllDay(allDay);
-                setStartTimeStringState(startTimeString);
-                setEndTimeStringState(endTimeString);
-                setFamilyGroupName(props.groupName);
+            <Grid xs={3}>
+              { isCreationUser && <Button auto flat color="error"
+              onPress={() => {
+                deleteEvent(props)
               }}>
-              Cancel
-            </Button>
-          }
+                Delete
+              </Button>}
+            </Grid>
 
-          <Button auto flat color="error"
-            onPress={() => {
-              props.setVisible(false);
-              setEditMode(false);
-              props.clearGroupName();
-            }}>
-            Close
-          </Button>
+            <Grid xs={6}></Grid>
+
+            <Grid xs={3} justify="right">
+              { isCreationUser && <Button auto flat color="default"
+                onPress={() => {
+                  if (editMode) {
+                    
+                    submitUpdateEventForm(props)
+                  } else {
+                    setEditMode(true)
+                  }
+                }}>
+                {editMode ? "Save" : "Edit"}
+              </Button>
+              }
+
+              {editMode &&
+                <Button auto flat color="error"
+                  onPress={() => { 
+                    resetEventDetails();
+                  }}>
+                  Cancel
+                </Button>
+              }
+
+              <Button auto flat color="error"
+                onPress={() => {
+                  props.setVisible(false);
+                  setEditMode(false);
+                  props.clearGroupName();
+                }}>
+                Close
+              </Button>
+            </Grid>
+          </Grid.Container>
         </Modal.Footer>
       </Modal>
     </div>

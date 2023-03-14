@@ -109,3 +109,37 @@
 .toastui-calendar-grid-cell-more-events {
     cursor: default;
 }
+
+.datePicker {
+    border: #e5e5e5;
+    border-style: solid;
+}
+
+.datePicker input,
+.datePicker button {
+    font: inherit;
+    background-color: #ffffff;
+    border-radius: 0;
+}
+
+.datePicker button:hover {
+    background-color: #bfbff8;
+}
+
+.datePicker .react-calendar .react-calendar__navigation {
+    display: flex;
+}
+
+.datePicker .react-calendar .react-calendar__navigation button {
+    border: #3700ff;
+    border-style: dotted;
+    border-width: 1px;
+}
+
+.datePicker .react-calendar .react-calendar__navigation button:hover {
+    background-color: #bfbff8;
+}
+
+.datePicker .react-calendar .react-calendar__month-view__weekdays {
+    background-color: #ffffff;
+}

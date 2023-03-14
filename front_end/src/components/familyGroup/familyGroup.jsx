@@ -2,11 +2,20 @@ import React, { useEffect, useState } from 'react';
 import "./familyGroup.css";
 import axios from 'axios';
 import {Text, Card, Spacer} from "@nextui-org/react";
-  
+import { createSearchParams, useNavigate } from 'react-router-dom';
+
 const FamilyGroup = (props) => {
   const [groupMembers, setGroupMembers] = useState([]);
   const [loading, setLoading] = useState(true);
-  
+  const navigate = useNavigate();
+
+  const visitProfile = (userId) => {
+    navigate({
+      pathname: "/familymemberprofile", 
+      search: createSearchParams({ id: userId}).toString()
+    })
+  }
+
   useEffect(() => {
     const CancelToken = axios.CancelToken;
     const source = CancelToken.source();
@@ -42,7 +51,7 @@ const FamilyGroup = (props) => {
       {
         !loading && (groupMembers?.map((userData) => ( loading ? null : 
           <div key={userData?._id}> 
-            <Card isPressable isHoverable variant="bordered" css={{ backgroundColor: "white"}}>
+            <Card isPressable isHoverable variant="bordered" onPress={() => { visitProfile(userData._id)}} css={{ backgroundColor: "white"}}>
               <Text h4 css={{textAlign: "left"}}> 
                 {userData?.firstName} {userData?.lastName}
               </Text>
@@ -53,7 +62,6 @@ const FamilyGroup = (props) => {
     </div>
   );
 };
-  
 export default FamilyGroup;
 
 

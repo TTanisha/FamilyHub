@@ -4,11 +4,12 @@ import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 import './calendar.css';
 import { FaArrowLeft, FaArrowRight } from "react-icons/fa";
 import moment from 'moment';
-import CreateEventForm from '../../components/createEventForm';
+import CreateEventForm from '../../components/calendar/createEventForm';
 import axios from 'axios';
-import ViewEvent from '../../components/viewEvent';
+import ViewEvent from '../../components/calendar/viewEvent';
 import {Text, Grid, Spacer, Dropdown} from "@nextui-org/react";
 import { Calendar as ReactCalendar } from 'react-calendar';
+import FilterSelector from '../../components/calendar/filterSelector';
 
 let tuiCalendar = new TUICalendar('#calendar');
 
@@ -31,6 +32,10 @@ function setCalendarTitle(view) {
     string = moment(tuiCalendar.getDate().toString(), "ddd MMM DD YYYY HH:mm:ss").format("MMMM YYYY");
   } else if (view == 'Daily') {
     string = moment(tuiCalendar.getDate().toString(), "ddd MMM DD YYYY HH:mm:ss").format("ddd MMMM DD YYYY");
+  } else if (view == 'Weekly') {
+    let weekStart = moment(tuiCalendar.getDateRangeStart().toString(), "ddd MMM DD YYYY HH:mm:ss").format("ddd MMMM DD YYYY");
+    let weekEnd = moment(tuiCalendar.getDateRangeEnd().toString(), "ddd MMM DD YYYY HH:mm:ss").format("ddd MMMM DD YYYY");
+    string = weekStart + " - " + weekEnd;
   }
 
   document.getElementById("renderRange").innerHTML = string;
@@ -103,6 +108,13 @@ const Calendar = () => {
             taskView: false,
           }
         })
+      } else if(selectedView.currentKey == 'Weekly') {
+        tuiCalendar.changeView('week');
+        tuiCalendar.setOptions({
+          week: {
+            taskView: false,
+          }
+        })
       }
       setCalendarTitle(selectedView.currentKey);
     } 
@@ -129,6 +141,9 @@ const Calendar = () => {
           end: event.end,
           isAllDay: event.isAllDay,
           location: event.location,
+          raw: {
+            creationUser: event.creationUser
+          }
         };
         setTUICalendarEvents(tuiCalendarEvents => [...tuiCalendarEvents, tuiEvent]);
       });
@@ -216,31 +231,51 @@ const Calendar = () => {
     setSelectedFamilyGroupName(null);
   }
 
+  function setFilter(selected) {
+    currUser.groups?.map((groupId) => {
+      tuiCalendar.setCalendarVisibility(groupId, false);
+    })
+
+    selected.map((calendarId) => {
+      tuiCalendar.setCalendarVisibility(calendarId, true);
+      
+    })
+
+    tuiCalendar.render();
+  }
+
   return (
     <div className="container">
       <div className="filters-container">
+      
         <Grid.Container justify='center' direction='column'>
-          <Text> Select View: </Text>  
-          <Dropdown>
-          <Dropdown.Button flat>{selectedView}</Dropdown.Button>
-            <Dropdown.Menu 
-              aria-label="Static Actions" 
-              disallowEmptySelection
-              selectionMode="single"
-              defaultSelectedKeys={"monthly"}
-              selectedKeys={selectedView}
-              onSelectionChange={setSelectedView}
-            >
-              <Dropdown.Item key="Monthly">Monthly</Dropdown.Item>
-              <Dropdown.Item key="Daily">Daily</Dropdown.Item>
 
-            </Dropdown.Menu>
-          </Dropdown>
-          <Spacer/>
-          <ReactCalendar
-            onChange={(date) => setPickerDate(date)}  value={pickerDate} calendarType="Hebrew"
-          />
+            <Text h4> Select View: </Text>  
+            <Dropdown>
+              <Dropdown.Button flat>{selectedView}</Dropdown.Button>
+              <Dropdown.Menu 
+                aria-label="Static Actions" 
+                disallowEmptySelection
+                selectionMode="single"
+                defaultSelectedKeys={"monthly"}
+                selectedKeys={selectedView}
+                onSelectionChange={setSelectedView}
+              >
+                <Dropdown.Item key="Monthly">Monthly</Dropdown.Item>
+                <Dropdown.Item key="Weekly">Weekly</Dropdown.Item>
+                <Dropdown.Item key="Daily">Daily</Dropdown.Item>
+
+              </Dropdown.Menu>
+            </Dropdown>
+            <Spacer/>
+            <div className="datePicker">
+              <ReactCalendar
+                onChange={(date) => setPickerDate(date)}  value={pickerDate} calendarType="Hebrew"
+              />
+            </div>
+            <FilterSelector setFilter={setFilter}/>
         </Grid.Container> 
+        
       </div>
       <div>
         <span className="calendar-navi">

@@ -11,7 +11,7 @@ const DeleteAccount = (props) => {
   const deleteAccount = () => {
     axios.post("http://localhost:8080/api/users/deleteUser", 
     {
-        id: currUser._id
+        email: currUser.email
     })
     .then(function(response)
     {

@@ -137,7 +137,7 @@ exports.updateUser = async(req, res) => {
 
 exports.deleteUser = async(req, res) => {
   try {
-    const user = await Users.findById(req.body.id);
+    const user = await Users.findOne({email: req.body.email});
 
     //remove from family groups
     for(var i = 0; i<user.groups.length; i++) {
@@ -156,7 +156,7 @@ exports.deleteUser = async(req, res) => {
       } 
     }
 
-    await Users.findOneAndDelete({_id: req.body.id});
+    await Users.findOneAndDelete({email: req.body.email});
     if (user == null) {
       throw err;
     } else {

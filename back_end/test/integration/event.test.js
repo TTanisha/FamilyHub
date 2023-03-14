@@ -62,7 +62,7 @@ describe("Create Event Tests", () => {
 
   test("Create a new event", async () => {
     const response = await request.post("/api/events/createEvent").send({
-      title: "Test Event 2",
+      title: "Test New Event",
       body: "Event description",
       creationUser: user1,
       isAllDay: true,
@@ -72,7 +72,7 @@ describe("Create Event Tests", () => {
       familyGroup: familyGroup
     });
     expect(response.statusCode).toBe(201);
-    await Events.findOneAndDelete({title: "Test Event 2"});
+    await Events.findOneAndDelete({title: "Test New Event"});
   });
 
   test("Create an event with no title", async () => {
@@ -111,6 +111,20 @@ describe("Create Event Tests", () => {
       start: new Date("2023-01-17"), // year,month,day
       end: new Date("2023-01-17"),
       recurrenceRule: "huh",
+      familyGroup: familyGroup
+    });
+    expect(response.statusCode).toBe(400);
+  });
+
+  test("Create an event with an invalid end time", async () => {
+    const response = await request.post("/api/events/createEvent").send({
+      title: "Invalid end date test",
+      body: "Event description",
+      creationUser: new mongoose.Types.ObjectId(),
+      isAllDay: true,
+      start: new Date("2023-03-9"), // year,month,day
+      end: new Date("2023-03-8"),
+      recurrenceRule: "ONCE",
       familyGroup: familyGroup
     });
     expect(response.statusCode).toBe(400);

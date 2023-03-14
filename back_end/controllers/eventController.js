@@ -1,8 +1,22 @@
 const Events = require("../models/eventModel");
 const FamilyGroups = require("../models/familyGroupModel");
 
+exports.validateEventDates = function(event) {
+  if (event.start !== null && event.end !== null) {
+    const start = new Date(event.start); 
+    const end = new Date(event.end); 
+    if (end < start) { 
+      throw "Start date must be before end date."; 
+    } 
+    else { 
+      return true; 
+    };
+  };
+};
+
 exports.createEvent = async(req, res) => {
   try {
+    this.validateEventDates(req.body);
     const newEvent = await Events.create(req.body);
     if (newEvent === null) {
       throw err;
@@ -79,6 +93,7 @@ exports.updateEvent = async(req, res) => {
       throw err;
     };
     if (req.body.creationUser == eventToUpdate.creationUser) {
+      this.validateEventDates(req.body);
       eventToUpdate = await Events.findByIdAndUpdate(
         req.body.id, {$set: req.body}, {new: true, runValidators: true});
       if (eventToUpdate == null) {

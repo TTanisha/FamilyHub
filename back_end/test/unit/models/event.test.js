@@ -1,4 +1,5 @@
 const Events = require('../../../models/eventModel');
+const { validateEventDates } = require('../../../controllers/eventController');
 const mongoose = require('mongoose');
 const { ValidationError } = require('mongodb')
 require("dotenv").config({path: "config.env"}); // load environment variables
@@ -71,6 +72,7 @@ describe("Create Event Tests", () => {
       recurrenceRule: "ONCE",
       familyGroup: familyGroup
     };
+    expect(validateEventDates(eventData)).toBe(true);
     const event = await Events.create(eventData);
     expect(event.title).toBe(eventData.title);
     expect(event.familyGroup._id).toStrictEqual(familyGroup);
@@ -87,6 +89,7 @@ describe("Create Event Tests", () => {
       recurrenceRule: "ONCE",
       familyGroup: familyGroup
     };
+    expect(validateEventDates(eventData)).toBe(true);
     const event = Events.create(eventData);
     await expect(event).rejects.toThrow();
   });
@@ -102,6 +105,7 @@ describe("Create Event Tests", () => {
       recurrenceRule: "ONCE",
       familyGroup: familyGroup
     };
+    expect(validateEventDates(eventData)).toBe(true);
     const event = Events.create(eventData);
     await expect(event).rejects.toThrow();
   });
@@ -117,8 +121,25 @@ describe("Create Event Tests", () => {
       recurrenceRule: "huh",
       familyGroup: familyGroup
     };
+    expect(validateEventDates(eventData)).toBe(true);
     const event = Events.create(eventData);
     await expect(event).rejects.toThrow();
+  });
+
+  test("Create an event with an invalid end time", async () => {
+    const eventData = {
+      title: "Invalid end date test",
+      body: "Event description",
+      creationUser: new mongoose.Types.ObjectId(),
+      isAllDay: true,
+      start: new Date("2023-03-9"), // year,month,day
+      end: new Date("2023-03-8"),
+      recurrenceRule: "ONCE",
+      familyGroup: familyGroup
+    };
+    expect(() => {
+      validateEventDates(eventData)
+    }).toThrow('Start date must be before end date.');
   });
 
   test("Create an event without a family group", async () => {

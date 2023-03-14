@@ -4,7 +4,7 @@
   "description": "",
   "main": "server.js",
   "scripts": {
-    "test": "jest --testEnvironment=node --testTimeout=10000 --verbose",
+    "test": "jest --testEnvironment=node --testTimeout=10000 --verbose --collectCoverage",
     "start": "node server",
     "dev": "nodemon server"
   },

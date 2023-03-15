@@ -1,5 +1,6 @@
 const { MongoServerError } = require("mongodb");
 const Users = require("../models/userModel");
+const FamilyGroups = require("../models/familyGroupModel");
 
 exports.registerUser = async (req, res) => {
   try {
@@ -155,7 +156,27 @@ exports.updateUser = async (req, res) => {
 
 exports.deleteUser = async (req, res) => {
   try {
-    const user = await Users.findOneAndDelete({ email: req.body.email });
+    const user = await Users.findOne({ email: req.body.email });
+
+    //remove from family groups
+    for (var i = 0; i < user.groups.length; i++) {
+      await FamilyGroups.updateOne({ _id: user.groups[i] },
+        {
+            $pull: {
+                groupMembers: user._id,
+            },
+        });   
+
+      let updatedGroup = await FamilyGroups.findOne({ _id: user.groups[i] });
+
+      //delete family group if no members are left
+      if (updatedGroup.groupMembers.length == 0) {
+          await FamilyGroups.findOneAndRemove({ _id: user.groups[i] });
+      } 
+    }
+
+    await Users.findOneAndDelete({email: req.body.email});
+
     if (user == null) {
       throw err;
     } else {

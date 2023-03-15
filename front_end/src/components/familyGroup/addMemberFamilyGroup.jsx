@@ -22,11 +22,10 @@ const AddMemberFamilyGroup = (props) => {
             console.log(response);
         }
     }).catch(function (error) {
-        console.log("Error in Family Group");
+        window.alert(error.response.data.message);
     })
   }
 
-  
   // reset the form states on close and successful submit
   const resetFormState = () => {
     setVisible(false); 

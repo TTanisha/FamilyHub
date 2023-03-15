@@ -2,8 +2,18 @@ const { MongoServerError } = require("mongodb");
 const Users = require("../models/userModel");
 const FamilyGroups = require("../models/familyGroupModel");
 
+//from w3resource: https://www.w3resource.com/javascript/form/email-validation.php
+exports.validateEmail = function(mail) 
+{
+ return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
+}
+
 exports.registerUser = async (req, res) => {
   try {
+    if(!this.validateEmail(req.body.email)) {
+      throw new Error("Please enter a valid email address.");
+    }
+
     const newUser = await Users.create(req.body);
     res.status(201).send({
       // created successfully

@@ -12,12 +12,20 @@ exports.registerUser = async (req, res) => {
       data: { newUser },
     });
   } catch (err) {
-    res.status(400).send({
-      // bad request
-      status: "fail",
-      message: err.message,
-      description: "Failed to register a new user",
-    });
+    if(err.code === 11000) {
+      res.status(400).send({
+        // bad request
+        status: "fail",
+        message: "This email is already associated with an account.",
+      });
+    } else { 
+      res.status(400).send({
+        // bad request
+        status: "fail",
+        message: err.message,
+        description: "Failed to register a new user",
+      });
+    }
   }
 };
 

@@ -218,9 +218,10 @@ const UserProfile = (props) => {
             </>
           }  
           { editing &&
-            <Grid xs={3}  >
-              <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(JSON.parse(localStorage.getItem("user"))); }}> Discard changes</Button>
+            <Grid xs={4}  >
               <Button auto size="lg" onPress={() => { submitUpdateUser(props)}}>Update</Button>
+              <Spacer x={2}/>
+              <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(JSON.parse(localStorage.getItem("user"))); }}> Discard changes</Button>
             </Grid>
           }
         </Grid.Container>

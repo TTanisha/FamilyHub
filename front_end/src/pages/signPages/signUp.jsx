@@ -11,6 +11,12 @@ const SignUp = () => {
   const[password, setPassword] = React.useState('');
   const[birthDate, setBirthDate] = React.useState(null);
 
+  const handleKeyDown = (event) => {
+    if (event.key === 'Enter') {
+      signUserUp({firstName: firstName, lastName: lastName, email: email, password:password, birthday: birthDate})
+    }
+  };
+
   return (
     <div className="sign-up">
         <h1>Sign-Up</h1>
@@ -50,6 +56,8 @@ const SignUp = () => {
                 label="Birthday:"
                 helperText="required"
                 type="date"
+                onKeyDown={handleKeyDown}
+                max="9999-12-31"
                 onChange={(date) => setBirthDate((new Date(date.target.value)).toISOString())}>
               </Input>
             </Grid>

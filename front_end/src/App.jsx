@@ -9,7 +9,7 @@ import Profile from './pages/profile/profile';
 import FamilyMemberProfile from './pages/profile/familyMemberProfile';
 import { Navigate } from 'react-router-dom';
 import SignUp from './pages/signPages/signUp';
-import { NextUIProvider, Navbar, Text, Avatar, Dropdown } from "@nextui-org/react";
+import { NextUIProvider, Navbar, Text, Avatar, Dropdown, Button } from "@nextui-org/react";
 import profilePicture from './images/user.png';
 
 function App() {
@@ -60,14 +60,20 @@ function App() {
                 color="secondary"
                 
               >
-                <Dropdown.Item as={Text} key="profile" css={{ height: "$18" }} textValue>
-                  Signed in as {currUser.email}
+                <Dropdown.Item as={Text} variant="light" autokey="viewProfile" withDivider textValue css={{height: "$17", width:"$60"}}> 
+                <Button flat light css={{height: "$18", justifyContent: "flex-start"}} > 
+                    Signed in as {currUser.email}
+                  </Button> 
                 </Dropdown.Item>
-                <Dropdown.Item as={Text} key="viewProfile" withDivider textValue css={{height: "$18" }}> 
-                  <Navbar.Link href="/profile" isActive={window.location.pathname === "/profile"}> My Profile </Navbar.Link> 
+                <Dropdown.Item as={Text} variant="light" autokey="viewProfile" withDivider textValue css={{height: "$18", width: "$60" }}> 
+                  <Button as={Navbar.Link} flat light href="/profile" isActive={window.location.pathname === "/profile"} css={{height: "$18", justifyContent: "flex-start"}} > 
+                    My Profile 
+                  </Button> 
                 </Dropdown.Item>
-                <Dropdown.Item as={Text} key="logout" withDivider textValue color="error" css={{height: "$18" }}> 
-                  <Navbar.Link href="/signout" isActive={window.location.pathname === "/signout"} color="error"> Log Out </Navbar.Link> 
+                <Dropdown.Item as={Text} variant="light" autokey="viewProfile" withDivider textValue css={{height: "$18", width: "$60" }}> 
+                  <Button as={Navbar.Link} color="error" flat href="/signout" isActive={window.location.pathname === "/signout"}  css={{height: "$18", justifyContent: "flex-start"}} > 
+                    Log Out 
+                  </Button>
                 </Dropdown.Item>
                 
               </Dropdown.Menu>

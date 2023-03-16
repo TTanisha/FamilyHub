@@ -165,6 +165,7 @@ const UserProfile = (props) => {
           aria-label="Birthday"
           labelLeft='Birthday' 
           type={"date"}
+          max="9999-12-31"
           initialValue={birthday} 
           onBlur={e => setBirthday(e.target.value)}/>
         <Spacer y={1}/>

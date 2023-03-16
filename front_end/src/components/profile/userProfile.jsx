@@ -151,14 +151,14 @@ const UserProfile = (props) => {
           aria-label="First Name"
           labelLeft="First Name"
           initialValue={firstName} 
-          onChange={e => setFirstName(e.target.value)}/>
+          onBlur={e => setFirstName(e.target.value)}/>
         <Spacer y={1}/>
         <Input 
           size="xl"
           aria-label='Last Name'
           labelLeft="Last Name"
           initialValue={lastName} 
-          onChange={e => setLastName(e.target.value)}/>
+          onBlur={e => setLastName(e.target.value)}/>
         <Spacer y={1}/>
         <Input 
           size="xl"
@@ -166,42 +166,42 @@ const UserProfile = (props) => {
           labelLeft='Birthday' 
           type={"date"}
           initialValue={birthday} 
-          onChange={e => setBirthday(e.target.value)}/>
+          onBlur={e => setBirthday(e.target.value)}/>
         <Spacer y={1}/>
         <Input 
           size="xl"
           aria-label="Nickname"
           labelLeft='Nickname'  
           initialValue={nickname} 
-          onChange={e => setNickname(e.target.value)}/>
+          onBlur={e => setNickname(e.target.value)}/>
         <Spacer y={1}/>
         <Input 
           size="xl"
           aria-label="Pronouns"
           labelLeft='Pronouns' 
           initialValue={pronouns} 
-          onChange={e => setPronouns(e.target.value)}/>
+          onBlur={e => setPronouns(e.target.value)}/>
         <Spacer y={1}/>
         <Input 
           size="xl"
           aria-label="Address"
           labelLeft='Address' 
           initialValue={address} 
-          onChange={e => setaddress(e.target.value)}/>
+          onBlur={e => setaddress(e.target.value)}/>
         <Spacer y={1}/>
         <Input 
           size="xl"
           aria-label="Cell Number"
           labelLeft='Cell Number' 
           initialValue={cellNumber} 
-          onChange={e => setCellNumber(e.target.value)}/>
+          onBlur={e => setCellNumber(e.target.value)}/>
         <Spacer y={1}/>
         <Input
           size="xl"
           aria-label='Home Number' 
           labelLeft='Home Number' 
           initialValue={homeNumber} 
-          onChange={e => setHomeNumber(e.target.value)}/>
+          onBlur={e => setHomeNumber(e.target.value)}/>
         <Spacer y={1}/>
       </div>
       <div>

@@ -29,7 +29,7 @@ const DeleteAccount = (props) => {
 
   return (
     <>
-      <Button auto flat color="error" onPress={() => setVisible(true)}>
+      <Button flat auto size="md" color="error" onPress={() => setVisible(true)}>
           Delete Account
       </Button>
       <Modal

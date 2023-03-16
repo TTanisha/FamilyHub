@@ -7,7 +7,7 @@ import moment from 'moment';
 import CreateEventForm from '../../components/calendar/createEventForm';
 import axios from 'axios';
 import ViewEvent from '../../components/calendar/viewEvent';
-import {Text, Grid, Spacer, Dropdown} from "@nextui-org/react";
+import {Text, Grid, Spacer, Dropdown, Button} from "@nextui-org/react";
 import { Calendar as ReactCalendar } from 'react-calendar';
 import FilterSelector from '../../components/calendar/filterSelector';
 
@@ -279,16 +279,12 @@ const Calendar = () => {
       </div>
       <div>
         <span className="calendar-navi">
-          <button className="prev-button" type="button" onClick={()=>navigateCalendar((-1))}>
-            <FaArrowLeft />
-          </button>
+          <Button color="primary" flat onClick={()=>navigateCalendar((-1))} icon={<FaArrowLeft />}/>
           <div className="calendar-center-header">
             <div id="renderRange" className="calendar-title"></div>
-            <button type="button" className="today-button" onClick={()=>navigateCalendar(0)}>Today</button>
+            <Button color="primary" flat auto onClick={()=>navigateCalendar(0)}>Today</Button>
           </div>
-          <button type="button" className="next-button" onClick={()=>navigateCalendar(1)}>
-            <FaArrowRight />
-          </button>
+          <Button color="primary" flat onClick={()=>navigateCalendar(1)} icon={<FaArrowRight />}/>
         </span>
         <div id="calendar" className="calendar"></div>
         { selectedFamilyGroupName ? 

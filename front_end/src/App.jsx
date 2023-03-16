@@ -9,7 +9,6 @@ import Profile from './pages/profile/profile';
 import FamilyMemberProfile from './pages/profile/familyMemberProfile';
 import { Navigate } from 'react-router-dom';
 import SignUp from './pages/signPages/signUp';
-import SignUpSuccess from './pages/signPages/signUpSuccess';
 import { NextUIProvider, Navbar, Text, Avatar, Dropdown } from "@nextui-org/react";
 import profilePicture from './images/user.png';
 
@@ -86,7 +85,6 @@ function App() {
           <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate to='/' />} />
           <Route path='/familymemberprofile' element={isLoggedIn ? <FamilyMemberProfile /> : <Navigate to='/' />} />
           <Route path='/sign-up' element={<SignUp />} />
-          <Route path='/signup-success' element={<SignUpSuccess />} />
         </Routes>
       </Router>
     </NextUIProvider>

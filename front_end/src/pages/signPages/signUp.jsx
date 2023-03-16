@@ -76,12 +76,13 @@ const SignUp = () => {
 
 async function signUserUp(props) {
   await axios.post("http://localhost:8080/api/users/registerUser", (props))
-   .then(function(response)
-   {
-       if(response.data.status === "success")
-       {
-        window.location.href = '/signup-success';
-       } 
+    .then(function(response) {
+      if(response.data.status === "success") {
+        const newUser = response.data.data.newUser;
+        localStorage.setItem("user", JSON.stringify(newUser));
+        localStorage.setItem("loggedIn", "true");
+        window.location.href = '/calendar';
+      } 
    }).catch(function (error) {
        console.log(error);
        window.alert(error.response.data.message);

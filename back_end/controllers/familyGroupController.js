@@ -1,6 +1,5 @@
 const FamilyGroups = require("../models/familyGroupModel");
 const Users = require("../models/userModel");
-const { ObjectId } = require("mongodb");
 
 // Include controller logic
 exports.createFamilyGroup = async (req, res) => {

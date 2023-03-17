@@ -96,7 +96,7 @@ const CreateEventForm = (props) => {
           props.updateEvents();
         }
     }).catch(function (error) {
-      alert("Event could not be created.");
+      window.alert(error.response.data.message);
     })
   }
 
@@ -149,7 +149,7 @@ const CreateEventForm = (props) => {
             <Grid> 
               <Grid.Container direction='column'> 
                 <Grid>
-                  <Input required label='Start Date' type='date' onChange={e => setStartDateInput(e.target.value)}/>
+                  <Input required label='Start Date' type='date' max='9999-12-31' onChange={e => setStartDateInput(e.target.value)}/>
                 </Grid>
                 { !isAllDay &&
                   <Grid>
@@ -166,7 +166,7 @@ const CreateEventForm = (props) => {
             <Grid xs={3}> 
               <Grid.Container direction='column'>
                 <Grid>
-                  <Input required label='End Date' type='date' onChange={e => setEndDateInput(e.target.value)}/>
+                  <Input required label='End Date' type='date' max='9999-12-31' onChange={e => setEndDateInput(e.target.value)}/>
                   </Grid>
                 { !isAllDay &&
                   <Grid>

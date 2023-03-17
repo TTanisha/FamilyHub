@@ -65,12 +65,12 @@ exports.addMemberToFamilyGroup = async (req, res) => {
 
     if (group == null) {
       reason = "Family Group not found";
-      throw err;
+      throw new Error(message = reason);
     }
 
     if (member == null) {
       reason = "Member not found";
-      throw err;
+      throw new Error(message = reason);
     }
 
     //if new member, count should = 0
@@ -158,12 +158,12 @@ exports.leaveFamilyGroup = async (req, res) => {
     //check if group and user are null
     if (group == null) {
       reason = "Family Group not found";
-      throw err;
+      throw new Error(message = reason);
     }
 
     if (member == null) {
       reason = "User not found";
-      throw err;
+      throw new Error(message = reason);
     }
 
     //check if member array is empty

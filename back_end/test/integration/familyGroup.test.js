@@ -264,7 +264,7 @@ describe("Family Group Integration Tests", () => {
 
   describe("Update Group (Remove User Membership)", () => {
     describe("Given a valid group ID and new user email", () => {
-      describe.only("Given a user leaves the group and there are still members", () => {
+      describe("Given a user leaves the group and there are still members", () => {
         it("Should return the group without the user in the group", async () => {
           // First add a member
           let tempUser = await Users.create({

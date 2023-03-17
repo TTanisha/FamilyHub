@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Radio} from "@nextui-org/react";
+import {Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Dropdown} from "@nextui-org/react";
 import FamilyGroupSelector from '../familyGroup/familyGroupSelector';
 
 const CreateEventForm = (props) => {
@@ -18,6 +18,11 @@ const CreateEventForm = (props) => {
   const [locationInput, setLocationInput] = useState("");
   const [isAllDay, setIsAllDay] = useState(false); 
   const [recurrenceRule, setRecurrenceRule] = useState("ONCE"); 
+  const [recurranceFrequency, setRecurranceFrequency] = React.useState(new Set(["Frequency"]));
+  const selectedFrequency = React.useMemo(
+    () => Array.from(recurranceFrequency).join("").replaceAll("_", " "),
+    [recurranceFrequency]
+  );
   const [familyGroup, setFamilyGroup] = useState(currUser.groups[0]);
 
   //transformed data 
@@ -143,7 +148,6 @@ const CreateEventForm = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Input required label='Title' onChange={e => setTitleInput(e.target.value)}/>
-
           {/* Date input */}
           <Grid.Container>
             <Grid> 
@@ -177,6 +181,39 @@ const CreateEventForm = (props) => {
             </Grid>
           </Grid.Container>
           <Checkbox size="sm" onChange={setIsAllDay}> All day </Checkbox>
+          
+         {/* Recurring Event */}
+          <Grid.Container>
+            <Grid> 
+              <Grid.Container direction='column'> 
+                <Grid>
+                <Checkbox size="sm" onChange={setRecurrenceRule}> Recurring </Checkbox>
+                </Grid>
+              </Grid.Container>
+            </Grid>
+            <Spacer y={1} x={10.5}/>
+            <Grid xs={5}> 
+              <Grid.Container direction='column'>
+                <Grid>
+                  <Dropdown >
+                    <Dropdown.Button flat>{selectedFrequency}</Dropdown.Button>
+                    <Dropdown.Menu aria-label="Static Actions" disallowEmptySelection selectionMode="single" selectedKeys={recurranceFrequency} onSelectionChange={setRecurranceFrequency}>
+                      <Dropdown.Item key="Daily">Daily</Dropdown.Item>
+                      <Dropdown.Item key="Weekly">Weekly</Dropdown.Item>
+                      <Dropdown.Item key="Monthly">Monthly</Dropdown.Item>
+                      <Dropdown.Item key="Yearly">Yearly</Dropdown.Item>
+                    </Dropdown.Menu>
+                  </Dropdown>
+                  </Grid>
+              </Grid.Container>
+              <Grid.Container direction='column'>
+                <Grid>
+                <Input width="120px" placeHolder= 'Recurrances' type='number' onChange={e => setNumRecurrances(e.target.value)}/>
+                  </Grid>
+              </Grid.Container>
+            </Grid>
+          </Grid.Container>
+
 
           <FamilyGroupSelector initialGroup={familyGroup} setFamilyGroup={setFamilyGroupFromSelector}/>
 

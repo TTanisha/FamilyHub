@@ -10,6 +10,11 @@ const SignUp = () => {
   const[email, setEmail] = React.useState('');
   const[password, setPassword] = React.useState('');
   const[birthDate, setBirthDate] = React.useState(null);
+  const[nickname, setNickname] = React.useState('');
+  const[pronouns, setPronouns] = React.useState('');
+  const[address, setAddress] = React.useState('');
+  const[cellNumber, setCellNumber] = React.useState('');
+  const[homeNumber, setHomeNumber] = React.useState('');
 
   return (
     <div className="sign-up">
@@ -53,12 +58,49 @@ const SignUp = () => {
                 onChange={(date) => setBirthDate((new Date(date.target.value)).toISOString())}>
               </Input>
             </Grid>
+            <Grid>
+              <Input 
+                label="Nickname:"
+                helperText="optional"
+                onChange={e => setNickname(e.target.value)}>
+              </Input>
+            </Grid>
+            <Grid>
+              <Input 
+                label="Pronouns:"
+                helperText="optional"
+                onChange={e => setPronouns(e.target.value)}>
+              </Input>
+            </Grid>
+            <Grid>
+              <Input 
+                label="Address:"
+                helperText="optional"
+                onChange={e => setAddress(e.target.value)}>
+              </Input>
+            </Grid>
+            <Grid>
+              <Input 
+                label="Cell Number:"
+                helperText="optional"
+                type="number"
+                onChange={e => setCellNumber(e.target.value)}>
+              </Input>
+            </Grid>
+            <Grid>
+              <Input 
+                label="Home Number:"
+                helperText="optional"
+                type="number"
+                onChange={e => setHomeNumber(e.target.value)}>
+              </Input>
+            </Grid>
           </Grid.Container>
         </form>
         <Spacer y={2}/>
         <Button 
           className="sign-in" 
-          onClick={() => signUserUp({firstName: firstName, lastName: lastName, email: email, password:password, birthday: birthDate})}
+          onClick={() => signUserUp({firstName: firstName, lastName: lastName, email: email, password:password, birthday: birthDate, nickname:nickname, pronouns:pronouns, address:address, cellNumber:cellNumber, homeNumber:homeNumber })}
         >
           Create account
         </Button>

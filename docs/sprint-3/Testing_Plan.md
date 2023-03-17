@@ -579,10 +579,6 @@ Below is the criteria that will deem our testing complete:
 - All manual and automated test cases executed 
 - All open bugs are fixed or will be fixed in next release 
 
-#### 2.2.1 Regression Testing (Results):
-![Regression-Test](./Regression_Testing_v2.png) 
-
-
 ---
 
 

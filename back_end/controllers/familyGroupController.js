@@ -164,16 +164,16 @@ exports.leaveFamilyGroup = async (req, res) => {
     }
 
     //remove member from the group's member array
-    try {
-      group = await FamilyGroups.findByIdAndUpdate(groupId, {
-        $pull: {
-          groupMembers: memberId,
-        },
-      });
-    } catch (err) {
+    group = await FamilyGroups.findByIdAndUpdate(groupId, {
+      $pull: {
+        groupMembers: memberId,
+      },
+    },  {new: true });
+
+    if (group == null) {
       throw new Error((message = "Member could not be removed from the group"));
     }
-
+    
     //if member array is now empty, delete the group
     try {
       group = await FamilyGroups.findById(groupId);

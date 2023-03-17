@@ -317,6 +317,21 @@ describe("Family Group Integration Tests", () => {
       });
     });
 
+    describe("Given a group with no members", () => {
+      it("Should return group empty 404 status", async () => {
+        const testGroup = await FamilyGroups.create({groupName: "no users"});
+        const { statusCode, body } = await request
+            .post("/api/familyGroups/leaveFamilyGroup")
+            .send({
+              groupId: testGroup._id,
+              memberId: defaultUser._id,
+            });
+          expect(statusCode).toBe(404);
+          expect(body.message).toBe("Group does not have any members to remove");
+          await FamilyGroups.findByIdAndDelete(testGroup._id);
+      });
+    });
+
     describe("Given an invalid group ID", () => {
       it("Should return a family not found status 404", async () => {
         const { statusCode, body } = await request

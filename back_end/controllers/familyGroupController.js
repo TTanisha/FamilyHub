@@ -57,58 +57,56 @@ exports.getFamilyGroup = async (req, res) => {
 
 exports.addMemberToFamilyGroup = async (req, res) => {
   try {
-    const { groupId, memberEmail } = req.body;
+    const { groupId, memberEmail } = req.body
     const group = await FamilyGroups.findOne({ _id: groupId });
     const member = await Users.findOne({ email: memberEmail });
 
     reason = "";
 
     if (group == null) {
-      reason = "Family Group not found";
-      throw new Error(message = reason);
+        reason = "Family Group not found";
+        throw err;
     }
 
     if (member == null) {
-      reason = "Member not found";
-      throw new Error(message = reason);
+        reason = "Member not found";
+        throw err;
     }
 
-    //if new member, count should = 0
-    const count = await FamilyGroups.find({
-      _id: groupId,
-      "groupMembers._id": member._id,
-    }).count();
+    //if new member, count should = 0 
+    const count = await FamilyGroups.find (
+        {
+            _id: groupId,
+            groupMembers: {
+                _id: member._id
+            }
+        }).count();
 
     if (count >= 1) {
-      reason = "Member already in family.";
-      throw err;
+        reason = "Member already in family.";
+        throw err;
     }
 
-    await Users.updateOne(
-      { _id: member._id },
-      {
+    await Users.updateOne({ _id: member._id },
+    {
         $addToSet: {
-          groups: group,
+            groups: group,
         },
-      },
-    );
-
-    group = await FamilyGroups.updateOne(
-      { _id: groupId },
-      {
+    });
+    
+    await FamilyGroups.updateOne({ _id: groupId },
+    {
         $addToSet: {
-          groupMembers: member,
+            groupMembers: member,
         },
-      }, 
-      { new: true }
-    );
+    });
 
-    res.status(200).send({
-      status: "success",
-      message: "Added member to group",
-      data: {
-        group: group,
-      },
+    res.status(200).json({
+        status: "success",
+        message: "Added member to group",
+        data: {
+            group: group,
+        },
     });
   } catch (err) {
     res.status(404).send({

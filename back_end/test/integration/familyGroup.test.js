@@ -167,33 +167,65 @@ describe("Family Group Integration Tests", () => {
   describe("Update Group (Add User Membership)", () => {
     describe("Given a valid group ID and new user email", () => {
       it("Should return the group with new user added to the group", async () => {
+        const tempUser = await Users.create({
+          email: "addUserToGroup@test.ca",
+          password: "password",
+          firstName: "first",
+          lastName: "last",
+          birthday: new Date(),
+        });
+
+        const tempGroup = await FamilyGroups.create({
+          groupName: "add user to group test",
+          groupMembers: []
+        });
+
         const { statusCode, body } = await request
           .post("/api/familyGroups/addMemberToFamilyGroup")
           .send({
-            groupId: defaultGroup_ID,
-            memberEmail: defaultUserData.email,
+            groupId: tempGroup._id,
+            memberEmail: tempUser.email,
           });
+          
         expect(statusCode).toBe(200);
-        const result = body.data.group;
-        expect(result.groupName).toBe(defaultGroupData.groupName);
-        expect(result.groupMembers).toStrictEqual([defaultUser_ID]);
+        const result = body.data.group; 
+        expect(result.groupName).toBe(tempGroup.groupName);
+
+        const updatedGroup = await FamilyGroups.findById({_id: tempGroup._id});
+        expect(updatedGroup.groupMembers).toStrictEqual([tempUser._id]);
+
+        await Users.findByIdAndDelete(tempUser._id);
+        await FamilyGroups.findByIdAndDelete(tempGroup._id);
       });
     });
 
     describe("Given a valid group ID and existing user email", () => {
       it("Should return a status 404 and the group with no change", async () => {
-        await request.post("/api/familyGroups/addMemberToFamilyGroup").send({
-          groupId: defaultGroup_ID,
-          memberEmail: defaultUserData.email,
+        const tempUser = await Users.create({
+          email: "addExistingUserToGroup@test.ca",
+          password: "password",
+          firstName: "first",
+          lastName: "last",
+          birthday: new Date(),
         });
+
+        const tempGroup = await FamilyGroups.create({
+          groupName: "add user to group test",
+          groupMembers: [new mongoose.Types.ObjectId(tempUser._id), new mongoose.Types.ObjectId()]
+        });
+
         const { statusCode, body } = await request
           .post("/api/familyGroups/addMemberToFamilyGroup")
           .send({
-            groupId: defaultGroup_ID,
-            memberEmail: defaultUserData.email,
+            groupId: tempGroup._id,
+            memberEmail: tempUser.email,
           });
+          
         expect(statusCode).toBe(404);
-        expect(body.data.group.groupMembers).toStrictEqual([defaultUser_ID]);
+        expect(body.message).toBe("Member already in family. Member not successfully added to group")
+
+        await Users.findByIdAndDelete(tempUser._id);
+        await FamilyGroups.findByIdAndDelete(tempGroup._id);
       });
     });
 
@@ -232,12 +264,24 @@ describe("Family Group Integration Tests", () => {
 
   describe("Update Group (Remove User Membership)", () => {
     describe("Given a valid group ID and new user email", () => {
-      describe("Given a user leaves the group and there are still members", () => {
+      describe.only("Given a user leaves the group and there are still members", () => {
         it("Should return the group without the user in the group", async () => {
           // First add a member
+          let tempUser = await Users.create({
+            email: "tempUser@model.com",
+            password: "testPassword123",
+            firstName: "testFirstName",
+            lastName: "testLastName",
+            birthday: new Date(),
+          });
+
+          const tempGroup = await FamilyGroups.create({
+            groupName: "add user to group test",
+          });
+
           await request.post("/api/familyGroups/addMemberToFamilyGroup").send({
-            groupId: defaultGroup_ID,
-            memberEmail: defaultUserData.email,
+            groupId: tempGroup._id,
+            memberEmail: tempUser.email,
           });
           let secondUser = await Users.create({
             email: "testfamily2@model.com",
@@ -247,20 +291,25 @@ describe("Family Group Integration Tests", () => {
             birthday: new Date(),
           });
           await request.post("/api/familyGroups/addMemberToFamilyGroup").send({
-            groupId: defaultGroup_ID,
+            groupId: tempGroup._id,
             memberEmail: secondUser.email,
           });
           //Now remove that member
-          let newUser = await Users.findOne({ email: defaultUserData.email });
           const { statusCode, body } = await request
             .post("/api/familyGroups/leaveFamilyGroup")
             .send({
-              groupId: defaultGroup_ID,
-              memberId: newUser._id,
+              groupId: tempGroup._id,
+              memberId: secondUser._id,
             });
+
+          const updatedGroup = await FamilyGroups.findById({_id: tempGroup._id});
           expect(statusCode).toBe(200);
-          expect(body.data.updatedGroup).toStrictEqual([secondUser._id]);
+          expect(updatedGroup.groupMembers).toStrictEqual([tempUser._id]);
+          
+          expect(body.data.groupMembers).toStrictEqual(tempUser._id);
           await Users.findByIdAndDelete(newUser._id);
+          await Users.findByIdAndDelete(tempUser._id);
+          await FamilyGroups.findByIdAndDelete(tempGroup._id);
         });
 
         describe("Given a user leaves and is the last member", () => {

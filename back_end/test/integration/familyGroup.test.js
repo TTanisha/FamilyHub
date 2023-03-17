@@ -88,7 +88,7 @@ afterAll(async () => {
 
 //=====================================================================================//
 
-describe("Family Group Unit Tests", () => {
+describe("Family Group Integration Tests", () => {
   describe("Create Group", () => {
     describe("Given valid input", () => {
       it("Should create and return the new group", async () => {

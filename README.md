@@ -11,6 +11,12 @@
 
 ---
 
+## Sprint 3 Documentation 
+
+Updated Testing Plan: [Testing Plan for FamilyHub](./docs/sprint-3/Testing_Plan.md)
+
+Updated Shared Calendar Sequence Diagram: [Shared Calendar](./docs/sprint-2/shared-calendar-sequence-diagram.png)
+
 ## Sprint 2 Documentation
 
 Testing Plan: [Testing Plan for FamilyHub](./docs/sprint-2/Testing_Plan.md)

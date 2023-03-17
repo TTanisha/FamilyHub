@@ -113,6 +113,7 @@ const UserProfile = (props) => {
         console.log("Error in User Profile");
         console.log(error);
 
+        window.alert(error.response.data.message);
       })
   }
 

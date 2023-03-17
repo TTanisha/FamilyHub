@@ -159,6 +159,7 @@ const ViewEvent = (props) => {
 
         }
     }).catch(function (error) {
+      window.alert(error.response.data.message);
     })
   }
 

@@ -96,7 +96,7 @@ const CreateEventForm = (props) => {
           props.updateEvents();
         }
     }).catch(function (error) {
-      alert("Event could not be created.");
+      window.alert(error.response.data.message);
     })
   }
 

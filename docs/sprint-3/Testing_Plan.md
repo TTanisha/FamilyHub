@@ -122,6 +122,8 @@ This is our testing scope for Sprint 2:
     - Should return a status 400 
   - Given input data with an invalid first name
     - Should return a status 400 
+  - Given input data with an invalid email
+    - Should return a status 400
 - Get User
   - Given a valid email and password
     - Should return the user 
@@ -148,11 +150,17 @@ This is our testing scope for Sprint 2:
     - Should return a status 400 
   - Given no email or ID
     - Should return a status 400 
+   - Given valid email 
+     - Should return a status 200 
 - Delete User
   - Given a valid email
     - Should remove the user from database, and return user 
   - Given an invalid email
     - Should return a status 400 
+  - Delete user with a family group consisting of only 1 member
+    - Should remove the user and family group from database
+  - Delete user with a family group consisting of more than 1 member
+    - Should remove only the user from database
 
 ##### **Acceptance Tests**
 

@@ -28,11 +28,6 @@ exports.createFamilyGroup = async (req, res) => {
   }
 };
 
-/**
- *
- * @param {ObjectId} req
- * @param {JSON} res
- */
 exports.getFamilyGroup = async (req, res) => {
   try {
     const { groupId } = req.body;

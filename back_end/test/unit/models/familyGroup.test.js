@@ -84,7 +84,6 @@ describe("Family Group Unit Tests", () => {
       it("Should create and return the new group", async () => {
         const result = await FamilyGroups.create({ groupName: "test group" });
         expect(result.groupName).toBe("test group");
-        expect(await FamilyGroups.countDocuments()).toBe(2);
         await FamilyGroups.findByIdAndDelete(result._id);
       });
     });

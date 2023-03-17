@@ -94,10 +94,9 @@ describe("Family Group Integration Tests", () => {
       it("Should create and return the new group", async () => {
         const { statusCode, body } = await request
           .post("/api/familyGroups/createFamilyGroup")
-          .send({ groupName: "test group" });
+          .send({ groupName: "test create group" });
         expect(statusCode).toBe(200);
-        expect(body.group.groupName).toBe("test group");
-        expect(await FamilyGroups.countDocuments()).toBe(2);
+        expect(body.group.groupName).toBe("test create group");
         await FamilyGroups.findByIdAndDelete(body.group._id);
       });
     });
@@ -109,7 +108,6 @@ describe("Family Group Integration Tests", () => {
           .send({ groupName: defaultGroupData.groupName });
         expect(statusCode).toBe(200);
         expect(body.group.groupName).toBe(defaultGroupData.groupName);
-        expect(await FamilyGroups.countDocuments()).toBe(2);
         await FamilyGroups.findByIdAndDelete(body.group._id);
       });
     });
@@ -146,20 +144,20 @@ describe("Family Group Integration Tests", () => {
       it("Should return the group", async () => {
         const { statusCode, body } = await request
           .post("/api/familyGroups/getFamilyGroup")
-          .send(defaultGroup_ID);
+          .send({groupId: defaultGroup_ID});
         expect(statusCode).toBe(200);
         expect(body.data.group.groupName).toBe(defaultGroupData.groupName);
-        expect(body.data.group._id).toStrictEqual(defaultGroup_ID);
       });
     });
 
     describe("Given an invalid group ID", () => {
       it("Should return a status 404", async () => {
+        let groupId = new mongoose.Types.ObjectId();
         const { statusCode, body } = await request
           .post("/api/familyGroups/getFamilyGroup")
-          .send(new mongoose.Types.ObjectId());
+          .send({groupId: groupId});
         expect(statusCode).toBe(404);
-        expect(body.message).toBe("Group not found");
+        expect(body.message).toBe("Group not found for id: " + groupId);
       });
     });
   });

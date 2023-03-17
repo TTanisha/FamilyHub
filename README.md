@@ -11,7 +11,7 @@
 
 ---
 
-## Sprint 3 Documentation 
+## Sprint 3 Documentation Update
 
 Updated Testing Plan: [Testing Plan for FamilyHub](./docs/sprint-3/Testing_Plan.md)
 

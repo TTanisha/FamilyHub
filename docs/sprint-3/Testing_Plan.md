@@ -7,7 +7,7 @@
 |**Version**  |**Change Date** |**By** |**Description** |
 | - | - | - | - |
 |`V1` |Feb 16, 2023 |Juan Armijos |**Reviewers:** Everyone. |
-|`V2` |March 17, 2023 |Freyja Kristjanson |**Reviewers:** Everyone. |
+|`V2` |March 17, 2023 |Freyja Kristjanson, Jasmine Tabuzo |**Reviewers:** Everyone. |
 ---
 
 ## 1 Introduction
@@ -16,23 +16,40 @@
 
 This is our testing scope for Sprint 2:
 1. Shared Calendar
-    - View the shared calendar in a monthly view
-    - Navigate through the calendar (view previous, next, and today’s month)  
-    - Create events on the backend
+    - View the shared calendar
+        - monthly view
+        - weekly view
+        - daily view 
+    - Navigate through the calendar
+    - Create events 
+    - Update events
+    - Delete events 
+    - View event details 
+    - Filter events by family group 
 
 2. Family Member Profiles
     - Create an account
     - Log in into an account
     - Update Profile details
+    - View Profile details 
+    - Delete account
+
+3. Family Groups
+    - Create family groups
+    - View family groups 
+    - View family group members 
+    - View profiles of family group members 
+    - Leave family group 
+    - Delete family group 
 
 ### 1.2 Roles and Responsibilities
 
 |**Name** |**Net ID** |**GitHub username** |**Role** |
 | - | - | - | - |
 |Freyja Kristjanson  |kristjaf |@FreyjaKristjanson | Backend Developer, DB Manager |
-|Jasmine Tabuzo |tabuzoj |@jasmine-tabuzo  |Full-stack developer |
-|Juan Armijos  |armijosj | @armijos | Configuration Manager, Installation Team |
-|Tanisha Turner  |turnert1 | @TTanisha |Frontend Developer |
+|Jasmine Tabuzo |tabuzoj |@jasmine-tabuzo  | Full-stack developer |
+|Juan Armijos  |armijosj | @armijos | Configuration Manager, Installation Team, Full-stack developer |
+|Tanisha Turner  |turnert1 | @TTanisha | Frontend Developer |
 
 
 --- 
@@ -490,6 +507,11 @@ TO COMPLETE
 
 
 ### 2.2 Test Completeness
+
+Below is the criteria that will deem our testing complete: 
+- 100% code coverage 
+- All manual and automated test cases executed 
+- All open bugs are fixed or will be fixed in next release 
 
 #### 2.2.1 Regression Testing (Results):
 ![Regression-Test]() ADD IMAGE

@@ -268,7 +268,39 @@ This is our testing scope for Sprint 2:
 
 ##### **Unit Tests**
 
-TO COMPLETE
+Create Group
+  - Given valid input
+    - Should create and return the new group 
+  - Given a duplicate group name
+    - Should create and return the new group 
+  - Given invalid group name
+    - Should not create the group, throw validation error 
+  - Given no group name
+    - Should not create the group, return undefined group
+- Get Group
+  - Given a valid group ID
+    - Should return the group 
+  - Given an invalid group ID
+    - Should return null 
+- Update Group (Add User Membership)
+  - Given a valid group ID and new user email
+    - Should return the group with new user added to the group 
+  - Given a valid group ID and existing user email
+    - Should return the group with no change 
+  - Given an invalid group ID
+    - Should return a null 
+- Update Group (Remove User Membership)
+  - Given a valid group ID and new user email
+    - Should return the group without the user in the group 
+  - Given a valid group ID and invalid user email
+    - Should return the group with no change 
+  - Given an invalid group ID
+    - Should return a null 
+- Delete Group
+  - Given a valid group ID
+    - Should return the deleted group 
+  - Given an invalid group ID
+    - Should return null 
 
 ##### **Integration Tests**
 

@@ -200,7 +200,7 @@ describe("Family Group Unit Tests", () => {
     });
 
     describe("Given a valid group ID and invalid user email", () => {
-      it("Should return a status 400", async () => {
+      it("Should return a status 404", async () => {
         const { statusCode, body } = await request
           .post("/api/familyGroups/addMemberToFamilyGroup")
           .send({

@@ -14,9 +14,11 @@ exports.createFamilyGroup = async (req, res) => {
         status: "success",
         message: "Family Group (ID: " + group._id + ") successfully created",
         group,
-      })
+      });
     } else {
-      throw new Error(message = "Unable to create a group with name: " + groupName);
+      throw new Error(
+        (message = "Unable to create a group with name: " + groupName),
+      );
     }
   } catch (err) {
     res.status(401).send({
@@ -70,30 +72,37 @@ exports.addMemberToFamilyGroup = async (req, res) => {
       throw new Error((message = "Member not found"));
     }
 
-    //if new member, count should = 0 
-    const count = await FamilyGroups.countDocuments(
-      {
-          _id: groupId,
-          groupMembers: {
-              _id: member._id
-          }
-      });
+    //if new member, count should = 0
+    const count = await FamilyGroups.countDocuments({
+      _id: groupId,
+      groupMembers: {
+        _id: member._id,
+      },
+    });
 
     if (count >= 1) {
       throw new Error((message = "Member already in family."));
     }
 
-    member = await Users.findByIdAndUpdate(member._id, {
-      $addToSet: {
-        groups: group,
+    member = await Users.findByIdAndUpdate(
+      member._id,
+      {
+        $addToSet: {
+          groups: group,
+        },
       },
-    }, { runValidators: true, new: true });
+      { runValidators: true, new: true },
+    );
 
-    group = await FamilyGroups.findByIdAndUpdate(groupId, {
-      $addToSet: {
-        groupMembers: member,
+    group = await FamilyGroups.findByIdAndUpdate(
+      groupId,
+      {
+        $addToSet: {
+          groupMembers: member,
+        },
       },
-    }, { runValidators: true, new: true });
+      { runValidators: true, new: true },
+    );
 
     if (group !== null) {
       res.status(200).send({
@@ -103,12 +112,12 @@ exports.addMemberToFamilyGroup = async (req, res) => {
           group: group,
         },
       });
-    };
+    }
   } catch (err) {
     res.status(404).send({
       status: "fail",
       message: err.message,
-      description: "Member not successfully added to group"
+      description: "Member not successfully added to group",
     });
   }
 };
@@ -177,7 +186,7 @@ exports.leaveFamilyGroup = async (req, res) => {
 
       if (group.groupMembers.length == 0) {
         group = await FamilyGroups.findByIdAndRemove(groupId, {
-          new: true
+          new: true,
         });
 
         successMessage =
@@ -206,7 +215,6 @@ exports.leaveFamilyGroup = async (req, res) => {
       message: "User has successfully left the family group." + successMessage,
       data: group,
     });
-
   } catch (err) {
     res.status(404).send({
       status: "fail",

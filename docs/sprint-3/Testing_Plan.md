@@ -427,6 +427,8 @@ Create Group
     - Should throw a custom validation error 
   - Given input data without a family group
     - Should throw a validation error 
+  - Given input data with null dates
+    - Should throw a date validation error
 - Get Event
   - Given a valid user ID
     - Should return the events created by that user 

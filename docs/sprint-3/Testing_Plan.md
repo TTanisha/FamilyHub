@@ -174,7 +174,8 @@ This is our testing scope for Sprint 2:
     - when the user enters all valid information (first name, last name, email, password, birthday) 
     - when the user selects `Create account` 
     - then their account should be created with the correct information 
-    - then the page should display a success message saying their account has been created  
+    - then the user should be logged in
+    - then the user should be redirected to the calendar page
 
   - Given a user is on the  **`sign up`** page 
     - when the user enters an invalid email address

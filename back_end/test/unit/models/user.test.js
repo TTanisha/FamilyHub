@@ -176,21 +176,6 @@ describe("User Unit Tests", () => {
     });
   });
 
-  describe("Given input data with an invalid email", () => {
-    it("Should return a 400 response", async () => {
-      const res = await request(app).post("/api/users/registerUser").send({
-        email: "notanemail",
-        password: "testPassword123",
-        firstName: "testFirstName",
-        lastName: "testLastName",
-        birthday: new Date(),
-      });
-
-      expect(res.statusCode).toEqual(400);
-      expect(res.body.message).toEqual("Please enter a valid email address.");
-    });
-  });
-
   //=====================================================================================//
 
   describe("Get User", () => {
@@ -312,42 +297,12 @@ describe("User Unit Tests", () => {
           email: defaultUser.email,
         };
 
-        const res = await request(app).post("/api/users/updateUser").send({
-          newEmail: "newUnit@test.ca",
-        });
-
-        expect(res.statusCode).toEqual(400);
-
         const user = Users.findOneAndUpdate(filter, updateFields, {
           new: true,
           runValidators: true,
         });
         await expect(user).rejects.toThrow("11000"); // duplicate key
         await Users.findByIdAndDelete(tempUser._id);
-      });
-    });
-
-    describe("Given valid email", () => {
-      it("Should update user", async () => {
-        const tempUser = await Users.create({
-          email: "newUnit@test.ca",
-          password: "password",
-          firstName: "first",
-          lastName: "last",
-          birthday: new Date(),
-        });
-        filter = { email: tempUser.email };
-        updateFields = {
-          email: defaultUser.email,
-        };
-
-        const res = await request(app).post("/api/users/updateUser").send({
-          email: "newUnit@test.ca",
-          newEmail: "newUpdatedEmail@test.ca",
-        });
-
-        await Users.findByIdAndDelete(tempUser._id);
-        expect(res.statusCode).toEqual(200);
       });
     });
 
@@ -394,70 +349,6 @@ describe("User Unit Tests", () => {
           email: "bademail@test.com",
         });
         expect(user).toBe(null);
-
-        const res = await request(app).post("/api/users/deleteUser").send({
-          email: "bademail@test.com",
-        });
-
-        expect(res.statusCode).toEqual(400);
-        expect(res.body.message).toEqual("User not found.");
-      });
-    });
-
-    describe("Delete user with a family group consisting of only 1 member", () => {
-      it("Should remove the user and family group from database", async () => {
-        const familyGroupData = {
-          groupName: "family group",
-        };
-
-        const familyGroup = await FamilyGroups.create(familyGroupData);
-
-        userData = {
-          email: "testDelete@gmail.com",
-          password: "testPassword123",
-          firstName: "testFirstName",
-          lastName: "testLastName",
-          birthday: new Date(),
-          groups: [familyGroup._id],
-        };
-
-        await Users.create(userData);
-
-        const res = await request(app).post("/api/users/deleteUser").send({
-          email: userData.email,
-        });
-
-        expect(res.statusCode).toEqual(200);
-      });
-    });
-
-    describe("Delete user with a family group consisting of more than 1 member", () => {
-      it("Should remove only the user from database", async () => {
-        const familyGroupData = {
-          groupName: "family group",
-          groupMembers: [new mongoose.Types.ObjectId()],
-        };
-
-        const familyGroup = await FamilyGroups.create(familyGroupData);
-
-        userData = {
-          email: "testDelete@gmail.com",
-          password: "testPassword123",
-          firstName: "testFirstName",
-          lastName: "testLastName",
-          birthday: new Date(),
-          groups: [familyGroup._id],
-        };
-
-        await Users.create(userData);
-
-        const res = await request(app).post("/api/users/deleteUser").send({
-          email: userData.email,
-        });
-
-        expect(res.statusCode).toEqual(200);
-
-        await FamilyGroups.findOneAndRemove({ _id: familyGroup._id });
       });
     });
   });

@@ -1,9 +1,6 @@
 const Users = require("../../../models/userModel");
-const FamilyGroups = require("../../../models/familyGroupModel");
 const mongoose = require("mongoose");
 const { ValidationError } = require("mongodb");
-const request = require("supertest");
-const app = require("../../../app");
 require("dotenv").config({ path: "config.env" }); // load environment variables
 
 //=====================================================================================//

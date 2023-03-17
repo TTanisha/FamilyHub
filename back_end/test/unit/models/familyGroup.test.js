@@ -136,7 +136,7 @@ describe("Family Group Unit Tests", () => {
 
   //=====================================================================================//
 
-  describe("Update Group (user membership)", () => {
+  describe("Update Group (Add User Membership)", () => {
     describe("Given a valid group ID and new user email", () => {
       it("Should return the group with new user added to the group", async () => {
         let testUser = await Users.findOne({ email: defaultUserData.email });
@@ -182,6 +182,75 @@ describe("Family Group Unit Tests", () => {
       it("Should return a null", async () => {
         const result = await FamilyGroups.findByIdAndUpdate(new ID(), {
           $addToSet: { groupMembers: defaultUser_ID },
+        });
+        expect(result).toBe(null);
+      });
+    });
+  });
+
+  describe("Update Group (Remove User Membership)", () => {
+    describe("Given a valid group ID and new user email", () => {
+      it("Should return the group without the user in the group", async () => {
+        let testUser = await Users.findOne({ email: defaultUserData.email });
+        let testGroup = await FamilyGroups.findById(defaultGroup_ID);
+
+        let result = await FamilyGroups.findByIdAndUpdate(
+          testGroup._id,
+          {
+            $addToSet: {
+              groupMembers: testUser,
+            },
+          },
+          { new: true },
+        );
+        expect(result.groupMembers).toStrictEqual([testUser._id]);
+
+        result = await FamilyGroups.findByIdAndUpdate(
+          testGroup._id,
+          {
+            $pull: {
+              groupMembers: testUser._id,
+            },
+          },
+          { new: true },
+        );
+        expect(result.groupMembers).toStrictEqual([]);
+      });
+    });
+
+    describe("Given a valid group ID and invalid user email", () => {
+      it("Should return the group with no change", async () => {
+        let testUser = await Users.findOne({ email: defaultUserData.email });
+        let testGroup = await FamilyGroups.findById(defaultGroup_ID);
+
+        let result = await FamilyGroups.findByIdAndUpdate(
+          testGroup._id,
+          {
+            $addToSet: {
+              groupMembers: testUser,
+            },
+          },
+          { new: true },
+        );
+        expect(result.groupMembers).toStrictEqual([testUser._id]);
+
+        result = await FamilyGroups.findByIdAndUpdate(
+          testGroup._id,
+          {
+            $pull: {
+              groupMembers: new ID(),
+            },
+          },
+          { new: true },
+        );
+        expect(result.groupMembers).toStrictEqual([testUser._id]);
+      });
+    });
+
+    describe("Given an invalid group ID", () => {
+      it("Should return a null", async () => {
+        const result = await FamilyGroups.findByIdAndUpdate(new ID(), {
+          $pull: { groupMembers: defaultUser_ID },
         });
         expect(result).toBe(null);
       });

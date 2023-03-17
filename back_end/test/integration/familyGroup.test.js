@@ -40,7 +40,7 @@ beforeAll(async () => {
     },
     (err) => {
       console.error("Unable to connect to MongoDB.", err.message);
-    },
+    }
   );
 
   try {
@@ -81,7 +81,7 @@ afterAll(async () => {
     },
     (err) => {
       console.error("Unable to disconnect from MongoDB.", err.message);
-    },
+    }
   );
 });
 
@@ -118,7 +118,7 @@ describe("Family Group Integration Tests", () => {
           .send({ groupName: "" });
         expect(statusCode).toBe(401);
         expect(body.message).toBe(
-          "FamilyGroups validation failed: groupName: A family group must have groupName",
+          "FamilyGroups validation failed: groupName: A family group must have groupName"
         );
       });
     });
@@ -130,7 +130,7 @@ describe("Family Group Integration Tests", () => {
           .send();
         expect(statusCode).toBe(401);
         expect(body.message).toBe(
-          "FamilyGroups validation failed: groupName: A family group must have groupName",
+          "FamilyGroups validation failed: groupName: A family group must have groupName"
         );
       });
     });
@@ -157,6 +157,29 @@ describe("Family Group Integration Tests", () => {
           .send({ groupId: groupId });
         expect(statusCode).toBe(404);
         expect(body.message).toBe("Group not found for id: " + groupId);
+      });
+    });
+  });
+
+  //=====================================================================================//
+
+  describe("Get Group Events", () => {
+    describe("Given a valid group ID", () => {
+      it("Should return the group", async () => {
+        const { statusCode, body } = await request
+          .post("/api/familyGroups/getFamilyGroupEvents")
+          .send({ groupId: defaultGroup._id });
+        expect(statusCode).toBe(200);
+      });
+    });
+
+    describe("Given an invalid group ID", () => {
+      it("Should return a status 404", async () => {
+        let groupId = new mongoose.Types.ObjectId();
+        const { statusCode, body } = await request
+          .post("/api/familyGroups/getFamilyGroupEvents")
+          .send({ groupId: groupId });
+        expect(statusCode).toBe(404);
       });
     });
   });
@@ -273,6 +296,14 @@ describe("Family Group Integration Tests", () => {
               groupId: defaultGroup._id,
               memberId: newUser._id,
             });
+
+          //Reset state - remove first member, but keep the group
+          await FamilyGroups.findByIdAndUpdate(defaultGroup._id, {
+            $pull: {
+              groupMembers: secondUser._id,
+            },
+          });
+
           await Users.findByIdAndDelete(secondUser._id);
           expect(statusCode).toBe(200);
           expect(body.data.groupMembers).toStrictEqual([
@@ -290,6 +321,11 @@ describe("Family Group Integration Tests", () => {
           });
           //Now remove that member
           let newUser = await Users.findOne({ email: defaultUserData.email });
+
+          let group = await FamilyGroups.findById(defaultGroup._id);
+
+          console.debug("jasmine:  ", group);
+
           const { statusCode, body } = await request
             .post("/api/familyGroups/leaveFamilyGroup")
             .send({
@@ -297,51 +333,59 @@ describe("Family Group Integration Tests", () => {
               memberId: newUser._id,
             });
           expect(statusCode).toBe(200);
-          expect(body.data.updatedGroup).toBe(undefined);
+          expect(body.data.group).toBe(undefined);
           const check = FamilyGroups.findById(defaultGroup._id);
           expect(check._id).toBe(undefined);
+
+          //Reset state - recreate family group
+          defaultGroup = new FamilyGroups(defaultGroupData);
+          await defaultGroup.save();
         });
       });
-    });
 
-    describe("Given a valid group ID and invalid user email", () => {
-      it("Should return a user not found status 404", async () => {
-        const { statusCode, body } = await request
-          .post("/api/familyGroups/leaveFamilyGroup")
-          .send({
-            groupId: defaultGroup._id,
-            memberId: new mongoose.Types.ObjectId(),
-          });
-        expect(statusCode).toBe(404);
-        expect(body.message).toBe("User not found");
+      describe("Given a valid group ID and invalid user email", () => {
+        it("Should return a user not found status 404", async () => {
+          const { statusCode, body } = await request
+            .post("/api/familyGroups/leaveFamilyGroup")
+            .send({
+              groupId: defaultGroup._id,
+              memberId: new mongoose.Types.ObjectId(),
+            });
+          expect(statusCode).toBe(404);
+          expect(body.message).toBe("User not found");
+        });
       });
-    });
 
-    describe("Given a group with no members", () => {
-      it("Should return group empty 404 status", async () => {
-        const testGroup = await FamilyGroups.create({groupName: "no users"});
-        const { statusCode, body } = await request
+      describe("Given a group with no members", () => {
+        it("Should return group empty 404 status", async () => {
+          const testGroup = await FamilyGroups.create({
+            groupName: "no users",
+          });
+          const { statusCode, body } = await request
             .post("/api/familyGroups/leaveFamilyGroup")
             .send({
               groupId: testGroup._id,
               memberId: defaultUser._id,
             });
           expect(statusCode).toBe(404);
-          expect(body.message).toBe("Group does not have any members to remove");
+          expect(body.message).toBe(
+            "Group does not have any members to remove"
+          );
           await FamilyGroups.findByIdAndDelete(testGroup._id);
+        });
       });
-    });
 
-    describe("Given an invalid group ID", () => {
-      it("Should return a family not found status 404", async () => {
-        const { statusCode, body } = await request
-          .post("/api/familyGroups/leaveFamilyGroup")
-          .send({
-            groupId: new mongoose.Types.ObjectId(),
-            memberId: defaultUser._id,
-          });
-        expect(statusCode).toBe(404);
-        expect(body.message).toBe("Family Group not found");
+      describe("Given an invalid group ID", () => {
+        it("Should return a family not found status 404", async () => {
+          const { statusCode, body } = await request
+            .post("/api/familyGroups/leaveFamilyGroup")
+            .send({
+              groupId: new mongoose.Types.ObjectId(),
+              memberId: defaultUser._id,
+            });
+          expect(statusCode).toBe(404);
+          expect(body.message).toBe("Family Group not found");
+        });
       });
     });
   });

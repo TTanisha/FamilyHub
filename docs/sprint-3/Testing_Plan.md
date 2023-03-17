@@ -272,7 +272,39 @@ TO COMPLETE
 
 ##### **Integration Tests**
 
-TO COMPLETE
+- Create Group
+  - Given valid input
+    - Should create and return the new group 
+  - Given a duplicate group name
+    - Should create and return the new group 
+  - Given invalid group name
+    - Should return a validation fail status 401, and not create the group 
+  - Given no group name
+    - Should return a validation fail status 401, and not create the group 
+- Get Group
+  - Given a valid group ID
+    - Should return the group 
+  - Given an invalid group ID
+    - Should return a status 404 
+- Update Group (Add User Membership)
+  - Given a valid group ID and new user email
+    - Should return the group with new user added to the group 
+  - Given a valid group ID and existing user email
+    - Should return a status 404 and the group with no change 
+  - Given a valid group ID and invalid user email
+    - Should return a status 404 
+  - Given an invalid group ID
+    - Should return a status 404 
+- Update Group (Remove User Membership)
+  - Given a valid group ID and new user email
+    - Given a user leaves the group and there are still members
+      - Should return the group without the user in the group 
+      - Given a user leaves and is the last member
+        - Should remove the group from the database 
+  - Given a valid group ID and invalid user email
+    - Should return a user not found status 404 
+  - Given an invalid group ID
+    - Should return a family not found status 404
 
 ##### **Acceptance Tests**
 

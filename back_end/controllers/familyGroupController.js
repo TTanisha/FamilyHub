@@ -8,17 +8,12 @@ exports.createFamilyGroup = async (req, res) => {
     const group = await FamilyGroups.create({
       groupName,
     });
-    if (group !== null) {
-      res.status(200).send({
-        status: "success",
-        message: "Family Group (ID: " + group._id + ") successfully created",
-        group,
-      });
-    } else {
-      throw new Error(
-        (message = "Unable to create a group with name: " + groupName),
-      );
-    }
+
+    res.status(200).send({
+      status: "success",
+      message: "Family Group (ID: " + group._id + ") successfully created",
+      group,
+    });
   } catch (err) {
     res.status(401).send({
       message: err.message,
@@ -85,7 +80,7 @@ exports.addMemberToFamilyGroup = async (req, res) => {
           groups: group,
         },
       },
-      { runValidators: true, new: true },
+      { runValidators: true, new: true }
     );
 
     group = await FamilyGroups.findByIdAndUpdate(
@@ -95,18 +90,16 @@ exports.addMemberToFamilyGroup = async (req, res) => {
           groupMembers: member,
         },
       },
-      { runValidators: true, new: true },
+      { runValidators: true, new: true }
     );
 
-    if (group !== null) {
-      res.status(200).send({
-        status: "success",
-        message: "Added member to group",
-        data: {
-          group: group,
-        },
-      });
-    }
+    res.status(200).send({
+      status: "success",
+      message: "Added member to group",
+      data: {
+        group: group,
+      },
+    });
   } catch (err) {
     res.status(404).send({
       status: "fail",
@@ -164,45 +157,35 @@ exports.leaveFamilyGroup = async (req, res) => {
     }
 
     //remove member from the group's member array
-    group = await FamilyGroups.findByIdAndUpdate(groupId, {
-      $pull: {
-        groupMembers: memberId,
+    group = await FamilyGroups.findByIdAndUpdate(
+      groupId,
+      {
+        $pull: {
+          groupMembers: memberId,
+        },
       },
-    },  {new: true });
+      { new: true }
+    );
 
-    if (group == null) {
-      throw new Error((message = "Member could not be removed from the group"));
-    }
-    
     //if member array is now empty, delete the group
-    try {
-      group = await FamilyGroups.findById(groupId);
 
-      if (group.groupMembers.length == 0) {
-        group = await FamilyGroups.findByIdAndRemove(groupId, {
-          new: true,
-        });
+    group = await FamilyGroups.findById(groupId);
 
-        successMessage =
-          " User was the last member of the group, so the group has been deleted";
-      }
-    } catch (err) {
-      throw new Error(
-        (message =
-          "The last member of the group was removed, but the group could not be deleted"),
-      );
+    if (group.groupMembers.length == 0) {
+      group = await FamilyGroups.findByIdAndRemove(groupId, {
+        new: true,
+      });
+
+      successMessage =
+        " User was the last member of the group, so the group has been deleted";
     }
 
     //remove the group from the user's groups array
-    try {
-      await Users.findByIdAndUpdate(memberId, {
-        $pull: {
-          groups: groupId,
-        },
-      });
-    } catch (err) {
-      throw new Error((message = "Group could not be removed from the member"));
-    }
+    await Users.findByIdAndUpdate(memberId, {
+      $pull: {
+        groups: groupId,
+      },
+    });
 
     res.status(200).send({
       status: "success",

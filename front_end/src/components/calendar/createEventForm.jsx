@@ -82,103 +82,66 @@ const CreateEventForm = (props) => {
   }, [isAllDay])
 
   const submitCreateEventForm = (props) => {
-
     if(!recurring) {
-    axios.post("http://localhost:8080/api/events/createEvent", 
-    {
-      title: titleInput, 
-      body: descriptionInput,
-      creationUser: currUser._id, 
-      isAllDay: isAllDay, 
-      start: startTimeDate, 
-      end: endTimeDate, 
-      location: locationInput, 
-      recurrenceRule: "ONCE", 
-      familyGroup: familyGroup
-    })
-    .then(function(response)
-    {
-        if(response.data.status === "success")
-        {
-          console.log(response);
-          resetFormState();
-          props.updateEvents();
-        }
-    }).catch(function (error) {
-      alert("Event could not be created.");
-    })
+      axios.post("http://localhost:8080/api/events/createEvent", 
+      {
+        title: titleInput, 
+        body: descriptionInput,
+        creationUser: currUser._id, 
+        isAllDay: isAllDay, 
+        start: startTimeDate, 
+        end: endTimeDate, 
+        location: locationInput, 
+        recurrenceRule: "ONCE", 
+        familyGroup: familyGroup
+      })
+      .then(function(response)
+      {
+          if(response.data.status === "success")
+          {
+            console.log(response);
+            resetFormState();
+            props.updateEvents();
+          }
+      }).catch(function (error) {
+        alert("Event could not be created.");
+      })
+    } else {
+      let startDate = new Date(startDateInput);
+      let endDate = new Date(endDateInput);
 
-  }
-  else
-  {
-    let startDate = new Date(startDateInput);
-    let endDate = new Date(endDateInput);
+      if(startTimeInput) 
+      {
+        startDate = new Date(startDateInput + " " + startTimeInput);
+        endDate = new Date(endDateInput + " " + endTimeInput);
+      }
 
-    if(startTimeInput) 
-    {
-      startDate = new Date(startDateInput + " " + startTimeInput);
-      endDate = new Date(endDateInput + " " + endTimeInput);
-    }
-
-      // let start = new Date();
-      // let end = new Date();
-
-      // for(let i = 0; i < numRecurrences; i++)
-      // {
-
-      //   if(selectedFrequency === "DAILY")
-      //   {
-      //     start = startDate.getDate();
-      //     end = endDate.getDate();
-      //     startDate.setUTCDate(start+i);
-      //     endDate.setUTCDate(end+i);
-      //   }
-      //   else if (selectedFrequency === 'MONTHLY')
-      //   {
-      //     start = startDate.getMonth();
-      //     end = endDate.getMonth();
-      //     startDate.setMonth(start+i);
-      //     endDate.setMonth(end+i);
-      //   }
-      //   else if (selectedFrequency === 'YEARLY')
-      //   {
-      //     start = startDate.getFullYear();
-      //     end = endDate.getFullYear();
-      //     startDate.setUTCFullYear(start+i);
-      //     endDate.setUTCFullYear(end+i);
-      //     console.log("YEARLY");
-      //   }
-
-      //   console.log("START: " + startDate)
-      //   console.log("END: "+ endDate);
-
-        axios.post("http://localhost:8080/api/events/createEvent", 
-        {
-          title: titleInput, 
-          body: descriptionInput,
-          creationUser: currUser._id, 
-          isAllDay: isAllDay, 
-          start: startDate, 
-          end: endDate, 
-          location: locationInput, 
-          recurrenceRule: selectedFrequency, 
-          recurrenceNum: numRecurrences, 
-          familyGroup: familyGroup
-        })
-        .then(function(response)
-        {
-            if(response.data.status === "success")
-            {
-              console.log(response);
-              resetFormState();
-              props.updateEvents();
-            }
-        }).catch(function (error) {
-          alert("Event could not be created.");
-        })
+      axios.post("http://localhost:8080/api/events/createEvent", 
+      {
+        title: titleInput, 
+        body: descriptionInput,
+        creationUser: currUser._id, 
+        isAllDay: isAllDay, 
+        start: startDate, 
+        end: endDate, 
+        location: locationInput, 
+        recurrenceRule: selectedFrequency, 
+        recurrenceNum: numRecurrences, 
+        familyGroup: familyGroup
+      })
+      .then(function(response)
+      {
+          if(response.data.status === "success")
+          {
+            console.log(response);
+            resetFormState();
+            props.updateEvents();
+          }
+      }).catch(function (error) {
+        alert("Event could not be created.");
+      })
     }
   }
-  //}
 
   const setFamilyGroupFromSelector = (id) => {
     setFamilyGroup(id);

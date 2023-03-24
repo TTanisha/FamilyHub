@@ -142,7 +142,10 @@ const Calendar = () => {
           isAllDay: event.isAllDay,
           location: event.location,
           raw: {
-            creationUser: event.creationUser
+            creationUser: event.creationUser,
+            recurrenceId: event.recurrenceId,
+            recurrenceRule: event.recurrenceRule,
+            recurrenceNum: event.recurrenceNum
           }
         };
         setTUICalendarEvents(tuiCalendarEvents => [...tuiCalendarEvents, tuiEvent]);

@@ -20,10 +20,7 @@ const CreateEventForm = (props) => {
   const [recurring, setRecurring] = useState(false); 
   const [numRecurrences, setNumrecurrences] = useState(1); 
   const [recurrenceRule, setrecurrenceRule] = useState("ONCE");
-  const selectedFrequency = React.useMemo(
-    () => Array.from(recurrenceRule).join("").replaceAll("_", " "),
-    [recurrenceRule]
-  );
+  const [selectedFrequency, setSelectedFrequency] = useState("ONCE");
   const [familyGroup, setFamilyGroup] = useState(currUser.groups[0]);
 
   //transformed data 
@@ -69,6 +66,10 @@ const CreateEventForm = (props) => {
       }
     }
   }, [endDate, endTimeInput])
+
+  useEffect(() => {
+    setSelectedFrequency(recurrenceRule.currentKey ? recurrenceRule.currentKey : recurrenceRule);
+  }, [recurrenceRule])
 
   //reset time inputs if 'All Day' is toggled off 
   useEffect(() => {
@@ -119,37 +120,37 @@ const CreateEventForm = (props) => {
       endDate = new Date(endDateInput + " " + endTimeInput);
     }
 
-      let start = new Date();
-      let end = new Date();
+      // let start = new Date();
+      // let end = new Date();
 
-      for(let i = 0; i < numRecurrences; i++)
-      {
+      // for(let i = 0; i < numRecurrences; i++)
+      // {
 
-        if(selectedFrequency === "DAILY")
-        {
-          start = startDate.getDate();
-          end = endDate.getDate();
-          startDate.setUTCDate(start+i);
-          endDate.setUTCDate(end+i);
-        }
-        else if (selectedFrequency === 'MONTHLY')
-        {
-          start = startDate.getMonth();
-          end = endDate.getMonth();
-          startDate.setMonth(start+i);
-          endDate.setMonth(end+i);
-        }
-        else if (selectedFrequency === 'YEARLY')
-        {
-          start = startDate.getFullYear();
-          end = endDate.getFullYear();
-          startDate.setUTCFullYear(start+i);
-          endDate.setUTCFullYear(end+i);
-          console.log("YEARLY");
-        }
+      //   if(selectedFrequency === "DAILY")
+      //   {
+      //     start = startDate.getDate();
+      //     end = endDate.getDate();
+      //     startDate.setUTCDate(start+i);
+      //     endDate.setUTCDate(end+i);
+      //   }
+      //   else if (selectedFrequency === 'MONTHLY')
+      //   {
+      //     start = startDate.getMonth();
+      //     end = endDate.getMonth();
+      //     startDate.setMonth(start+i);
+      //     endDate.setMonth(end+i);
+      //   }
+      //   else if (selectedFrequency === 'YEARLY')
+      //   {
+      //     start = startDate.getFullYear();
+      //     end = endDate.getFullYear();
+      //     startDate.setUTCFullYear(start+i);
+      //     endDate.setUTCFullYear(end+i);
+      //     console.log("YEARLY");
+      //   }
 
-        console.log("START: " + startDate)
-        console.log("END: "+ endDate);
+      //   console.log("START: " + startDate)
+      //   console.log("END: "+ endDate);
 
         axios.post("http://localhost:8080/api/events/createEvent", 
         {
@@ -160,7 +161,8 @@ const CreateEventForm = (props) => {
           start: startDate, 
           end: endDate, 
           location: locationInput, 
-          recurrenceRule: "ONCE", 
+          recurrenceRule: selectedFrequency, 
+          recurrenceNum: numRecurrences, 
           familyGroup: familyGroup
         })
         .then(function(response)
@@ -176,7 +178,7 @@ const CreateEventForm = (props) => {
         })
     }
   }
-  }
+  //}
 
   const setFamilyGroupFromSelector = (id) => {
     setFamilyGroup(id);
@@ -198,6 +200,9 @@ const CreateEventForm = (props) => {
     setEndDate(null);
     setStartTimeDate(null);
     setEndTimeDate(null);
+    setRecurring(false);
+    setSelectedFrequency("ONCE");
+    setrecurrenceRule("ONCE");
   }
 
   return (
@@ -269,19 +274,19 @@ const CreateEventForm = (props) => {
             <Grid xs={5}> 
               <Grid.Container direction='column'>
                 <Grid>
-                  <Dropdown required >
-                    <Dropdown.Button size="md" auto="true" flat>{selectedFrequency}</Dropdown.Button>
+                  <Dropdown>
+                    <Dropdown.Button size="md" auto flat>{selectedFrequency}</Dropdown.Button>
                     <Dropdown.Menu aria-label="Static Actions" disallowEmptySelection selectionMode="single" selectedKeys={recurrenceRule} onSelectionChange={setrecurrenceRule}>
-                      <Dropdown.Item key="DAILY">DAILY</Dropdown.Item>
-                      <Dropdown.Item key="MONTHLY">MONTHLY</Dropdown.Item>
-                      <Dropdown.Item key="YEARLY">YEARLY</Dropdown.Item>
+                      <Dropdown.Item aria-label="DAILY" key="DAILY">DAILY</Dropdown.Item>
+                      <Dropdown.Item aria-label="MONTHLY" key="MONTHLY">MONTHLY</Dropdown.Item>
+                      <Dropdown.Item aria-label="YEARLY" key="YEARLY">YEARLY</Dropdown.Item>
                     </Dropdown.Menu>
                   </Dropdown>
                   </Grid>
               </Grid.Container>
               <Grid.Container direction='column'>
                 <Grid>
-                <Input width="120px"  type='number' initialValue='1' onChange={e => setNumrecurrences(e.target.value)}/>
+                <Input width="120px" aria-label="numRecurrence" type='number' initialValue='1' onChange={e => setNumrecurrences(e.target.value)}/>
                   </Grid>
               </Grid.Container>
             </Grid>}

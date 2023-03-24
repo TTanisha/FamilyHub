@@ -14,24 +14,107 @@ exports.validateEventDates = function (event) {
 };
 
 exports.createEvent = async (req, res) => {
+  var mongoose = require('mongoose');
+
   try {
     this.validateEventDates(req.body);
-    const newEvent = await Events.create(req.body);
-    res.status(201).send({
-      // created successfully
-      status: "success",
-      message: "New event created",
-      data: { newEvent },
-    });
+    var { title, body, creationUser, isAllDay, 
+      start, end, location, recurrenceRule, 
+      recurrenceNum, recurrenceId, tags, familyGroup } = req.body;
 
-    await FamilyGroups.updateOne(
-      { _id: newEvent.familyGroup },
+      var initialStartDate = new Date(start); 
+      var initialEndDate = new Date(end);
+      
+      var startDate = new Date(initialStartDate);
+      var endDate = new Date(initialEndDate);
+
+      var newEvent;
+
+    //handle recurrence 
+    if(req.body.recurrenceRule != "ONCE") {
+      recurrenceId = mongoose.Types.ObjectId();
+
+      for(let i = 0; i < recurrenceNum; i++)
       {
-        $addToSet: {
-          events: newEvent,
+        if(recurrenceRule === "DAILY")
+        {
+          startDate.setUTCDate(initialStartDate.getDate()+i);
+          endDate.setUTCDate(initialEndDate.getDate()+i);
+        }
+        else if (recurrenceRule === 'MONTHLY')
+        {
+          startDate.setUTCMonth(initialStartDate.getUTCMonth()+i);
+          endDate.setUTCMonth(initialEndDate.getUTCMonth()+i);
+        }
+        else if (recurrenceRule === 'YEARLY')
+        {
+          startDate.setUTCFullYear(initialStartDate.getFullYear()+i);
+          endDate.setUTCFullYear(initialEndDate.getFullYear()+i);
+        }
+
+        newEvent = await Events.create(
+          {"title": title, 
+            "body": body, 
+            "creationUser": creationUser, 
+            "isAllDay": isAllDay, 
+            "start": startDate, 
+            "end": endDate,
+            "location": location, 
+            "recurrenceRule": recurrenceRule, 
+            "recurrenceNum": recurrenceNum,
+            "recurrenceId": recurrenceId, 
+            "tags": tags,
+            "familyGroup": familyGroup
+          });
+
+        await FamilyGroups.updateOne(
+          { _id: newEvent.familyGroup },
+          {
+            $addToSet: {
+              events: newEvent,
+            },
+          },
+        );
+      }
+
+      res.status(201).send({
+        // created successfully
+        status: "success",
+        message: "New recurring event created",
+        data: { newEvent },
+      });
+    } else {
+
+      newEvent = await Events.create(
+        {"title": title, 
+          "body": body, 
+          "creationUser": creationUser, 
+          "isAllDay": isAllDay, 
+          "start": startDate, 
+          "end": endDate,
+          "location": location, 
+          "recurrenceRule": recurrenceRule, 
+          "tags": tags,
+          "familyGroup": familyGroup
+        });
+
+      await FamilyGroups.updateOne(
+        { _id: newEvent.familyGroup },
+        {
+          $addToSet: {
+            events: newEvent,
+          },
         },
-      },
-    );
+      );
+
+      res.status(201).send({
+        // created successfully
+        status: "success",
+        message: "New event created",
+        data: { newEvent },
+      });
+    }
+
   } catch (err) {
     res.status(400).send({
       // bad request

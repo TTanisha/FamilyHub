@@ -172,6 +172,27 @@ describe("Event / Shared Calendar Unit Tests", () => {
     });
   });
 
+  describe("Given input data with null dates", () => {
+    it("Should throw an error", async () => {
+      const eventData = {
+        title: "Event without group",
+        body: "Event not connected to a family group",
+        creationUser: user1,
+        isAllDay: true,
+        start: null,
+        end: null,
+        recurrenceRule: "ONCE",
+      };
+
+      const event = () => {
+        validateEventDates(eventData)
+      };
+
+      await expect(event).toThrow(Error);
+      await expect(event).toThrow("Date values cannot be null.");
+    });
+  });
+
   //=====================================================================================//
 
   describe("Get Event", () => {

@@ -176,6 +176,10 @@ exports.deleteUser = async (req, res) => {
   try {
     const user = await Users.findOne({ email: req.body.email });
 
+    if (user == null) {
+      throw new Error("User not found.");
+    } 
+
     //remove from family groups
     for (var i = 0; i < user.groups.length; i++) {
       await FamilyGroups.updateOne({ _id: user.groups[i] },
@@ -195,16 +199,13 @@ exports.deleteUser = async (req, res) => {
 
     await Users.findOneAndDelete({email: req.body.email});
 
-    if (user == null) {
-      throw err;
-    } else {
-      res.status(200).send({
-        // everything is OK
-        status: "success",
-        message: "User deleted",
-        data: { user },
-      });
-    }
+    res.status(200).send({
+      // everything is OK
+      status: "success",
+      message: "User deleted",
+      data: { user },
+    });
+
   } catch (err) {
     res.status(400).send({
       // bad request

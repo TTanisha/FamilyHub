@@ -172,6 +172,7 @@ const ViewEvent = (props) => {
 
         }
     }).catch(function (error) {
+      window.alert(error.response.data.message);
     })
   }
 
@@ -277,6 +278,7 @@ const ViewEvent = (props) => {
                     label={editMode ? "Start Date" : ""}
                     labelLeft={editMode ? "" : "Start Date"}
                     type='date' 
+                    max='9999-12-31'
                     initialValue={startDateString} 
                     onChange={e => setStartDateInput(e.target.value)}/>
                 </Grid>
@@ -313,6 +315,7 @@ const ViewEvent = (props) => {
                     label={editMode ? "End Date" : ""}
                     labelLeft={editMode ? "" : "End Date"}
                     type='date' 
+                    max='9999-12-31'
                     initialValue={endDateString} 
                     onChange={e => setEndDateInput(e.target.value)}/>
                   </Grid>

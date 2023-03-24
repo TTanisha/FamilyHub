@@ -10,6 +10,8 @@ exports.validateEventDates = function (event) {
     } else {
       return true;
     }
+  } else {
+    throw new Error((message = "Date values cannot be null."));
   }
 };
 

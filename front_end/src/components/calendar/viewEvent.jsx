@@ -2,6 +2,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
 import {Text, Modal, Button, Input, Grid, Spacer, Checkbox, Textarea, Dropdown} from "@nextui-org/react";
 import FamilyGroupSelector from '../familyGroup/familyGroupSelector';
+import DeleteRecurrence from './deleteRecurrence';
 
 const ViewEvent = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));
@@ -426,12 +427,15 @@ const ViewEvent = (props) => {
           <Grid.Container direction='row'>
 
             <Grid xs={3}>
-              { isCreationUser && <Button auto flat color="error"
+              { isCreationUser && !recurring && <Button auto flat color="error"
               onPress={() => {
                 deleteEvent(props)
               }}>
                 Delete
               </Button>}
+
+              { isCreationUser && recurring && <DeleteRecurrence eventProps={props} eventName={title}/>
+}
             </Grid>
 
             <Grid xs={6}></Grid>

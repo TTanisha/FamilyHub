@@ -40,8 +40,8 @@ exports.createEvent = async (req, res) => {
       {
         if(recurrenceRule === "DAILY")
         {
-          startDate.setUTCDate(initialStartDate.getDate()+i);
-          endDate.setUTCDate(initialEndDate.getDate()+i);
+          startDate.setUTCDate(initialStartDate.getUTCDate()+i);
+          endDate.setUTCDate(initialEndDate.getUTCDate()+i);
         }
         else if (recurrenceRule === 'MONTHLY')
         {
@@ -349,6 +349,27 @@ exports.deleteEvent = async (req, res) => {
       status: "fail",
       message: err.message,
       description: "Failed to delete the event",
+    });
+  }
+};
+
+exports.deleteRecurrence = async (req, res) => {
+  try {
+    //delete all events in recurrence
+    await Events.deleteMany({recurrenceId: req.body.recurrenceId});
+
+    res.status(200).send({
+      // everything is OK
+      status: "success",
+      message: "Recurrence deleted"
+    });
+
+  } catch (err) {
+    res.status(400).send({
+      // bad request
+      status: "fail",
+      message: err.message,
+      description: "Failed to delete the recurrence",
     });
   }
 };

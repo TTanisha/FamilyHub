@@ -11,5 +11,6 @@ router.route("/getEvents").get(eventController.getEvents);
 router.route("/updateEvent").post(eventController.updateEvent);
 router.route("/updateRecurrence").post(eventController.updateRecurrence);
 router.route("/deleteEvent").post(eventController.deleteEvent);
+router.route("/deleteRecurrence").post(eventController.deleteRecurrence);
 
 module.exports = router;

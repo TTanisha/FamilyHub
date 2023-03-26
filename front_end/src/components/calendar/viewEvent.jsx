@@ -350,14 +350,6 @@ const ViewEvent = (props) => {
               </div>
           } 
 
-          {/* Recurrence - read mode*/}
-          {
-            (!editMode && recurrenceRule != "ONCE" && recurrenceNum != 0) && 
-            <> 
-              <Text>Occurs {recurrenceRule}, {recurrenceNum} more time(s)</Text>
-            </>
-          }
-
           {/* Recurrence - edit mode*/}
           {
             (editMode && editRecurringMode) && 

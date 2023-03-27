@@ -1,4 +1,16 @@
+<div align="center">
+
 # FamilyHub
+
+[![Push image to Docker Hub](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml)
+[![Regression Testing](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml)
+
+--------------
+
+</div>
+
+FamilyHub is a web-based application designed to help families stay on top of important events with their loved ones through the use of a shared calendar. This application aims to reduce friction and conflict within families by enabling them to improve their organization and communication of events. Thus, FamilyHub will help bring families closer together by giving them an avenue to stay connected, share memories, plan events, and build stronger bonds.
+
 --------------
 
 ## Team Members
@@ -11,104 +23,140 @@
 
 ---
 
-## Sprint 3 Documentation Update
+### Table of Contents
 
-Updated Testing Plan: [Testing Plan for FamilyHub](./docs/sprint-3/Testing_Plan.md)
+- [Core Features](#core-features)
+- [Documentation](#documentation)
+  - [Sprint 1](#sprint-1)
+  - [Sprint 2](#sprint-2)
+  - [Sprint 3](#sprint-3)
+  - [Sprint 4](#sprint-4)
+  - [Presentations](#presentations)
+- [Usage](#usage)
+  - [Run with Docker](#run-with-docker)
+  - [Run Local](#run-locally)
+- [Tests](#tests)
+  - [Unit and Integration](#unit-and-integration)
+  - [Acceptance Tests](#acceptance-tests)
+  - ~~[Load Tests](#load-tests)~~
 
-Updated Shared Calendar Sequence Diagram: [Shared Calendar](./docs/sprint-3/sequence-diagram-shared-calendar-v2.png)
+## Core Features
 
-## Sprint 2 Documentation
+#### User Profile 
 
-Testing Plan: [Testing Plan for FamilyHub](./docs/sprint-2/Testing_Plan.md)
+- Create an account using an email and password.
+- Sign-out and sign back in at a later time.
+- Stay signed-in and be remembered.
+- Add and edit personal information, including name, pronouns, birthday, email, cell and home phone numbers, and address. 
+- Delete your account. 
 
-Sequence Diagrams for:
-* [User Profile](./docs/sprint-2/profile-page-sequence-diagram.png)
-* [Family Group](./docs/sprint-2/family-group-sequence-diagram.png)
-* [Shared Calendar](./docs/sprint-2/shared-calendar-sequence-diagram.png)
+#### Family Groups
 
----
-
-## Resources:
-* [Project Proposal](./docs/Project_Proposal.md)
-
----
-## Running FamilyHub:
-
-### Prerequisites:
-* Docker.
-
-
-### Front End AND Back End using Docker
-
-In the repository directory type:
-
-- For building images, creating containers and running them:
-
-    ```
-    docker-compose up --build
-     ```
-
-- For building images, creating containers but not running them:
-
-    ```
-    docker-compose up --build --no-start
-    ```
+- Create a family group.
+- Invite other users to join your family group. 
+- Leave a family group. 
 
 
-### Only Front End
+#### Shared Calendar
 
-Inside **./front_end/** directory, type:
+- View the calendar by month, week, or day. 
+- View events from any combination of family groups that you are a part of. 
+- Add, edit, and delete events within a specific family calendar. 
 
-- Using docker:
-    - Create the image:
+## Documentation 
 
-        ```
-        docker build ./ -t armijosj/familyhub:client
-        ```
+```
+|
+|
+```
 
-    - Run the image
+- ~~[Project Release](docs/sprint-4/project_release.md)~~
+- ~~[Coding Style](docs/sprint-4/coding_style.md)~~
+- [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes)
 
-        ```
-        docker run -p 5173:5173 armijosj/familyhub:client
-        ```
+### Sprint 1
 
-- Using npm:
+- [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes#sprint-1)
+- [Project Proposal](docs/sprint-1/Project_Proposal.md)
+- [Architecture Diagram](docs/sprint-1/architecture-diagram.png)
 
-    ``` 
-    npm install
-    npm run dev
-    ```
+### Sprint 2
 
-- Using pnpm:
+- [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes#sprint-2)
+- [Testing Plan](docs/sprint-2/Testing_Plan.md)
+- [Sequence Diagrams](docs/sprint-2/Sequence%20Diagrams/)
+  - [User Profile](./docs/sprint-2/Sequence%20Diagrams/profile-page-sequence-diagram.png)
+  - [Family Group](./docs/sprint-2/Sequence%20Diagrams/family-group-sequence-diagram.png)
+  - [Shared Calendar](./docs/sprint-2/Sequence%20Diagrams/shared-calendar-sequence-diagram.png)   
 
-   ```
-    pnpm install
-    pnpm run dev
-   ```
+### Sprint 3
 
-### Only Back End
+- [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes#sprint-3)
+- [Testing Plan](docs/sprint-3/Testing_Plan.md)
+- [Sequence Diagrams](docs/sprint-3/sequence-diagram-shared-calendar-v2.png)
 
-Inside **./back_end/** directory, type:
 
-- Using docker:
+### Sprint 4
 
-    - Create the image:
+- [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes#sprint-4)
+- [Coding Style](docs/sprint-4/coding_style.md)
+- ~~[Load Testing Results](docs/sprint-4/)~~
+- ~~[Security Analysis Results](docs/sprint-4/)~~
 
-        ```
-        docker build ./ -t armijosj/familyhub:server
-        ```
+## Presentations 
 
-    - Run the image
+- [Project Proposal](docs/presentations/Project_Proposal.pptx)
+- [Technique Seminar](docs/presentations/Technique_Seminar.pptx)
+- ~~[Final Project](docs/presentations/)~~
 
-        ```
-        docker run -p 8080:8080 armijosj/familyhub:server
-        ```
+## Usage 
 
-- Using npm:
+### Run with Docker
 
-    ``` 
-    npm install
-    npm run dev
-    ```
+In the repository directory:
+```
+docker-compose up --build
+```
+
+### Run Locally 
+
+Inside the **`./src/back_end/`** directory (in a terminal):
+``` 
+npm install
+npm run dev
+```
+
+Inside the **`./src/front_end/`** directory (in a separate terminal):
+``` 
+npm install
+npm run dev
+```
+
+## Tests
+
+Code directory:
+```
+./src/back_end/test
+```
+
+### Unit and Integration 
+
+Inside the **`./src/back_end/`** directory:
+```
+npm test [for all tests]
+npm test -- unit/models [for just unit tests]
+npm test -- integration [for just integration tests]
+npm test -- {user.test.js | event.test.js | familyGroup.test.js} [for a specific core feature]
+```
+
+### Acceptance Tests
+
+All acceptance tests are done manually. 
+
+See [this](back_end/test/acceptance_tests.md) document for detailed instructions. 
+
+### Load Tests
+
+See [this]() directory for our load test results. 
 
 ---

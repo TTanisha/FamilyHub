@@ -93,7 +93,7 @@ const ViewEvent = (props) => {
     setLocationInput(location);
     setRecurrenceRule(recurrenceRuleString);
     setRecurring((recurrenceRuleString != "ONCE")); 
-    setNumRecurrences(recurrenceNum + 1);
+    setNumRecurrences(recurrenceNum);
     setSelectedFrequency(recurrenceRuleString);
   }
 

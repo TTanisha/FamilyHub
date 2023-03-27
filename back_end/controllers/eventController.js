@@ -15,90 +15,78 @@ exports.validateEventDates = function (event) {
   }
 };
 
-exports.createEvent = async (req, res) => {
+exports.createRecurringEvent = async function (event) {
   var mongoose = require('mongoose');
 
+  var { title, body, creationUser, isAllDay, 
+    start, end, location, recurrenceRule, 
+    recurrenceNum, recurrenceId, tags, familyGroup } = event;
+
+  var newEvent;
+
+  recurrenceId = mongoose.Types.ObjectId();
+
+  for(let i = 0; i < recurrenceNum; i++) {
+    var initialStartDate = new Date(start); 
+    var initialEndDate = new Date(end);
+
+    var startDate = new Date(initialStartDate);
+    var endDate = new Date(initialEndDate);
+
+    if (recurrenceRule === "DAILY") {
+      startDate.setDate(initialStartDate.getDate()+i);
+      endDate.setDate(initialEndDate.getDate()+i);
+
+    } else if (recurrenceRule === 'MONTHLY') {
+      startDate.setMonth(initialStartDate.getMonth()+i);
+      endDate.setMonth(initialEndDate.getMonth()+i);
+
+    } else if (recurrenceRule === 'YEARLY') {
+      startDate.setFullYear(initialStartDate.getFullYear()+i);
+      endDate.setFullYear(initialEndDate.getFullYear()+i);
+    }
+
+    newEvent = await Events.create({
+      "title": title, 
+      "body": body, 
+      "creationUser": creationUser, 
+      "isAllDay": isAllDay, 
+      "start": startDate, 
+      "end": endDate,
+      "location": location, 
+      "recurrenceRule": recurrenceRule, 
+      "recurrenceNum": recurrenceNum,
+      "recurrenceId": recurrenceId, 
+      "tags": tags,
+      "familyGroup": familyGroup
+      });
+
+    await FamilyGroups.updateOne(
+      { _id: newEvent.familyGroup },
+      {
+        $addToSet: {
+          events: newEvent,
+        },
+      },
+    );
+  }
+}
+
+exports.createEvent = async (req, res) => {
   try {
     this.validateEventDates(req.body);
-    var { title, body, creationUser, isAllDay, 
-      start, end, location, recurrenceRule, 
-      recurrenceNum, recurrenceId, tags, familyGroup } = req.body;
-
-      var initialStartDate = new Date(start); 
-      var initialEndDate = new Date(end);
-      
-      var startDate = new Date(initialStartDate);
-      var endDate = new Date(initialEndDate);
-
-      var newEvent;
 
     //handle recurrence 
     if(req.body.recurrenceRule != "ONCE") {
-      recurrenceId = mongoose.Types.ObjectId();
-
-      for(let i = 0; i < recurrenceNum; i++)
-      {
-        if(recurrenceRule === "DAILY")
-        {
-          startDate.setUTCDate(initialStartDate.getUTCDate()+i);
-          endDate.setUTCDate(initialEndDate.getUTCDate()+i);
-        }
-        else if (recurrenceRule === 'MONTHLY')
-        {
-          startDate.setUTCMonth(initialStartDate.getUTCMonth()+i);
-          endDate.setUTCMonth(initialEndDate.getUTCMonth()+i);
-        }
-        else if (recurrenceRule === 'YEARLY')
-        {
-          startDate.setUTCFullYear(initialStartDate.getFullYear()+i);
-          endDate.setUTCFullYear(initialEndDate.getFullYear()+i);
-        }
-
-        newEvent = await Events.create(
-          {"title": title, 
-            "body": body, 
-            "creationUser": creationUser, 
-            "isAllDay": isAllDay, 
-            "start": startDate, 
-            "end": endDate,
-            "location": location, 
-            "recurrenceRule": recurrenceRule, 
-            "recurrenceNum": recurrenceNum - (i+1),
-            "recurrenceId": recurrenceId, 
-            "tags": tags,
-            "familyGroup": familyGroup
-          });
-
-        await FamilyGroups.updateOne(
-          { _id: newEvent.familyGroup },
-          {
-            $addToSet: {
-              events: newEvent,
-            },
-          },
-        );
-      }
+      await this.createRecurringEvent(req.body);
 
       res.status(201).send({
         // created successfully
         status: "success",
         message: "New recurring event created",
-        data: { newEvent },
       });
     } else {
-
-      newEvent = await Events.create(
-        {"title": title, 
-          "body": body, 
-          "creationUser": creationUser, 
-          "isAllDay": isAllDay, 
-          "start": startDate, 
-          "end": endDate,
-          "location": location, 
-          "recurrenceRule": recurrenceRule, 
-          "tags": tags,
-          "familyGroup": familyGroup
-        });
+      const newEvent = await Events.create(req.body);
 
       await FamilyGroups.updateOne(
         { _id: newEvent.familyGroup },
@@ -214,107 +202,18 @@ exports.updateRecurrence = async (req, res) => {
     await Events.deleteMany({recurrenceId: req.body.recurrenceId});
 
     //recreate updated recurrence
-    var mongoose = require('mongoose');
-
-
       this.validateEventDates(req.body);
-      var { title, body, creationUser, isAllDay, 
-        start, end, location, recurrenceRule, 
-        recurrenceNum, recurrenceId, tags, familyGroup } = req.body;
-  
-        var initialStartDate = new Date(start); 
-        var initialEndDate = new Date(end);
-        
-        var startDate = new Date(initialStartDate);
-        var endDate = new Date(initialEndDate);
-  
-        var newEvent;
   
       //handle recurrence 
       if(req.body.recurrenceRule != "ONCE") {
-        recurrenceId = mongoose.Types.ObjectId();
-  
-        for(let i = 0; i < recurrenceNum; i++)
-        {
-          if(recurrenceRule === "DAILY")
-          {
-            startDate.setUTCDate(initialStartDate.getDate()+i);
-            endDate.setUTCDate(initialEndDate.getDate()+i);
-          }
-          else if (recurrenceRule === 'MONTHLY')
-          {
-            startDate.setUTCMonth(initialStartDate.getUTCMonth()+i);
-            endDate.setUTCMonth(initialEndDate.getUTCMonth()+i);
-          }
-          else if (recurrenceRule === 'YEARLY')
-          {
-            startDate.setUTCFullYear(initialStartDate.getFullYear()+i);
-            endDate.setUTCFullYear(initialEndDate.getFullYear()+i);
-          }
-  
-          newEvent = await Events.create(
-            {"title": title, 
-              "body": body, 
-              "creationUser": creationUser, 
-              "isAllDay": isAllDay, 
-              "start": startDate, 
-              "end": endDate,
-              "location": location, 
-              "recurrenceRule": recurrenceRule, 
-              "recurrenceNum": recurrenceNum - (i+1),
-              "recurrenceId": recurrenceId, 
-              "tags": tags,
-              "familyGroup": familyGroup
-            });
-  
-          await FamilyGroups.updateOne(
-            { _id: newEvent.familyGroup },
-            {
-              $addToSet: {
-                events: newEvent,
-              },
-            },
-          );
-        }
+        await this.createRecurringEvent(req.body);
   
         res.status(201).send({
           // created successfully
           status: "success",
           message: "New recurring event created",
-          data: { newEvent },
         });
-      } else {
-  
-        newEvent = await Events.create(
-          {"title": title, 
-            "body": body, 
-            "creationUser": creationUser, 
-            "isAllDay": isAllDay, 
-            "start": startDate, 
-            "end": endDate,
-            "location": location, 
-            "recurrenceRule": recurrenceRule, 
-            "tags": tags,
-            "familyGroup": familyGroup
-          });
-  
-        await FamilyGroups.updateOne(
-          { _id: newEvent.familyGroup },
-          {
-            $addToSet: {
-              events: newEvent,
-            },
-          },
-        );
-  
-        res.status(201).send({
-          // created successfully
-          status: "success",
-          message: "New event created",
-          data: { newEvent },
-        });
-      }
-  
+      } 
   } catch (err) {
     res.status(400).send({
       // bad request

@@ -356,35 +356,38 @@ const ViewEvent = (props) => {
             (editMode && editRecurringMode) && 
             <> 
               <Grid.Container>
-            <Grid> 
-              <Grid.Container direction='column'> 
-                <Grid>
-                <Checkbox size="sm" isSelected={recurring} onChange={setRecurring}> Recurring </Checkbox>
+              <Grid> 
+                <Grid.Container direction='column'> 
+                  <Grid>
+                  <Checkbox size="sm" isSelected={recurring} onChange={setRecurring}> Recurring </Checkbox>
+                  </Grid>
+                </Grid.Container>
+              </Grid>
+              <Spacer y={1} x={10.5}/>
+              { recurring &&
+                <Grid xs={5}> 
+                  <Grid.Container direction='column'>
+                    <Grid>
+                      <Dropdown>
+                        <Dropdown.Button size="md" auto flat>{selectedFrequency}</Dropdown.Button>
+                        <Dropdown.Menu aria-label="Static Actions" disallowEmptySelection selectionMode="single" selectedKeys={recurrenceRule} onSelectionChange={setRecurrenceRule}>
+                          <Dropdown.Item aria-label="DAILY" key="DAILY">DAILY</Dropdown.Item>
+                          <Dropdown.Item aria-label="MONTHLY" key="MONTHLY">MONTHLY</Dropdown.Item>
+                          <Dropdown.Item aria-label="YEARLY" key="YEARLY">YEARLY</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                      </Grid>
+                  </Grid.Container>
+                  <Grid.Container direction='column'>
+                    <Grid>
+                      { recurrenceRule!="ONCE" && 
+                        <Input width="120px" aria-label="numRecurrence" type='number' initialValue={numRecurrences} onChange={e => setNumRecurrences(e.target.value)}/>
+                      }
+                    </Grid>
+                  </Grid.Container>
                 </Grid>
+              }
               </Grid.Container>
-            </Grid>
-            <Spacer y={1} x={10.5}/>
-            { recurring &&
-            <Grid xs={5}> 
-              <Grid.Container direction='column'>
-                <Grid>
-                  <Dropdown>
-                    <Dropdown.Button size="md" auto flat>{selectedFrequency}</Dropdown.Button>
-                    <Dropdown.Menu aria-label="Static Actions" disallowEmptySelection selectionMode="single" selectedKeys={recurrenceRule} onSelectionChange={setRecurrenceRule}>
-                      <Dropdown.Item aria-label="DAILY" key="DAILY">DAILY</Dropdown.Item>
-                      <Dropdown.Item aria-label="MONTHLY" key="MONTHLY">MONTHLY</Dropdown.Item>
-                      <Dropdown.Item aria-label="YEARLY" key="YEARLY">YEARLY</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
-                  </Grid>
-              </Grid.Container>
-              <Grid.Container direction='column'>
-                <Grid>
-                <Input width="120px" aria-label="numRecurrence" type='number' initialValue={numRecurrences} onChange={e => setNumRecurrences(e.target.value)}/>
-                  </Grid>
-              </Grid.Container>
-            </Grid>}
-          </Grid.Container>
             </>
           }
 

@@ -234,25 +234,28 @@ const CreateEventForm = (props) => {
             </Grid>
             <Spacer y={1} x={10.5}/>
             { recurring &&
-            <Grid xs={5}> 
-              <Grid.Container direction='column'>
-                <Grid>
-                  <Dropdown>
-                    <Dropdown.Button size="md" auto flat>{selectedFrequency}</Dropdown.Button>
-                    <Dropdown.Menu aria-label="Static Actions" disallowEmptySelection selectionMode="single" selectedKeys={recurrenceRule} onSelectionChange={setrecurrenceRule}>
-                      <Dropdown.Item aria-label="DAILY" key="DAILY">DAILY</Dropdown.Item>
-                      <Dropdown.Item aria-label="MONTHLY" key="MONTHLY">MONTHLY</Dropdown.Item>
-                      <Dropdown.Item aria-label="YEARLY" key="YEARLY">YEARLY</Dropdown.Item>
-                    </Dropdown.Menu>
-                  </Dropdown>
+              <Grid xs={5}> 
+                <Grid.Container direction='column'>
+                  <Grid>
+                    <Dropdown>
+                      <Dropdown.Button size="md" auto flat>{selectedFrequency}</Dropdown.Button>
+                      <Dropdown.Menu aria-label="Static Actions" disallowEmptySelection selectionMode="single" selectedKeys={recurrenceRule} onSelectionChange={setrecurrenceRule}>
+                        <Dropdown.Item aria-label="DAILY" key="DAILY">DAILY</Dropdown.Item>
+                        <Dropdown.Item aria-label="MONTHLY" key="MONTHLY">MONTHLY</Dropdown.Item>
+                        <Dropdown.Item aria-label="YEARLY" key="YEARLY">YEARLY</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                    </Grid>
+                </Grid.Container>
+                <Grid.Container direction='column'>
+                  <Grid>
+                    { recurrenceRule!="ONCE" && 
+                      <Input width="120px" aria-label="numRecurrence" type='number' initialValue='1' onChange={e => setNumrecurrences(e.target.value)}/>
+                    }
                   </Grid>
-              </Grid.Container>
-              <Grid.Container direction='column'>
-                <Grid>
-                <Input width="120px" aria-label="numRecurrence" type='number' initialValue='1' onChange={e => setNumrecurrences(e.target.value)}/>
-                  </Grid>
-              </Grid.Container>
-            </Grid>}
+                </Grid.Container>
+              </Grid>
+            }
           </Grid.Container>
 
           <FamilyGroupSelector initialGroup={familyGroup} setFamilyGroup={setFamilyGroupFromSelector}/>

@@ -111,12 +111,30 @@ FamilyHub is a web-based application designed to help families stay on top of im
 
 ## Usage 
 
-### Run with Docker
+### Build and Run Images Locally (recommended)
 
-In the repository directory:
+Have docker running, then in the repository directory:
 ```
 docker-compose up --build
 ```
+
+### Pull and Run Images from Docker Hub
+
+You don't need to have previously cloned the repository for the following steps, but you must be logged in to Docker Hub.
+
+In a terminal:
+```
+docker pull armijosj/familyhub:server
+docker run -p 8080:8080 armijosj/familyhub:server
+```
+
+In a different terminal:
+```
+docker pull armijosj/familyhub:client
+docker run -p 5173:5173 armijosj/familyhub:server
+```
+
+Note: Run server before running client.
 
 ### Run Locally 
 

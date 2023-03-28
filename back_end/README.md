@@ -1,58 +1,185 @@
-# Back End README
+# Description
+A Rest API to Family Hub backend and database.
 
-## Instructions
+# List of endpoints
 
-# Running Test suite:
- - Type:
-    ```
-    npm test
-    ```
+## /api/users
 
-# Running locally without docker:
+### POST: /registerUser
 
-- Make sure all dependencies are installed:  
-      
-    ```
-    npm install cors dotenv express mongodb mongoose
-    ```
+### POST: /getUser
+### POST: /getUserById
+### POST: /updateUser
+### POST: /deleteUser
 
-- Make sure nodemon is installed. (-D for development) *(runs app again when change made)*
+### GET: /getUserById
+### GET: /getUser
 
-    ```
-    npm install nodemon -D
-    ``` 
-- Run either:
-    ```
-    npm start
-    ```
-    ```
-    npm dev
-    ``` 
-    (using nodemon)
+--- 
+
+## /api/familyGroups
+
+### POST: /createFamilyGroup
+```
+"body":
+    {
+        "groupName": "myGroupName", 
+    }
+```
+### POST: /getFamilyGroup
+### POST: /addMemberToFamilyGroup
+### POST: /getFamilyGroupEvents
+### POST: /leaveFamilyGroup
+
+### GET: /getFamilyGroup
+
+--- 
+
+## /api/events
+
+### POST: /createEvent
+### POST: /updateEvent
+### POST: /deleteEvent
+
+### GET: /getEventById
+### GET: /getEvents
 
 
-# Using Docker
-- For creating an image locally in ./back_end/
+# Resources: Formatted as JSON
 
-    ```
-    docker build ./ -t armijosj/familyhub:server
-    ```
+- The result data is formatted using JSON. 
 
-- For pushing an image manually **(not necessary when pulled from Docker Hub )** ( username: *armijosj* and password: *dckr_pat_D6kvLu_NbuDnl4jkJG1ubmJ5uzQ* (Actually iit is a CLI access token) )
+### GET: /Timetable/{bus-stop num}
+```
+{
+   "BusSchedule": [ 
+        {
+            "routeId": BUS_NUMBER, 
+            "lastStopName": FINAL_STOP_NAME, 
+            "time": TIME
+        }, 
+    ...
+   ]
+}
+```
 
-    ```
-    docker push armijosj/familyhub:server
-    ```
+### GET: /Stops/search?area-code={area code}
+```
+{
+    "AreaStops":
+    {
+        "stopId": STOP_CODE,
+        "stopName": STOP_NAME,
+        "routeIds": [
+            ROUTE_ID, 
+            ROUTE_ID, 
+            ROUTE_ID
+            ...
+        ]
+    }
+}
+```
 
-- For pulling the image from DockerHub (After running github actions or pushing manually)
+### GET: /Route/{route id}
 
-    ```
-    docker pull armijosj/familyhub:server
-    ``` 
+```
+{
+    "RouteStops":
+    {
+        "stopId": STOP_CODE,
+        "stopName": STOP_NAME,
+        "routeIds": [
+            ROUTE_ID,
+            ...
+        ]
+    }
+}
+```
 
-- For running the Docker image (Create a container and run the server)
-    ```
-    docker run -p 8080:8080 armijosj/familyhub:server
-    ```
-    
-- NOTE: the -p PORT:PORT script opens the specified port. If a change is made to the running server port, then it should also change on the run script.
+# Sample request with sample response
+TimeTimetable/{bus-stop num}
+### GET: /Timetable/17784
+Returns:
+```
+    {
+        "BusSchedule":[
+            {
+                "routeId": 671,
+                "lastStopName": "South Point",
+                "time": "11:00:00"
+            },
+            {
+                "routeId": 72,
+                "lastStopName": "Richmond",
+                "time": "11:15:00"
+            },
+            {
+                "routeId": 51,
+                "lastStopName": "Downtown",
+                "time": "11:30:00"
+            }
+        ]
+    }
+```
+### GET: /Stops/search?area-code=R3T2M9
+Returns:
+```
+    {
+        "AreaStops":[
+            {
+                "stopId": 12345,
+                "stopName": "Hawkstead",
+                "routeIds": [
+                    51,
+                    61,
+                    72
+                ]
+            },
+            {
+                "stopId": 67898,
+                "stopName": "Richmond",
+                "routeIds": [
+                    91,
+                ]
+            },
+            {
+                "stopId": 54313,
+                "stopName": "Thornsdale",
+                "routeIds": [
+                    72,
+                    80
+                ]
+            }
+        ]
+    }
+```
+### GET: /Route/671
+Returns:
+```
+    {
+        "RouteStops":[
+            {
+                "stopId": 12351,
+                "stopName": "Jimbo",
+                "routeIds": [
+                    671,
+                    672
+                ]
+            },
+            {
+                "stopId": 46847,
+                "stopName": "Wumbo",
+                "routeIds": [
+                    671
+                ]
+            },
+            {
+                "stopId": 35789,
+                "stopName": "Gumbo",
+                "routeIds": [
+                    671
+                ]
+            }
+        ]
+    }
+```

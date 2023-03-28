@@ -36,6 +36,14 @@ const eventSchema = new mongoose.Schema({
     enum: ["ONCE", "DAILY", "WEEKLY", "MONTHLY", "YEARLY"],
     required: [true, "The event must specify if it is a one-time or recurring."]
   },
+  recurrenceNum: {
+    type: Number,
+    required: [false] 
+  },
+  recurrenceId: {
+    type: String,
+    required: [false],
+  },
   tags: [{
     type: String,
     required: [false],

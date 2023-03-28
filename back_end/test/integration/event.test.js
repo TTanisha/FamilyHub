@@ -137,6 +137,7 @@ describe("Event / Shared Calendar Integration Tests", () => {
             start: new Date("2023-01-17"), // year,month,day
             end: new Date("2023-01-17"),
             recurrenceRule: "huh",
+            recurrenceNum: 1,
             familyGroup: familyGroup,
           });
         expect(statusCode).toBe(400);

@@ -37,11 +37,15 @@ exports.createRecurringEvent = async function (event) {
       startDate.setDate(initialStartDate.getDate()+i);
       endDate.setDate(initialEndDate.getDate()+i);
 
-    } else if (recurrenceRule === 'MONTHLY') {
+    } else if (recurrenceRule === "WEEKLY") {
+      startDate.setDate(initialStartDate.getDate()+(i*7));
+      endDate.setDate(initialEndDate.getDate()+(i*7));
+
+    } else if (recurrenceRule === "MONTHLY") {
       startDate.setMonth(initialStartDate.getMonth()+i);
       endDate.setMonth(initialEndDate.getMonth()+i);
 
-    } else if (recurrenceRule === 'YEARLY') {
+    } else if (recurrenceRule === "YEARLY") {
       startDate.setFullYear(initialStartDate.getFullYear()+i);
       endDate.setFullYear(initialEndDate.getFullYear()+i);
     }

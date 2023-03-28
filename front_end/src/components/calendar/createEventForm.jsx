@@ -241,6 +241,7 @@ const CreateEventForm = (props) => {
                       <Dropdown.Button size="md" auto flat>{selectedFrequency}</Dropdown.Button>
                       <Dropdown.Menu aria-label="Static Actions" disallowEmptySelection selectionMode="single" selectedKeys={recurrenceRule} onSelectionChange={setrecurrenceRule}>
                         <Dropdown.Item aria-label="DAILY" key="DAILY">DAILY</Dropdown.Item>
+                        <Dropdown.Item aria-label="WEEKLY" key="WEEKLY">WEEKLY</Dropdown.Item>
                         <Dropdown.Item aria-label="MONTHLY" key="MONTHLY">MONTHLY</Dropdown.Item>
                         <Dropdown.Item aria-label="YEARLY" key="YEARLY">YEARLY</Dropdown.Item>
                       </Dropdown.Menu>

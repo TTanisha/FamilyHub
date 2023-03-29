@@ -40,6 +40,8 @@ FamilyHub is a web-based application designed to help families stay on top of im
   - [Acceptance Tests](#acceptance-tests)
   - [Load Tests](#load-tests)
 
+--------------
+
 ## Core Features
 
 #### User Profile 

@@ -11,3 +11,11 @@ npm install -g artillery@latest
 ```
 artillery run load_test.yml
 ```
+
+```
+artillery run load_test.yml --output load_test.json
+```
+
+```
+artillery report load_test.json
+```

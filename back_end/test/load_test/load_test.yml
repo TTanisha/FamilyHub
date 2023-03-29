@@ -1,0 +1,35 @@
+config:
+  target: "http://localhost:8080/api"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+
+  payload:
+    path: "./data.csv"
+    fields:
+      - "email"
+      - "password"
+    order: sequence
+    skipHeader: true
+  
+
+scenarios:
+  - name: "Log in"
+    flow:
+      - post:
+          url: "/users/getUser"
+          json:
+            username: "{{ username }}"
+            password: "{{ password }}"
+          capture:
+            - json: "$.data._id"
+              as: "userID"
+      - post:
+          url: /familyGroups/getFamilyGroup
+          json:
+            groupId: "6410ca8b05bf931425536554"
+          
+
+          
+     

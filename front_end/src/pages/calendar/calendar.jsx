@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import TUICalendar from '@toast-ui/calendar';
 import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 import './calendar.css';
@@ -7,7 +7,7 @@ import moment from 'moment';
 import CreateEventForm from '../../components/calendar/createEventForm';
 import axios from 'axios';
 import ViewEvent from '../../components/calendar/viewEvent';
-import {Text, Grid, Spacer, Dropdown, Button} from "@nextui-org/react";
+import { Text, Grid, Spacer, Dropdown, Button } from "@nextui-org/react";
 import { Calendar as ReactCalendar } from 'react-calendar';
 import FilterSelector from '../../components/calendar/filterSelector';
 

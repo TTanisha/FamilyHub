@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Dropdown} from "@nextui-org/react";
+import { Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Dropdown } from "@nextui-org/react";
 import FamilyGroupSelector from '../familyGroup/familyGroupSelector';
 
 const CreateEventForm = (props) => {

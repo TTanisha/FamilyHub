@@ -5,7 +5,6 @@
 [![Build](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml)
 [![Tests](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml)
 
---------------
 
 </div>
 
@@ -35,7 +34,7 @@ FamilyHub is a web-based application designed to help families stay on top of im
 - [Usage](#usage)
   - [Run with Docker](#build-and-run-images-locally-recommended)
   - [Run Locally](#run-locally)
-- [Tests](#tests)
+- [Testing](#testing)
   - [Unit and Integration](#unit-and-integration)
   - [Acceptance Tests](#acceptance-tests)
   - [Load Tests](#load-tests)
@@ -165,7 +164,7 @@ npm install
 npm run dev
 ```
 
-## Tests
+## Testing
 
 ```
 ./back_end/test

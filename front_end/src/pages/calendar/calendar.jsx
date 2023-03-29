@@ -41,11 +41,7 @@ function setCalendarTitle(view) {
   document.getElementById("renderRange").innerHTML = string;
 }
 
-function renderTUICalendarEvents(tuiCalendarEvents) {
-  tuiCalendar.clear();
-  tuiCalendar.createEvents(tuiCalendarEvents);
-  tuiCalendar.render();
-}
+
 
 const Calendar = () => {
   let currUser = JSON.parse(localStorage.getItem("user"));
@@ -58,6 +54,7 @@ const Calendar = () => {
   const [selectedFamilyGroupName, setSelectedFamilyGroupName] = useState();
   const [selectedView, setSelectedView] = useState("Monthly");
   const [pickerDate, setPickerDate] = useState();
+  const [selectedFilters, setSelectedFilters] = useState(currUser.groups);
 
   useEffect(() => {
     createCalendar();
@@ -65,6 +62,13 @@ const Calendar = () => {
     setPickerDate(tuiCalendar.getDate().toDate());
     bindEventHandlers();
   }, []);
+
+  function renderTUICalendarEvents(tuiCalendarEvents) {
+    tuiCalendar.clear();
+    tuiCalendar.createEvents(tuiCalendarEvents);
+    setFilterVisibility();
+    tuiCalendar.render();
+  }
 
   function handleSetCalendarTitle() {
     if(selectedView != "Monthly") {
@@ -220,6 +224,10 @@ const Calendar = () => {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    setFilterVisibility();
+  }, [selectedFilters])
+
   function updateEvents() {
     const controller = new AbortController();
     setUsersEvents([]);
@@ -230,21 +238,24 @@ const Calendar = () => {
     return () => controller.abort();
   }
 
+  function setFilterVisibility() {
+    currUser.groups?.map((groupId) => {
+      tuiCalendar.setCalendarVisibility(groupId, false);
+    });
+
+    selectedFilters.map((calendarId) => {
+      tuiCalendar.setCalendarVisibility(calendarId, true);
+    });
+
+    tuiCalendar.render();
+  }
+
   function clearGroupName() {
     setSelectedFamilyGroupName(null);
   }
 
   function setFilter(selected) {
-    currUser.groups?.map((groupId) => {
-      tuiCalendar.setCalendarVisibility(groupId, false);
-    })
-
-    selected.map((calendarId) => {
-      tuiCalendar.setCalendarVisibility(calendarId, true);
-      
-    })
-
-    tuiCalendar.render();
+    setSelectedFilters(selected);
   }
 
   return (

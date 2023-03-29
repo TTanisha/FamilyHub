@@ -2,8 +2,8 @@
 
 # FamilyHub
 
-[![Push image to Docker Hub](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml)
-[![Regression Testing](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml)
+[![Build](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml)
+[![Tests](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml)
 
 --------------
 
@@ -13,7 +13,7 @@ FamilyHub is a web-based application designed to help families stay on top of im
 
 --------------
 
-## Team Members
+## Team We Tried
 | Member             | GitHub ID          | Email                   |
 |--------------------|--------------------|-------------------------|
 | Freyja Kristjanson | @FreyjaKristjanson | kristjaf@myumanitoba.ca |
@@ -33,12 +33,12 @@ FamilyHub is a web-based application designed to help families stay on top of im
   - [Sprint 4](#sprint-4)
   - [Presentations](#presentations)
 - [Usage](#usage)
-  - [Run with Docker](#run-with-docker)
-  - [Run Local](#run-locally)
+  - [Run with Docker](#build-and-run-images-locally-recommended)
+  - [Run Locally](#run-locally)
 - [Tests](#tests)
   - [Unit and Integration](#unit-and-integration)
   - [Acceptance Tests](#acceptance-tests)
-  - ~~[Load Tests](#load-tests)~~
+  - [Load Tests](#load-tests)
 
 ## Core Features
 
@@ -56,7 +56,6 @@ FamilyHub is a web-based application designed to help families stay on top of im
 - Invite other users to join your family group. 
 - Leave a family group. 
 
-
 #### Shared Calendar
 
 - View the calendar by month, week, or day. 
@@ -65,13 +64,27 @@ FamilyHub is a web-based application designed to help families stay on top of im
 
 ## Documentation 
 
+Project Organization: 
 ```
-|
-|
+.
+├── back_end
+│   ├── controllers
+│   ├── models
+│   ├── routes
+│   └── test
+├── docs
+│   ├── presentations
+│   ├── sprint-1
+│   ├── sprint-2
+│   ├── sprint-3
+│   └── sprint-4
+└── front_end
+    ├── public
+    └── src
 ```
 
-- ~~[Project Release](docs/sprint-4/project_release.md)~~
-- ~~[Coding Style](docs/sprint-4/coding_style.md)~~
+- ~~[Project Release](docs/sprint-4/project_release.md)~~ (In progress)
+- [Coding Style](docs/sprint-4/coding_style.md)
 - [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes)
 
 ### Sprint 1
@@ -100,14 +113,14 @@ FamilyHub is a web-based application designed to help families stay on top of im
 
 - [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes#sprint-4)
 - [Coding Style](docs/sprint-4/coding_style.md)
-- ~~[Load Testing Results](docs/sprint-4/)~~
-- ~~[Security Analysis Results](docs/sprint-4/)~~
+- ~~[Load Testing Results](docs/sprint-4/)~~ (In progress)
+- ~~[Security Analysis Results](docs/sprint-4/)~~ (In progress)
 
 ## Presentations 
 
 - [Project Proposal](docs/presentations/Project_Proposal.pptx)
 - [Technique Seminar](docs/presentations/Technique_Seminar.pptx)
-- ~~[Final Project](docs/presentations/)~~
+- ~~[Final Project](docs/presentations/)~~ (In progress)
 
 ## Usage 
 
@@ -138,13 +151,13 @@ Note: Run server before running client.
 
 ### Run Locally 
 
-Inside the **`./src/back_end/`** directory (in a terminal):
+Inside the **`./back_end/`** directory (in a terminal):
 ``` 
 npm install
 npm run dev
 ```
 
-Inside the **`./src/front_end/`** directory (in a separate terminal):
+Inside the **`./front_end/`** directory (in a separate terminal):
 ``` 
 npm install
 npm run dev
@@ -152,19 +165,31 @@ npm run dev
 
 ## Tests
 
-Code directory:
 ```
-./src/back_end/test
+./back_end/test
+├── acceptance_tests.md
+├── integration
+│   ├── event.test.js
+│   ├── familyGroup.test.js
+│   └── user.test.js
+└── unit
+    └── models
+        ├── event.test.js
+        ├── familyGroup.test.js
+        └── user.test.js
 ```
 
 ### Unit and Integration 
 
-Inside the **`./src/back_end/`** directory:
+Inside the **`./back_end/`** directory:
 ```
 npm test [for all tests]
+
 npm test -- unit/models [for just unit tests]
 npm test -- integration [for just integration tests]
 npm test -- {user.test.js | event.test.js | familyGroup.test.js} [for a specific core feature]
+
+npm run testFull [to get detailed code coverage information and test descriptions]
 ```
 
 ### Acceptance Tests
@@ -175,6 +200,6 @@ See [this](back_end/test/acceptance_tests.md) document for detailed instructions
 
 ### Load Tests
 
-See [this]() directory for our load test results. 
+See [(In progress)]() directory for our load test results. 
 
 ---

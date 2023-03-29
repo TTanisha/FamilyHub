@@ -324,8 +324,6 @@ describe("Family Group Integration Tests", () => {
 
           let group = await FamilyGroups.findById(defaultGroup._id);
 
-          console.debug("jasmine:  ", group);
-
           const { statusCode, body } = await request
             .post("/api/familyGroups/leaveFamilyGroup")
             .send({

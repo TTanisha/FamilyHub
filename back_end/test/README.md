@@ -1,10 +1,24 @@
-# Test Cases
+# Testing
 
-To run the tests type in *back_end/*:
+### Unit and Integration 
+
+Inside the **`./back_end/`** directory:
 ```
-npm test
+npm test [for all tests]
+
+npm test -- unit/models [for just unit tests]
+npm test -- integration [for just integration tests]
+npm test -- {user.test.js | event.test.js | familyGroup.test.js} [for a specific core feature]
+
+npm run testFull [to get detailed code coverage information and test descriptions]
 ```
 
-To create a new test file use:
+### Acceptance Tests
 
-*feature.test.js*
+All acceptance tests are done manually. 
+
+See [this](acceptance_tests.md) document for detailed instructions. 
+
+### Load Tests
+
+See [(In progress)]() directory for our load test results. 

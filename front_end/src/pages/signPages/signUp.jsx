@@ -2,7 +2,7 @@ import React from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import './sign.css';
 import axios from 'axios';
-import {Button, Grid, Input, Spacer} from "@nextui-org/react";
+import { Button, Grid, Input, Spacer } from "@nextui-org/react";
 
 const SignUp = () => {
   const[firstName, setFirstName] = React.useState('');

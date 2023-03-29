@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Checkbox, Spacer, Text} from "@nextui-org/react";
+import { Checkbox, Spacer, Text } from "@nextui-org/react";
 
 const FilterSelector = (props) => {
     let currUser = JSON.parse(localStorage.getItem("user")); 

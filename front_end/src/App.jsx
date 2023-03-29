@@ -10,7 +10,7 @@ import FamilyMemberProfile from './pages/profile/familyMemberProfile';
 import { Navigate } from 'react-router-dom';
 import SignUp from './pages/signPages/signUp';
 import { NextUIProvider, Navbar, Text, Avatar, Dropdown, Button } from "@nextui-org/react";
-import profilePicture from './images/user.png';
+import profilePicture from './assets/user.png';
 
 function App() {
 

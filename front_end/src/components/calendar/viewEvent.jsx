@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import {Text, Modal, Button, Input, Grid, Spacer, Checkbox, Textarea, Dropdown} from "@nextui-org/react";
+import { Text, Modal, Button, Input, Grid, Spacer, Checkbox, Textarea, Dropdown } from "@nextui-org/react";
 import FamilyGroupSelector from '../familyGroup/familyGroupSelector';
 import DeleteRecurrence from './deleteRecurrence';
 

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Radio} from "@nextui-org/react";
+import { Radio } from "@nextui-org/react";
 
 const FamilyGroupSelector = (props) => {
     let currUser = JSON.parse(localStorage.getItem("user")); 

@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import axios from 'axios';
-import {Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Radio} from "@nextui-org/react";
+import { Text, Modal, useModal, Button } from "@nextui-org/react";
 
 const LeaveFamilyGroup = (props) => {
 

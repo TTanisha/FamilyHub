@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./userProfile.css";
 import axios from 'axios';
-import {Text, useModal, Button, Grid, Card, Spacer, Input} from "@nextui-org/react";
+import { Text, Button, Grid, Card, Spacer, Input } from "@nextui-org/react";
 import DeleteAccount from './deleteAccount';
 
 

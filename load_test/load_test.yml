@@ -1,0 +1,22 @@
+config:
+  target: "http://localhost:8080/api"
+  phases:
+    - duration: 60
+      arrivalRate: 5
+      name: Warm up
+   
+    
+  payload:
+    path: "data.csv"
+    fields:
+      - "email"
+      - "password"
+   
+
+scenarios:
+  - name: "Log in"
+    flow:
+      - get:
+          url: "/users/getUser"
+          
+     

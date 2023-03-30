@@ -1,13 +1,9 @@
 config:
   target: "http://localhost:8080/api"
   phases:
+  # Each user makes 5 request to the application. 200 users making 5 requests results in 1000 requests in a minute
     - duration: 60
-      arrivalRate: 5
-      name: Warm up
-
-    - duration: 120
-      arrivalRate: 5
-      rampTo: 50
+      arrivalCount: 200
       name: Load Test
 
   payload:
@@ -24,7 +20,7 @@ config:
 
 scenarios:
   - name: "Log in"
-    # This simulates logging in to the user account and retrieving the data.
+    # This simulates logging in to the user account and retrieving the data. (2 requests)
     flow:
       - post:
           url: "/users/getUser"
@@ -39,7 +35,7 @@ scenarios:
           
 
   - name: "Populate Calendar"
-    # Simulate retrieving event data for the calendar for a family group
+    # Simulate retrieving event data for the calendar for a family group. (2 requests)
     flow: 
       - post:
           url: "/familyGroups/getFamilyGroup"
@@ -51,7 +47,7 @@ scenarios:
             groupId: "{{ groupId }}"
 
   - name: "Get and Edit an Event"
-    # Simulate updating an event.
+    # Simulate updating an event. (1 request)
     flow:  
       - post:
           url: "/events/updateEvent"

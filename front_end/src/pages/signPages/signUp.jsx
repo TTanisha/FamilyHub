@@ -66,7 +66,7 @@ const SignUp = () => {
         <Spacer y={2}/>
         <Button 
           className="sign-in" 
-          onClick={() => signUserUp({firstName: firstName, lastName: lastName, email: email, password:password, birthday: birthDate, nickname:nickname, pronouns:pronouns, address:address, cellNumber:cellNumber, homeNumber:homeNumber })}
+          onClick={() => signUserUp({firstName: firstName, lastName: lastName, email: email, password:password, birthday: birthDate})}
         >
           Next
         </Button>

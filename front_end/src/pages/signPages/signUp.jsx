@@ -66,43 +66,6 @@ const SignUp = () => {
                 onChange={(date) => setBirthDate((new Date(date.target.value)).toISOString())}>
               </Input>
             </Grid>
-            <Grid>
-              <Input 
-                label="Nickname:"
-                helperText="optional"
-                onChange={e => setNickname(e.target.value)}>
-              </Input>
-            </Grid>
-            <Grid>
-              <Input 
-                label="Pronouns:"
-                helperText="optional"
-                onChange={e => setPronouns(e.target.value)}>
-              </Input>
-            </Grid>
-            <Grid>
-              <Input 
-                label="Address:"
-                helperText="optional"
-                onChange={e => setAddress(e.target.value)}>
-              </Input>
-            </Grid>
-            <Grid>
-              <Input 
-                label="Cell Number:"
-                helperText="optional"
-                type="number"
-                onChange={e => setCellNumber(e.target.value)}>
-              </Input>
-            </Grid>
-            <Grid>
-              <Input 
-                label="Home Number:"
-                helperText="optional"
-                type="number"
-                onChange={e => setHomeNumber(e.target.value)}>
-              </Input>
-            </Grid>
           </Grid.Container>
         </form>
         <Spacer y={2}/>
@@ -110,7 +73,7 @@ const SignUp = () => {
           className="sign-in" 
           onClick={() => signUserUp({firstName: firstName, lastName: lastName, email: email, password:password, birthday: birthDate, nickname:nickname, pronouns:pronouns, address:address, cellNumber:cellNumber, homeNumber:homeNumber })}
         >
-          Create account
+          Next
         </Button>
     </div>
   );
@@ -123,7 +86,7 @@ async function signUserUp(props) {
         const newUser = response.data.data.newUser;
         localStorage.setItem("user", JSON.stringify(newUser));
         localStorage.setItem("loggedIn", "true");
-        window.location.href = '/calendar';
+        window.location.href = '/additional-info';
       } 
    }).catch(function (error) {
        console.log(error);

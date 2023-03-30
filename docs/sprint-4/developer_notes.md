@@ -87,7 +87,7 @@ We will follow the basic JS and HTML/CSS coding conventions.
   let x = y + z; 
   const myArray = ["item1", "item2", "item3"]
   ```
-- Use 2 spaces for indentation of code clocks. 
+- Use 2 spaces for indentation of code blocks. 
 - Always end simple statements with a semicolon. 
 - Line length should always be less than 80 characters. 
 
@@ -96,7 +96,4 @@ We will follow the basic JS and HTML/CSS coding conventions.
 - Always declare local variables (use `var`, `let`, or `const`).
 - Put all declarations at the top of each script or function. 
 - Initialize variables.
-- Declare Objects and Arrays with `const`. 
-- Use `===` comparisons. 
-- Use function defaults. 
 - Add comments when necessary, but code should be easy to understand. 

@@ -21,4 +21,4 @@ See [this](acceptance_tests.md) document for detailed instructions.
 
 ### Load Tests
 
-See [(In progress)]() directory for our load test results. 
+See [this](load_test) directory for our load tests. 

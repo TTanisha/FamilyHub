@@ -34,8 +34,8 @@
 #### Testing
 
 - **Jest** - for unit and integration tests
-- Whatever the security testing thing we use
-- Whatever the load testing thing we use
+- **Artillery** - load testing
+- **CodeQL** - security analysis
 
 
 ## Project Organization 

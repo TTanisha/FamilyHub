@@ -114,8 +114,8 @@ Project Organization:
 
 - [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes#sprint-4)
 - [Coding Style](docs/sprint-4/coding_style.md)
-- ~~[Load Testing Results](docs/sprint-4/)~~ (In progress)
-- ~~[Security Analysis Results](docs/sprint-4/)~~ (In progress)
+- [Load Testing](back_end/test/load_test)
+- [Security Analysis Report](https://github.com/TTanisha/FamilyHub/security/code-scanning)
 
 ## Presentations 
 
@@ -173,6 +173,8 @@ npm run dev
 │   ├── event.test.js
 │   ├── familyGroup.test.js
 │   └── user.test.js
+├── load_test
+│   └── load_test.json.html
 └── unit
     └── models
         ├── event.test.js
@@ -201,6 +203,6 @@ See [this](back_end/test/acceptance_tests.md) document for detailed instructions
 
 ### Load Tests
 
-See [(In progress)]() directory for our load test results. 
+See [this](./back_end/test/load_test) directory for our load tests. 
 
 ---

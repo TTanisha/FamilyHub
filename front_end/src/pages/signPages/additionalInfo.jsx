@@ -80,7 +80,7 @@ const AdditionalInfo = () => {
           })
         }
       >
-        Create account
+        Complete My Profile
       </Button>
     </div>
   );

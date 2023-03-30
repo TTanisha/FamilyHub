@@ -68,7 +68,7 @@ const SignUp = () => {
           className="sign-in" 
           onClick={() => signUserUp({firstName: firstName, lastName: lastName, email: email, password:password, birthday: birthDate})}
         >
-          Next
+          Create Account
         </Button>
     </div>
   );

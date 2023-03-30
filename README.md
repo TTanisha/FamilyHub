@@ -113,7 +113,7 @@ Project Organization:
 ### Sprint 4
 
 - [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes#sprint-4)
-- [Coding Style](docs/sprint-4/coding_style.md)
+- [Coding Style](docs/sprint-4/developer_notes.md/#coding-standards)
 - [Load Testing](back_end/test/load_test)
 - [Security Analysis Report](https://github.com/TTanisha/FamilyHub/security/code-scanning)
 

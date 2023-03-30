@@ -31,7 +31,7 @@ beforeAll(async () => {
     },
     (err) => {
       console.error("Unable to connect to MongoDB.", err.message);
-    }
+    },
   );
 
   try {
@@ -60,7 +60,7 @@ afterAll(async () => {
     },
     (err) => {
       console.error("Unable to disconnect from MongoDB.", err.message);
-    }
+    },
   );
 });
 

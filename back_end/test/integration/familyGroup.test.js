@@ -40,7 +40,7 @@ beforeAll(async () => {
     },
     (err) => {
       console.error("Unable to connect to MongoDB.", err.message);
-    }
+    },
   );
 
   try {
@@ -81,7 +81,7 @@ afterAll(async () => {
     },
     (err) => {
       console.error("Unable to disconnect from MongoDB.", err.message);
-    }
+    },
   );
 });
 
@@ -118,7 +118,7 @@ describe("Family Group Integration Tests", () => {
           .send({ groupName: "" });
         expect(statusCode).toBe(401);
         expect(body.message).toBe(
-          "FamilyGroups validation failed: groupName: A family group must have groupName"
+          "FamilyGroups validation failed: groupName: A family group must have groupName",
         );
       });
     });
@@ -130,7 +130,7 @@ describe("Family Group Integration Tests", () => {
           .send();
         expect(statusCode).toBe(401);
         expect(body.message).toBe(
-          "FamilyGroups validation failed: groupName: A family group must have groupName"
+          "FamilyGroups validation failed: groupName: A family group must have groupName",
         );
       });
     });
@@ -367,7 +367,7 @@ describe("Family Group Integration Tests", () => {
             });
           expect(statusCode).toBe(404);
           expect(body.message).toBe(
-            "Group does not have any members to remove"
+            "Group does not have any members to remove",
           );
           await FamilyGroups.findByIdAndDelete(testGroup._id);
         });

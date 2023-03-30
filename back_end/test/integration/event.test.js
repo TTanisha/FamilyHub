@@ -35,8 +35,12 @@ beforeAll(async () => {
   };
 
   mongoose.connect(DB, connectionOptions).then(
-    () => {console.log("Successfully connected to MongoDB.")},
-    err => {console.error("Unable to connect to MongoDB.", err.message)}
+    () => {
+      console.log("Successfully connected to MongoDB.");
+    },
+    (err) => {
+      console.error("Unable to connect to MongoDB.", err.message);
+    },
   );
 
   Events.createIndexes();
@@ -55,8 +59,12 @@ afterAll(async () => {
   }
 
   await mongoose.connection.close().then(
-    () => {console.log("Successfully disconnected from MongoDB.")},
-    err => {console.error("Unable to disconnect from MongoDB.", err.message)}
+    () => {
+      console.log("Successfully disconnected from MongoDB.");
+    },
+    (err) => {
+      console.error("Unable to disconnect from MongoDB.", err.message);
+    },
   );
 });
 

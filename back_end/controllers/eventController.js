@@ -16,54 +16,62 @@ exports.validateEventDates = function (event) {
 };
 
 exports.createRecurringEvent = async function (event) {
-  var mongoose = require('mongoose');
+  var mongoose = require("mongoose");
 
-  var { title, body, creationUser, isAllDay, 
-    start, end, location, recurrenceRule, 
-    recurrenceNum, recurrenceId, tags, familyGroup } = event;
+  var {
+    title,
+    body,
+    creationUser,
+    isAllDay,
+    start,
+    end,
+    location,
+    recurrenceRule,
+    recurrenceNum,
+    recurrenceId,
+    tags,
+    familyGroup,
+  } = event;
 
   var newEvent;
 
   recurrenceId = mongoose.Types.ObjectId();
 
-  for(let i = 0; i < recurrenceNum; i++) {
-    var initialStartDate = new Date(start); 
+  for (let i = 0; i < recurrenceNum; i++) {
+    var initialStartDate = new Date(start);
     var initialEndDate = new Date(end);
 
     var startDate = new Date(initialStartDate);
     var endDate = new Date(initialEndDate);
 
     if (recurrenceRule === "DAILY") {
-      startDate.setDate(initialStartDate.getDate()+i);
-      endDate.setDate(initialEndDate.getDate()+i);
-
+      startDate.setDate(initialStartDate.getDate() + i);
+      endDate.setDate(initialEndDate.getDate() + i);
     } else if (recurrenceRule === "WEEKLY") {
-      startDate.setDate(initialStartDate.getDate()+(i*7));
-      endDate.setDate(initialEndDate.getDate()+(i*7));
-
+      startDate.setDate(initialStartDate.getDate() + i * 7);
+      endDate.setDate(initialEndDate.getDate() + i * 7);
     } else if (recurrenceRule === "MONTHLY") {
-      startDate.setMonth(initialStartDate.getMonth()+i);
-      endDate.setMonth(initialEndDate.getMonth()+i);
-
+      startDate.setMonth(initialStartDate.getMonth() + i);
+      endDate.setMonth(initialEndDate.getMonth() + i);
     } else if (recurrenceRule === "YEARLY") {
-      startDate.setFullYear(initialStartDate.getFullYear()+i);
-      endDate.setFullYear(initialEndDate.getFullYear()+i);
+      startDate.setFullYear(initialStartDate.getFullYear() + i);
+      endDate.setFullYear(initialEndDate.getFullYear() + i);
     }
 
     newEvent = await Events.create({
-      "title": title, 
-      "body": body, 
-      "creationUser": creationUser, 
-      "isAllDay": isAllDay, 
-      "start": startDate, 
-      "end": endDate,
-      "location": location, 
-      "recurrenceRule": recurrenceRule, 
-      "recurrenceNum": recurrenceNum,
-      "recurrenceId": recurrenceId, 
-      "tags": tags,
-      "familyGroup": familyGroup
-      });
+      title: title,
+      body: body,
+      creationUser: creationUser,
+      isAllDay: isAllDay,
+      start: startDate,
+      end: endDate,
+      location: location,
+      recurrenceRule: recurrenceRule,
+      recurrenceNum: recurrenceNum,
+      recurrenceId: recurrenceId,
+      tags: tags,
+      familyGroup: familyGroup,
+    });
 
     await FamilyGroups.updateOne(
       { _id: newEvent.familyGroup },
@@ -74,14 +82,14 @@ exports.createRecurringEvent = async function (event) {
       },
     );
   }
-}
+};
 
 exports.createEvent = async (req, res) => {
   try {
     this.validateEventDates(req.body);
 
-    //handle recurrence 
-    if(req.body.recurrenceRule != "ONCE") {
+    //handle recurrence
+    if (req.body.recurrenceRule != "ONCE") {
       await this.createRecurringEvent(req.body);
 
       res.status(201).send({
@@ -108,7 +116,6 @@ exports.createEvent = async (req, res) => {
         data: { newEvent },
       });
     }
-
   } catch (err) {
     res.status(400).send({
       // bad request
@@ -203,21 +210,21 @@ exports.updateEvent = async (req, res) => {
 exports.updateRecurrence = async (req, res) => {
   try {
     //delete all events in recurrence
-    await Events.deleteMany({recurrenceId: req.body.recurrenceId});
+    await Events.deleteMany({ recurrenceId: req.body.recurrenceId });
 
     //recreate updated recurrence
-      this.validateEventDates(req.body);
-  
-      //handle recurrence 
-      if(req.body.recurrenceRule != "ONCE") {
-        await this.createRecurringEvent(req.body);
-  
-        res.status(201).send({
-          // created successfully
-          status: "success",
-          message: "New recurring event created",
-        });
-      } 
+    this.validateEventDates(req.body);
+
+    //handle recurrence
+    if (req.body.recurrenceRule != "ONCE") {
+      await this.createRecurringEvent(req.body);
+
+      res.status(201).send({
+        // created successfully
+        status: "success",
+        message: "New recurring event created",
+      });
+    }
   } catch (err) {
     res.status(400).send({
       // bad request
@@ -259,14 +266,13 @@ exports.deleteEvent = async (req, res) => {
 exports.deleteRecurrence = async (req, res) => {
   try {
     //delete all events in recurrence
-    await Events.deleteMany({recurrenceId: req.body.recurrenceId});
+    await Events.deleteMany({ recurrenceId: req.body.recurrenceId });
 
     res.status(200).send({
       // everything is OK
       status: "success",
-      message: "Recurrence deleted"
+      message: "Recurrence deleted",
     });
-
   } catch (err) {
     res.status(400).send({
       // bad request

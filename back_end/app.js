@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-var bodyParser = require('body-parser')
+var bodyParser = require("body-parser");
 
 const app = express();
 
@@ -8,7 +8,7 @@ const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
 
 // parse application/json
-app.use(bodyParser.json())
+app.use(bodyParser.json());
 
 //Get Routes
 const userRouter = require("./routes/userRoutes");
@@ -17,7 +17,7 @@ const eventRouter = require("./routes/eventRoutes");
 
 app.use(cors());
 // grant access to user's data from body
-app.use(express.json())
+app.use(express.json());
 
 // define routes and API
 app.use("/api/users", userRouter);

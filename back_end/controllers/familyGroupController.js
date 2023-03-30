@@ -80,7 +80,7 @@ exports.addMemberToFamilyGroup = async (req, res) => {
           groups: group,
         },
       },
-      { runValidators: true, new: true }
+      { runValidators: true, new: true },
     );
 
     group = await FamilyGroups.findByIdAndUpdate(
@@ -90,7 +90,7 @@ exports.addMemberToFamilyGroup = async (req, res) => {
           groupMembers: member,
         },
       },
-      { runValidators: true, new: true }
+      { runValidators: true, new: true },
     );
 
     res.status(200).send({
@@ -164,7 +164,7 @@ exports.leaveFamilyGroup = async (req, res) => {
           groupMembers: memberId,
         },
       },
-      { new: true }
+      { new: true },
     );
 
     //if member array is now empty, delete the group

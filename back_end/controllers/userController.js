@@ -3,14 +3,13 @@ const Users = require("../models/userModel");
 const FamilyGroups = require("../models/familyGroupModel");
 
 //from w3resource: https://www.w3resource.com/javascript/form/email-validation.php
-exports.validateEmail = function(mail) 
-{
- return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
-}
+exports.validateEmail = function (mail) {
+  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail);
+};
 
 exports.registerUser = async (req, res) => {
   try {
-    if(!this.validateEmail(req.body.email)) {
+    if (!this.validateEmail(req.body.email)) {
       throw new Error("Please enter a valid email address.");
     }
 
@@ -22,13 +21,13 @@ exports.registerUser = async (req, res) => {
       data: { newUser },
     });
   } catch (err) {
-    if(err.code === 11000) {
+    if (err.code === 11000) {
       res.status(400).send({
         // bad request
         status: "fail",
         message: "This email is already associated with an account.",
       });
-    } else { 
+    } else {
       res.status(400).send({
         // bad request
         status: "fail",
@@ -178,26 +177,28 @@ exports.deleteUser = async (req, res) => {
 
     if (user == null) {
       throw new Error("User not found.");
-    } 
+    }
 
     //remove from family groups
     for (var i = 0; i < user.groups.length; i++) {
-      await FamilyGroups.updateOne({ _id: user.groups[i] },
+      await FamilyGroups.updateOne(
+        { _id: user.groups[i] },
         {
-            $pull: {
-                groupMembers: user._id,
-            },
-        });   
+          $pull: {
+            groupMembers: user._id,
+          },
+        },
+      );
 
       let updatedGroup = await FamilyGroups.findOne({ _id: user.groups[i] });
 
       //delete family group if no members are left
       if (updatedGroup.groupMembers.length == 0) {
-          await FamilyGroups.findOneAndRemove({ _id: user.groups[i] });
-      } 
+        await FamilyGroups.findOneAndRemove({ _id: user.groups[i] });
+      }
     }
 
-    await Users.findOneAndDelete({email: req.body.email});
+    await Users.findOneAndDelete({ email: req.body.email });
 
     res.status(200).send({
       // everything is OK
@@ -205,7 +206,6 @@ exports.deleteUser = async (req, res) => {
       message: "User deleted",
       data: { user },
     });
-
   } catch (err) {
     res.status(400).send({
       // bad request

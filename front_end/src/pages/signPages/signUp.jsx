@@ -10,11 +10,6 @@ const SignUp = () => {
   const[email, setEmail] = React.useState('');
   const[password, setPassword] = React.useState('');
   const[birthDate, setBirthDate] = React.useState(null);
-  const[nickname, setNickname] = React.useState('');
-  const[pronouns, setPronouns] = React.useState('');
-  const[address, setAddress] = React.useState('');
-  const[cellNumber, setCellNumber] = React.useState('');
-  const[homeNumber, setHomeNumber] = React.useState('');
 
   const handleKeyDown = (event) => {
     if (event.key === 'Enter') {

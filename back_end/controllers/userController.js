@@ -1,4 +1,3 @@
-const { MongoServerError } = require("mongodb");
 const Users = require("../models/userModel");
 const FamilyGroups = require("../models/familyGroupModel");
 

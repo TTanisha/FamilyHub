@@ -1,13 +1,12 @@
 import React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Calendar from './pages/calendar/calendar';
 import FamilyGroups from './pages/familyGroups/familyGroups';
 import SignIn from './pages/signPages/signIn';
 import SignOut from './pages/signPages/signOut';
 import Profile from './pages/profile/profile';
 import FamilyMemberProfile from './pages/profile/familyMemberProfile';
-import { Navigate } from 'react-router-dom';
 import SignUp from './pages/signPages/signUp';
 import { NextUIProvider, Navbar, Text, Avatar, Dropdown, Button } from "@nextui-org/react";
 import profilePicture from './assets/user.png';

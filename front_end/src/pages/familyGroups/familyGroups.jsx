@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
 import FamilyGroup from '../../components/familyGroup/familyGroup';
 import CreateFamilyGroup from '../../components/familyGroup/createFamilyGroup';
 import AddMemberFamilyGroup from '../../components/familyGroup/addMemberFamilyGroup';

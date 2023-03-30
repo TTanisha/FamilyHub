@@ -32,7 +32,7 @@ jobs:
 
       - name: Docker Client build
         run: |
-          docker build ./back_end -t armijosj/familyhub:client
+          docker build ./front_end -t armijosj/familyhub:client
       - name: Docker Client push
         run: |
           docker push armijosj/familyhub:client

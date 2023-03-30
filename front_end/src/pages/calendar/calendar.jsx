@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import TUICalendar from '@toast-ui/calendar';
 import '@toast-ui/calendar/dist/toastui-calendar.min.css';
 import './calendar.css';
@@ -7,7 +7,7 @@ import moment from 'moment';
 import CreateEventForm from '../../components/calendar/createEventForm';
 import axios from 'axios';
 import ViewEvent from '../../components/calendar/viewEvent';
-import {Text, Grid, Spacer, Dropdown, Button} from "@nextui-org/react";
+import { Text, Grid, Spacer, Dropdown, Button } from "@nextui-org/react";
 import { Calendar as ReactCalendar } from 'react-calendar';
 import FilterSelector from '../../components/calendar/filterSelector';
 
@@ -41,11 +41,7 @@ function setCalendarTitle(view) {
   document.getElementById("renderRange").innerHTML = string;
 }
 
-function renderTUICalendarEvents(tuiCalendarEvents) {
-  tuiCalendar.clear();
-  tuiCalendar.createEvents(tuiCalendarEvents);
-  tuiCalendar.render();
-}
+
 
 const Calendar = () => {
   let currUser = JSON.parse(localStorage.getItem("user"));
@@ -58,6 +54,7 @@ const Calendar = () => {
   const [selectedFamilyGroupName, setSelectedFamilyGroupName] = useState();
   const [selectedView, setSelectedView] = useState("Monthly");
   const [pickerDate, setPickerDate] = useState();
+  const [selectedFilters, setSelectedFilters] = useState(currUser.groups);
 
   useEffect(() => {
     createCalendar();
@@ -65,6 +62,13 @@ const Calendar = () => {
     setPickerDate(tuiCalendar.getDate().toDate());
     bindEventHandlers();
   }, []);
+
+  function renderTUICalendarEvents(tuiCalendarEvents) {
+    tuiCalendar.clear();
+    tuiCalendar.createEvents(tuiCalendarEvents);
+    setFilterVisibility();
+    tuiCalendar.render();
+  }
 
   function handleSetCalendarTitle() {
     if(selectedView != "Monthly") {
@@ -142,7 +146,10 @@ const Calendar = () => {
           isAllDay: event.isAllDay,
           location: event.location,
           raw: {
-            creationUser: event.creationUser
+            creationUser: event.creationUser,
+            recurrenceId: event.recurrenceId,
+            recurrenceRule: event.recurrenceRule,
+            recurrenceNum: event.recurrenceNum
           }
         };
         setTUICalendarEvents(tuiCalendarEvents => [...tuiCalendarEvents, tuiEvent]);
@@ -217,6 +224,10 @@ const Calendar = () => {
     return () => controller.abort();
   }, []);
 
+  useEffect(() => {
+    setFilterVisibility();
+  }, [selectedFilters])
+
   function updateEvents() {
     const controller = new AbortController();
     setUsersEvents([]);
@@ -227,21 +238,24 @@ const Calendar = () => {
     return () => controller.abort();
   }
 
+  function setFilterVisibility() {
+    currUser.groups?.map((groupId) => {
+      tuiCalendar.setCalendarVisibility(groupId, false);
+    });
+
+    selectedFilters.map((calendarId) => {
+      tuiCalendar.setCalendarVisibility(calendarId, true);
+    });
+
+    tuiCalendar.render();
+  }
+
   function clearGroupName() {
     setSelectedFamilyGroupName(null);
   }
 
   function setFilter(selected) {
-    currUser.groups?.map((groupId) => {
-      tuiCalendar.setCalendarVisibility(groupId, false);
-    })
-
-    selected.map((calendarId) => {
-      tuiCalendar.setCalendarVisibility(calendarId, true);
-      
-    })
-
-    tuiCalendar.render();
+    setSelectedFilters(selected);
   }
 
   return (

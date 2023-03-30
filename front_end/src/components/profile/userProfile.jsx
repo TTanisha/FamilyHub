@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./userProfile.css";
 import axios from 'axios';
-import {Text, useModal, Button, Grid, Card, Spacer, Input} from "@nextui-org/react";
+import { Text, Button, Grid, Card, Spacer, Input } from "@nextui-org/react";
 import DeleteAccount from './deleteAccount';
 
 
@@ -219,7 +219,7 @@ const UserProfile = (props) => {
             </>
           }  
           { editing &&
-            <Grid xs={3} AlignContent ='center'>
+            <Grid xs={3}>
               <Button auto size="lg" onPress={() => { submitUpdateUser(props)}}>Update</Button>
               <Spacer x={3}/>
               <Button  flat auto size="md" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(JSON.parse(localStorage.getItem("user"))); }}> Discard changes</Button>

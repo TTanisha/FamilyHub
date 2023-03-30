@@ -1,7 +1,8 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import axios from 'axios';
-import {Text, Modal, Button, Input, Grid, Spacer, Checkbox, Textarea} from "@nextui-org/react";
+import { Text, Modal, Button, Input, Grid, Spacer, Checkbox, Textarea, Dropdown } from "@nextui-org/react";
 import FamilyGroupSelector from '../familyGroup/familyGroupSelector';
+import DeleteRecurrence from './deleteRecurrence';
 
 const ViewEvent = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));
@@ -16,6 +17,9 @@ const ViewEvent = (props) => {
   const groupId = currEvent?.calendarId;
   const groupName = props.groupName;
   const creationUser = currEvent?.raw?.creationUser;
+  const recurrenceRuleString = currEvent?.raw?.recurrenceRule;
+  const recurrenceNum = currEvent?.raw?.recurrenceNum;
+  const recurrenceId = currEvent?.raw?.recurrenceId;
 
   //parse start date to get the proper string format 
   const startDateObject = currEvent?.start.d;
@@ -40,6 +44,8 @@ const ViewEvent = (props) => {
   const endTimeString = (endHour<10? "0" : "") + endHour + ":" + (endMinutes<10 ? "0" : "") + endMinutes;
 
   const [editMode, setEditMode] = useState(false);
+  const [editRecurringMode, setEditRecurringMode] = useState(false);
+  const [editSingleMode, setEditSingleMode] = useState(false);
   
   //form input
   const [titleInput, setTitleInput] = useState();
@@ -62,6 +68,10 @@ const ViewEvent = (props) => {
   const [startTimeStringState, setStartTimeStringState] = useState(startTimeString);
   const [endTimeStringState, setEndTimeStringState] = useState(endTimeString);
 
+  const [recurring, setRecurring] = useState(false); 
+  const [numRecurrences, setNumRecurrences] = useState(1); 
+  const [selectedFrequency, setSelectedFrequency] = useState("ONCE");
+
   //set input data once current event is loaded
   useEffect(() => {
     setDefaultValues();
@@ -81,6 +91,10 @@ const ViewEvent = (props) => {
     setFamilyGroupName(groupName);
     setIsCreationUser(currUser._id == creationUser);
     setLocationInput(location);
+    setRecurrenceRule(recurrenceRuleString);
+    setRecurring((recurrenceRuleString != "ONCE")); 
+    setNumRecurrences(recurrenceNum);
+    setSelectedFrequency(recurrenceRuleString);
   }
 
   //update start date/time if input is updated
@@ -134,7 +148,7 @@ const ViewEvent = (props) => {
     }
   }, [isAllDay])
   
-  const submitUpdateEventForm = (props) => {
+  const submitUpdateSingleEventForm = (props) => {
     axios.post("http://localhost:8080/api/events/updateEvent", 
     {
       id: currEvent?.id,
@@ -146,6 +160,37 @@ const ViewEvent = (props) => {
       end: endTimeDate, 
       location: locationInput, 
       recurrenceRule: recurrenceRule, 
+      familyGroup: familyGroup
+    })
+    .then(function(response)
+    {
+        if(response.data.status === "success")
+        {
+          props.setVisible(false);
+          setEditMode(false);
+          props.clearGroupName();
+          props.updateEvents();
+
+        }
+    }).catch(function (error) {
+      window.alert(error.response.data.message);
+    })
+  }
+
+  const submitUpdateRecurrenceForm = (props) => {
+    axios.post("http://localhost:8080/api/events/updateRecurrence", 
+    {
+      id: currEvent?.id,
+      title: titleInput, 
+      body: descriptionInput,
+      creationUser: currUser._id, 
+      isAllDay: isAllDay, 
+      start: startTimeDate, 
+      end: endTimeDate, 
+      location: locationInput, 
+      recurrenceRule: selectedFrequency, 
+      recurrenceNum: numRecurrences, 
+      recurrenceId: recurrenceId,
       familyGroup: familyGroup
     })
     .then(function(response)
@@ -187,6 +232,8 @@ const ViewEvent = (props) => {
 
   const resetEventDetails = () => {
     setEditMode(false); 
+    setEditRecurringMode(false);
+    setEditSingleMode(false);
     setDefaultValues();
   }
 
@@ -304,6 +351,47 @@ const ViewEvent = (props) => {
               </div>
           } 
 
+          {/* Recurrence - edit mode*/}
+          {
+            (editMode && editRecurringMode) && 
+            <> 
+              <Grid.Container>
+              <Grid> 
+                <Grid.Container direction='column'> 
+                  <Grid>
+                  <Checkbox size="sm" isSelected={recurring} onChange={setRecurring}> Recurring </Checkbox>
+                  </Grid>
+                </Grid.Container>
+              </Grid>
+              <Spacer y={1} x={10.5}/>
+              { recurring &&
+                <Grid xs={5}> 
+                  <Grid.Container direction='column'>
+                    <Grid>
+                      <Dropdown>
+                        <Dropdown.Button size="md" auto flat>{selectedFrequency}</Dropdown.Button>
+                        <Dropdown.Menu aria-label="Static Actions" disallowEmptySelection selectionMode="single" selectedKeys={recurrenceRule} onSelectionChange={setRecurrenceRule}>
+                          <Dropdown.Item aria-label="DAILY" key="DAILY">DAILY</Dropdown.Item>
+                          <Dropdown.Item aria-label="WEEKLY" key="WEEKLY">WEEKLY</Dropdown.Item>
+                          <Dropdown.Item aria-label="MONTHLY" key="MONTHLY">MONTHLY</Dropdown.Item>
+                          <Dropdown.Item aria-label="YEARLY" key="YEARLY">YEARLY</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                      </Grid>
+                  </Grid.Container>
+                  <Grid.Container direction='column'>
+                    <Grid>
+                      { recurrenceRule!="ONCE" && 
+                        <Input width="120px" aria-label="numRecurrence" type='number' initialValue={numRecurrences} onChange={e => setNumRecurrences(e.target.value)}/>
+                      }
+                    </Grid>
+                  </Grid.Container>
+                </Grid>
+              }
+              </Grid.Container>
+            </>
+          }
+
           {/* Details Mode - Family Group*/}
           { !editMode && 
               <div>
@@ -343,28 +431,61 @@ const ViewEvent = (props) => {
           <Grid.Container direction='row'>
 
             <Grid xs={3}>
-              { isCreationUser && <Button auto flat color="error"
+              { isCreationUser && !recurring && <Button auto flat color="error"
               onPress={() => {
                 deleteEvent(props)
               }}>
                 Delete
               </Button>}
+
+              { isCreationUser && recurring && <DeleteRecurrence eventProps={props} eventName={title}/>
+}
             </Grid>
 
             <Grid xs={6}></Grid>
 
             <Grid xs={3} justify="right">
-              { isCreationUser && <Button auto flat color="default"
+
+              { !recurring && isCreationUser && <Button auto flat color="default"
                 onPress={() => {
                   if (editMode) {
-                    
-                    submitUpdateEventForm(props)
+                    submitUpdateSingleEventForm(props)
                   } else {
                     setEditMode(true)
                   }
                 }}>
                 {editMode ? "Save" : "Edit"}
               </Button>
+              }
+
+              { recurring && isCreationUser && 
+              <> 
+              { !editSingleMode && <Button auto flat color="default"
+                onPress={() => {
+                  if (editRecurringMode) {
+                    submitUpdateRecurrenceForm(props);
+                  } else {
+                    setEditMode(true);
+                    setEditRecurringMode(true);
+                  }
+                }}>
+                {editRecurringMode ? "Save series" : "Edit this series"}
+              </Button>
+              }
+
+              { !editRecurringMode && <Button auto flat color="default"
+                onPress={() => {
+                  if (editMode) {
+                    submitUpdateSingleEventForm(props);
+                  } else {
+                    setEditMode(true);
+                    setEditSingleMode(true);
+                  }
+                }}>
+                {editSingleMode ? "Save event" : "Edit this event"}
+              </Button>
+              }
+              </>
               }
 
               {editMode &&
@@ -380,11 +501,14 @@ const ViewEvent = (props) => {
                 onPress={() => {
                   props.setVisible(false);
                   setEditMode(false);
+                  setEditRecurringMode(false);
+                  setEditSingleMode(false);
                   props.clearGroupName();
                 }}>
                 Close
               </Button>
             </Grid>
+            {editRecurringMode ? "NOTE: updating a series will overwrite ALL existing events in the series, including past and future events." : ""}
           </Grid.Container>
         </Modal.Footer>
       </Modal>

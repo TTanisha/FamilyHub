@@ -2,7 +2,7 @@ import React from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import './sign.css';
 import axios from 'axios';
-import {Button, Grid, Input, Spacer} from "@nextui-org/react";
+import { Button, Grid, Input, Spacer } from "@nextui-org/react";
 
 const SignUp = () => {
   const[firstName, setFirstName] = React.useState('');
@@ -68,7 +68,7 @@ const SignUp = () => {
           className="sign-in" 
           onClick={() => signUserUp({firstName: firstName, lastName: lastName, email: email, password:password, birthday: birthDate})}
         >
-          Create account
+          Create Account
         </Button>
     </div>
   );
@@ -81,7 +81,7 @@ async function signUserUp(props) {
         const newUser = response.data.data.newUser;
         localStorage.setItem("user", JSON.stringify(newUser));
         localStorage.setItem("loggedIn", "true");
-        window.location.href = '/calendar';
+        window.location.href = '/additional-info';
       } 
    }).catch(function (error) {
        console.log(error);

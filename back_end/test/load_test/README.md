@@ -1,6 +1,6 @@
 # Load Testing
 
-## Prerequesites
+## Prerequisites
 Installing artillery with npm. Run the following command
 ```
 npm install -g artillery@latest

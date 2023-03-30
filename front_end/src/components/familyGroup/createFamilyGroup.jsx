@@ -1,6 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import axios from 'axios';
-import {Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Radio} from "@nextui-org/react";
+import { Text, Modal, useModal, Button, Input } from "@nextui-org/react";
 
 const CreateFamilyGroup = (props) => {
   let currUser = JSON.parse(localStorage.getItem("user"));

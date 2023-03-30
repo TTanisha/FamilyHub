@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./userProfile.css";
 import axios from 'axios';
-import {Text, useModal, Button, Grid, Card, Spacer, Input} from "@nextui-org/react";
+import { Text, Button, Grid, Card, Spacer, Input } from "@nextui-org/react";
 import DeleteAccount from './deleteAccount';
 
 
@@ -113,6 +113,7 @@ const UserProfile = (props) => {
         console.log("Error in User Profile");
         console.log(error);
 
+        window.alert(error.response.data.message);
       })
   }
 
@@ -165,6 +166,7 @@ const UserProfile = (props) => {
           aria-label="Birthday"
           labelLeft='Birthday' 
           type={"date"}
+          max="9999-12-31"
           initialValue={birthday} 
           onBlur={e => setBirthday(e.target.value)}/>
         <Spacer y={1}/>
@@ -209,18 +211,18 @@ const UserProfile = (props) => {
         <Grid.Container gap={2} justify="center" direction = 'row'>
           { !editing &&
             <>
-            <Grid>
+            <Grid xs={3}>
               <Button auto  size="lg" onPress={() => {setEditing(true); setClickable({"pointerEvents": "auto"})}}>Edit</Button>
-            </Grid>
-            <Grid>
+              <Spacer x={3}/>
               <DeleteAccount/>
             </Grid>
             </>
           }  
           { editing &&
-            <Grid xs={3}  >
-              <Button  flat auto size="lg" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(JSON.parse(localStorage.getItem("user"))); }}> Discard changes</Button>
+            <Grid xs={3} AlignContent ='center'>
               <Button auto size="lg" onPress={() => { submitUpdateUser(props)}}>Update</Button>
+              <Spacer x={3}/>
+              <Button  flat auto size="md" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(JSON.parse(localStorage.getItem("user"))); }}> Discard changes</Button>
             </Grid>
           }
         </Grid.Container>

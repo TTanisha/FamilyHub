@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Radio} from "@nextui-org/react";
+import { Text, Modal, useModal, Button, Grid, Spacer, Input, Textarea, Checkbox, Dropdown } from "@nextui-org/react";
 import FamilyGroupSelector from '../familyGroup/familyGroupSelector';
 
 const CreateEventForm = (props) => {
@@ -17,7 +17,10 @@ const CreateEventForm = (props) => {
   const [endTimeInput, setEndTimeInput] = useState(""); 
   const [locationInput, setLocationInput] = useState("");
   const [isAllDay, setIsAllDay] = useState(false); 
-  const [recurrenceRule, setRecurrenceRule] = useState("ONCE"); 
+  const [recurring, setRecurring] = useState(false); 
+  const [numRecurrences, setNumrecurrences] = useState(1); 
+  const [recurrenceRule, setrecurrenceRule] = useState("ONCE");
+  const [selectedFrequency, setSelectedFrequency] = useState("ONCE");
   const [familyGroup, setFamilyGroup] = useState(currUser.groups[0]);
 
   //transformed data 
@@ -64,6 +67,10 @@ const CreateEventForm = (props) => {
     }
   }, [endDate, endTimeInput])
 
+  useEffect(() => {
+    setSelectedFrequency(recurrenceRule.currentKey ? recurrenceRule.currentKey : recurrenceRule);
+  }, [recurrenceRule])
+
   //reset time inputs if 'All Day' is toggled off 
   useEffect(() => {
     if(!isAllDay) {
@@ -75,29 +82,65 @@ const CreateEventForm = (props) => {
   }, [isAllDay])
 
   const submitCreateEventForm = (props) => {
-    axios.post("http://localhost:8080/api/events/createEvent", 
-    {
-      title: titleInput, 
-      body: descriptionInput,
-      creationUser: currUser._id, 
-      isAllDay: isAllDay, 
-      start: startTimeDate, 
-      end: endTimeDate, 
-      location: locationInput, 
-      recurrenceRule: recurrenceRule, 
-      familyGroup: familyGroup
-    })
-    .then(function(response)
-    {
-        if(response.data.status === "success")
-        {
-          console.log(response);
-          resetFormState();
-          props.updateEvents();
-        }
-    }).catch(function (error) {
-      alert("Event could not be created.");
-    })
+    if(!recurring) {
+      axios.post("http://localhost:8080/api/events/createEvent", 
+      {
+        title: titleInput, 
+        body: descriptionInput,
+        creationUser: currUser._id, 
+        isAllDay: isAllDay, 
+        start: startTimeDate, 
+        end: endTimeDate, 
+        location: locationInput, 
+        recurrenceRule: "ONCE", 
+        familyGroup: familyGroup
+      })
+      .then(function(response)
+      {
+          if(response.data.status === "success")
+          {
+            console.log(response);
+            resetFormState();
+            props.updateEvents();
+          }
+      }).catch(function (error) {
+        window.alert(error.response.data.message);
+      })
+    } else {
+      let startDate = new Date(startDateInput);
+      let endDate = new Date(endDateInput);
+
+      if(startTimeInput) 
+      {
+        startDate = new Date(startDateInput + " " + startTimeInput);
+        endDate = new Date(endDateInput + " " + endTimeInput);
+      }
+
+      axios.post("http://localhost:8080/api/events/createEvent", 
+      {
+        title: titleInput, 
+        body: descriptionInput,
+        creationUser: currUser._id, 
+        isAllDay: isAllDay, 
+        start: startDate, 
+        end: endDate, 
+        location: locationInput, 
+        recurrenceRule: selectedFrequency, 
+        recurrenceNum: numRecurrences, 
+        familyGroup: familyGroup
+      })
+      .then(function(response)
+      {
+          if(response.data.status === "success")
+          {
+            console.log(response);
+            resetFormState();
+            props.updateEvents();
+          }
+      }).catch(function (error) {
+        window.alert(error.response.data.message);
+      })
+    }
   }
 
   const setFamilyGroupFromSelector = (id) => {
@@ -120,6 +163,9 @@ const CreateEventForm = (props) => {
     setEndDate(null);
     setStartTimeDate(null);
     setEndTimeDate(null);
+    setRecurring(false);
+    setSelectedFrequency("ONCE");
+    setrecurrenceRule("ONCE");
   }
 
   return (
@@ -143,13 +189,12 @@ const CreateEventForm = (props) => {
         </Modal.Header>
         <Modal.Body>
           <Input required label='Title' onChange={e => setTitleInput(e.target.value)}/>
-
           {/* Date input */}
           <Grid.Container>
             <Grid> 
               <Grid.Container direction='column'> 
                 <Grid>
-                  <Input required label='Start Date' type='date' onChange={e => setStartDateInput(e.target.value)}/>
+                  <Input required label='Start Date' type='date' max='9999-12-31' onChange={e => setStartDateInput(e.target.value)}/>
                 </Grid>
                 { !isAllDay &&
                   <Grid>
@@ -166,7 +211,7 @@ const CreateEventForm = (props) => {
             <Grid xs={3}> 
               <Grid.Container direction='column'>
                 <Grid>
-                  <Input required label='End Date' type='date' onChange={e => setEndDateInput(e.target.value)}/>
+                  <Input required label='End Date' type='date' max='9999-12-31' onChange={e => setEndDateInput(e.target.value)}/>
                   </Grid>
                 { !isAllDay &&
                   <Grid>
@@ -177,6 +222,42 @@ const CreateEventForm = (props) => {
             </Grid>
           </Grid.Container>
           <Checkbox size="sm" onChange={setIsAllDay}> All day </Checkbox>
+          
+        {/* Recurring Event */ }
+          <Grid.Container>
+            <Grid> 
+              <Grid.Container direction='column'> 
+                <Grid>
+                <Checkbox size="sm" onChange={setRecurring}> Recurring </Checkbox>
+                </Grid>
+              </Grid.Container>
+            </Grid>
+            <Spacer y={1} x={10.5}/>
+            { recurring &&
+              <Grid xs={5}> 
+                <Grid.Container direction='column'>
+                  <Grid>
+                    <Dropdown>
+                      <Dropdown.Button size="md" auto flat>{selectedFrequency}</Dropdown.Button>
+                      <Dropdown.Menu aria-label="Static Actions" disallowEmptySelection selectionMode="single" selectedKeys={recurrenceRule} onSelectionChange={setrecurrenceRule}>
+                        <Dropdown.Item aria-label="DAILY" key="DAILY">DAILY</Dropdown.Item>
+                        <Dropdown.Item aria-label="WEEKLY" key="WEEKLY">WEEKLY</Dropdown.Item>
+                        <Dropdown.Item aria-label="MONTHLY" key="MONTHLY">MONTHLY</Dropdown.Item>
+                        <Dropdown.Item aria-label="YEARLY" key="YEARLY">YEARLY</Dropdown.Item>
+                      </Dropdown.Menu>
+                    </Dropdown>
+                    </Grid>
+                </Grid.Container>
+                <Grid.Container direction='column'>
+                  <Grid>
+                    { recurrenceRule!="ONCE" && 
+                      <Input width="120px" aria-label="numRecurrence" type='number' initialValue='1' onChange={e => setNumrecurrences(e.target.value)}/>
+                    }
+                  </Grid>
+                </Grid.Container>
+              </Grid>
+            }
+          </Grid.Container>
 
           <FamilyGroupSelector initialGroup={familyGroup} setFamilyGroup={setFamilyGroupFromSelector}/>
 
@@ -198,3 +279,4 @@ const CreateEventForm = (props) => {
 };
 
 export default CreateEventForm;
+

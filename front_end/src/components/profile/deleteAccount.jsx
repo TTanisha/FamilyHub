@@ -1,6 +1,6 @@
 import React from 'react';
 import axios from 'axios';
-import {Text, Modal, useModal, Button} from "@nextui-org/react";
+import { Text, Modal, useModal, Button } from "@nextui-org/react";
 
 const DeleteAccount = (props) => {
 
@@ -29,7 +29,7 @@ const DeleteAccount = (props) => {
 
   return (
     <>
-      <Button auto flat color="error" onPress={() => setVisible(true)}>
+      <Button flat auto size="md" color="error" onPress={() => setVisible(true)}>
           Delete Account
       </Button>
       <Modal

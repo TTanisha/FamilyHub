@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import "./familyGroup.css";
 import axios from 'axios';
-import {Text, Card, Spacer} from "@nextui-org/react";
+import { Text, Card, Spacer } from "@nextui-org/react";
 import { createSearchParams, useNavigate } from 'react-router-dom';
 
 const FamilyGroup = (props) => {

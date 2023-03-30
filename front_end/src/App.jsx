@@ -11,6 +11,7 @@ import { Navigate } from 'react-router-dom';
 import SignUp from './pages/signPages/signUp';
 import { NextUIProvider, Navbar, Text, Avatar, Dropdown, Button } from "@nextui-org/react";
 import profilePicture from './assets/user.png';
+import AdditionalInfo from './pages/signPages/additionalInfo';
 
 function App() {
 
@@ -71,7 +72,7 @@ function App() {
                   </Button> 
                 </Dropdown.Item>
                 <Dropdown.Item as={Text} variant="light" autokey="viewProfile" withDivider textValue css={{height: "$18", width: "$60" }}> 
-                  <Button as={Navbar.Link} color="error" flat href="/signout" isActive={window.location.pathname === "/signout"}  css={{height: "$18", justifyContent: "flex-start"}} > 
+                  <Button as={Navbar.Link} color="error" flat href="/signout" css={{height: "$18", justifyContent: "flex-start"}} > 
                     Log Out 
                   </Button>
                 </Dropdown.Item>
@@ -91,6 +92,7 @@ function App() {
           <Route path='/profile' element={isLoggedIn ? <Profile /> : <Navigate to='/' />} />
           <Route path='/familymemberprofile' element={isLoggedIn ? <FamilyMemberProfile /> : <Navigate to='/' />} />
           <Route path='/sign-up' element={<SignUp />} />
+          <Route path='/additional-info' element={<AdditionalInfo />} />
         </Routes>
       </Router>
     </NextUIProvider>

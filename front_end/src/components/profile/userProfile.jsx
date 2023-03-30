@@ -219,7 +219,7 @@ const UserProfile = (props) => {
             </>
           }  
           { editing &&
-            <Grid xs={3} AlignContent ='center'>
+            <Grid xs={3}>
               <Button auto size="lg" onPress={() => { submitUpdateUser(props)}}>Update</Button>
               <Spacer x={3}/>
               <Button  flat auto size="md" color="error" onPress={() => {setEditing(false); setClickable({"pointerEvents": "none"}); restoreValue(JSON.parse(localStorage.getItem("user"))); }}> Discard changes</Button>

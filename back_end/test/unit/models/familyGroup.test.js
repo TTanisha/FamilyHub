@@ -1,7 +1,7 @@
 const FamilyGroups = require("../../../models/familyGroupModel");
 const Users = require("../../../models/userModel");
+
 const mongoose = require("mongoose");
-const ID = mongoose.Types.ObjectId;
 const { ValidationError } = require("mongodb");
 require("dotenv").config({ path: "config.env" }); // load environment variables
 
@@ -47,7 +47,7 @@ beforeAll(async () => {
     await defaultGroup.save();
     defaultGroup_ID = defaultGroup._id;
   } catch (err) {
-    console.log("Error creating the group");
+    console.error("Error creating the group");
   }
   try {
     Users.createIndexes();
@@ -55,7 +55,7 @@ beforeAll(async () => {
     await defaultUser.save();
     defaultUser_ID = defaultUser._id;
   } catch (err) {
-    console.log("Error creating the user.");
+    console.error("Error creating the user.");
   }
 });
 
@@ -135,7 +135,9 @@ describe("Family Group Unit Tests", () => {
 
     describe("Given an invalid group ID", () => {
       it("Should return null", async () => {
-        const result = await FamilyGroups.findById(new ID());
+        const result = await FamilyGroups.findById(
+          new mongoose.Types.ObjectId(),
+        );
         expect(result).toBe(null);
       });
     });
@@ -187,9 +189,12 @@ describe("Family Group Unit Tests", () => {
 
     describe("Given an invalid group ID", () => {
       it("Should return a null", async () => {
-        const result = await FamilyGroups.findByIdAndUpdate(new ID(), {
-          $addToSet: { groupMembers: defaultUser_ID },
-        });
+        const result = await FamilyGroups.findByIdAndUpdate(
+          new mongoose.Types.ObjectId(),
+          {
+            $addToSet: { groupMembers: defaultUser_ID },
+          },
+        );
         expect(result).toBe(null);
       });
     });
@@ -245,7 +250,7 @@ describe("Family Group Unit Tests", () => {
           testGroup._id,
           {
             $pull: {
-              groupMembers: new ID(),
+              groupMembers: new mongoose.Types.ObjectId(),
             },
           },
           { new: true },
@@ -256,9 +261,12 @@ describe("Family Group Unit Tests", () => {
 
     describe("Given an invalid group ID", () => {
       it("Should return a null", async () => {
-        const result = await FamilyGroups.findByIdAndUpdate(new ID(), {
-          $pull: { groupMembers: defaultUser_ID },
-        });
+        const result = await FamilyGroups.findByIdAndUpdate(
+          new mongoose.Types.ObjectId(),
+          {
+            $pull: { groupMembers: defaultUser_ID },
+          },
+        );
         expect(result).toBe(null);
       });
     });
@@ -282,7 +290,9 @@ describe("Family Group Unit Tests", () => {
 
     describe("Given an invalid group ID", () => {
       it("Should return null", async () => {
-        const result = await FamilyGroups.findByIdAndDelete(new ID());
+        const result = await FamilyGroups.findByIdAndDelete(
+          new mongoose.Types.ObjectId(),
+        );
         expect(result).toBe(null);
       });
     });

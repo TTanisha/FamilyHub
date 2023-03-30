@@ -28,4 +28,5 @@ const FamilyGroups = mongoose.model(
   familyGroupSchema,
   (collection = "Family Groups"),
 );
+
 module.exports = FamilyGroups;

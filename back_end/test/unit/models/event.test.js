@@ -1,6 +1,7 @@
 const Events = require("../../../models/eventModel");
-const { validateEventDates } = require("../../../controllers/eventController");
+
 const mongoose = require("mongoose");
+const { validateEventDates } = require("../../../controllers/eventController");
 const { ValidationError } = require("mongodb");
 require("dotenv").config({ path: "config.env" }); // load environment variables
 
@@ -42,10 +43,15 @@ beforeAll(async () => {
     },
   );
 
-  Events.createIndexes();
-  let newEvent = new Events(defaultEvent);
-  await newEvent.save();
-  defaultEvent_ID = newEvent._id;
+  try {
+    Events.createIndexes();
+    let newEvent = new Events(defaultEvent);
+    await newEvent.save();
+    defaultEvent_ID = newEvent._id;
+  } catch (err) {
+    console.error("Error creating the event");
+  }
+  
 });
 
 //=====================================================================================//

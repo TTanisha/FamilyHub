@@ -1,7 +1,8 @@
 const app = require("../../app");
 const Events = require("../../models/eventModel");
-let supertest = require("supertest");
-let request = supertest(app);
+
+const supertest = require("supertest");
+const request = supertest(app);
 const mongoose = require("mongoose");
 require("dotenv").config({ path: "config.env" }); // load environment variables
 
@@ -43,10 +44,14 @@ beforeAll(async () => {
     },
   );
 
-  Events.createIndexes();
-  let newEvent = new Events(defaultEvent);
-  await newEvent.save();
-  defaultEvent_ID = newEvent._id;
+  try {
+    Events.createIndexes();
+    let newEvent = new Events(defaultEvent);
+    await newEvent.save();
+    defaultEvent_ID = newEvent._id;
+  } catch (err) {
+    console.error("Error creating the event");
+  }
 });
 
 //=====================================================================================//

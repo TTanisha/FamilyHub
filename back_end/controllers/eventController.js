@@ -1,3 +1,4 @@
+const mongoose = require("mongoose");
 const Events = require("../models/eventModel");
 const FamilyGroups = require("../models/familyGroupModel");
 
@@ -16,8 +17,7 @@ exports.validateEventDates = function (event) {
 };
 
 exports.createRecurringEvent = async function (event) {
-  var mongoose = require("mongoose");
-
+  
   var {
     title,
     body,
@@ -89,7 +89,7 @@ exports.createEvent = async (req, res) => {
     this.validateEventDates(req.body);
 
     //handle recurrence
-    if (req.body.recurrenceRule != "ONCE") {
+    if (req.body.recurrenceRule !== "ONCE") {
       await this.createRecurringEvent(req.body);
 
       res.status(201).send({
@@ -216,7 +216,7 @@ exports.updateRecurrence = async (req, res) => {
     this.validateEventDates(req.body);
 
     //handle recurrence
-    if (req.body.recurrenceRule != "ONCE") {
+    if (req.body.recurrenceRule !== "ONCE") {
       await this.createRecurringEvent(req.body);
 
       res.status(201).send({

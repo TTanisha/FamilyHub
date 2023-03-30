@@ -1,9 +1,10 @@
 const app = require("../../app");
 const Users = require("../../models/userModel");
-let supertest = require("supertest");
-let request = supertest(app);
-const mongoose = require("mongoose");
 const FamilyGroups = require("../../models/familyGroupModel");
+
+const supertest = require("supertest");
+const request = supertest(app);
+const mongoose = require("mongoose");
 require("dotenv").config({ path: "config.env" }); // load environment variables
 
 //=====================================================================================//
@@ -43,7 +44,7 @@ beforeAll(async () => {
     await newUser.save();
     defaultUser_ID = newUser._id;
   } catch (err) {
-    console.log("Error creating User.");
+    console.error("Error creating User.");
   }
 });
 
@@ -481,7 +482,7 @@ describe("User Integration  Tests", () => {
       });
     });
 
-    describe("Delete user with a family group consisting of more than 1 member", () => {
+    describe("Given a family group consisting of more than 1 member", () => {
       it("Should remove only the user from database", async () => {
         const familyGroupData = {
           groupName: "family group",

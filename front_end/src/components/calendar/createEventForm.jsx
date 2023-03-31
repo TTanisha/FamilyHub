@@ -338,6 +338,7 @@ const CreateEventForm = (props) => {
                         aria-label="numRecurrence"
                         type="number"
                         initialValue="1"
+                        min="1"
                         onChange={(e) => setNumrecurrences(e.target.value)}
                       />
                     )}

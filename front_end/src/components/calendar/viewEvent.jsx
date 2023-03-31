@@ -460,6 +460,7 @@ const ViewEvent = (props) => {
                             width="120px"
                             aria-label="numRecurrence"
                             type="number"
+                            min="1"
                             initialValue={numRecurrences}
                             onChange={(e) => setNumRecurrences(e.target.value)}
                           />

@@ -1,6 +1,7 @@
 const Events = require("../../../models/eventModel");
-const { validateEventDates } = require("../../../controllers/eventController");
+
 const mongoose = require("mongoose");
+const { validateEventDates } = require("../../../controllers/eventController");
 const { ValidationError } = require("mongodb");
 require("dotenv").config({ path: "config.env" }); // load environment variables
 
@@ -34,14 +35,23 @@ beforeAll(async () => {
   };
 
   mongoose.connect(DB, connectionOptions).then(
-    () => {console.log("Successfully connected to MongoDB.")},
-    err => {console.error("Unable to connect to MongoDB.", err.message)}
+    () => {
+      console.log("Successfully connected to MongoDB.");
+    },
+    (err) => {
+      console.error("Unable to connect to MongoDB.", err.message);
+    },
   );
 
-  Events.createIndexes();
-  let newEvent = new Events(defaultEvent);
-  await newEvent.save();
-  defaultEvent_ID = newEvent._id;
+  try {
+    Events.createIndexes();
+    let newEvent = new Events(defaultEvent);
+    await newEvent.save();
+    defaultEvent_ID = newEvent._id;
+  } catch (err) {
+    console.error("Error creating the event");
+  }
+  
 });
 
 //=====================================================================================//
@@ -55,8 +65,12 @@ afterAll(async () => {
   }
 
   await mongoose.connection.close().then(
-    () => {console.log("Successfully disconnected from MongoDB.")},
-    err => {console.error("Unable to disconnect from MongoDB.", err.message)}
+    () => {
+      console.log("Successfully disconnected from MongoDB.");
+    },
+    (err) => {
+      console.error("Unable to disconnect from MongoDB.", err.message);
+    },
   );
 });
 
@@ -185,7 +199,7 @@ describe("Event / Shared Calendar Unit Tests", () => {
       };
 
       const event = () => {
-        validateEventDates(eventData)
+        validateEventDates(eventData);
       };
 
       await expect(event).toThrow(Error);

@@ -2,8 +2,8 @@ const app = require("../../app");
 const FamilyGroups = require("../../models/familyGroupModel");
 const Users = require("../../models/userModel");
 
-let supertest = require("supertest");
-let request = supertest(app);
+const supertest = require("supertest");
+const request = supertest(app);
 const mongoose = require("mongoose");
 require("dotenv").config({ path: "config.env" }); // load environment variables
 
@@ -40,7 +40,7 @@ beforeAll(async () => {
     },
     (err) => {
       console.error("Unable to connect to MongoDB.", err.message);
-    }
+    },
   );
 
   try {
@@ -48,7 +48,7 @@ beforeAll(async () => {
     defaultGroup = new FamilyGroups(defaultGroupData);
     await defaultGroup.save();
   } catch (err) {
-    console.log("Unable to create default family group");
+    console.error("Unable to create default family group");
   }
 
   try {
@@ -56,7 +56,7 @@ beforeAll(async () => {
     defaultUser = new Users(defaultUserData);
     await defaultUser.save();
   } catch (err) {
-    console.log("Unable to create default user");
+    console.error("Unable to create default user");
   }
 });
 
@@ -81,7 +81,7 @@ afterAll(async () => {
     },
     (err) => {
       console.error("Unable to disconnect from MongoDB.", err.message);
-    }
+    },
   );
 });
 
@@ -118,7 +118,7 @@ describe("Family Group Integration Tests", () => {
           .send({ groupName: "" });
         expect(statusCode).toBe(401);
         expect(body.message).toBe(
-          "FamilyGroups validation failed: groupName: A family group must have groupName"
+          "FamilyGroups validation failed: groupName: A family group must have groupName",
         );
       });
     });
@@ -130,7 +130,7 @@ describe("Family Group Integration Tests", () => {
           .send();
         expect(statusCode).toBe(401);
         expect(body.message).toBe(
-          "FamilyGroups validation failed: groupName: A family group must have groupName"
+          "FamilyGroups validation failed: groupName: A family group must have groupName",
         );
       });
     });
@@ -170,6 +170,7 @@ describe("Family Group Integration Tests", () => {
           .post("/api/familyGroups/getFamilyGroupEvents")
           .send({ groupId: defaultGroup._id });
         expect(statusCode).toBe(200);
+        expect(body.message).toBe("Found group");
       });
     });
 
@@ -180,6 +181,7 @@ describe("Family Group Integration Tests", () => {
           .post("/api/familyGroups/getFamilyGroupEvents")
           .send({ groupId: groupId });
         expect(statusCode).toBe(404);
+        expect(body.message).toBe("Family Group not found");
       });
     });
   });
@@ -367,7 +369,7 @@ describe("Family Group Integration Tests", () => {
             });
           expect(statusCode).toBe(404);
           expect(body.message).toBe(
-            "Group does not have any members to remove"
+            "Group does not have any members to remove",
           );
           await FamilyGroups.findByIdAndDelete(testGroup._id);
         });

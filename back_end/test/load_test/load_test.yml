@@ -54,8 +54,3 @@ scenarios:
           json:
             id: "{{ eventId }}"
             creationUser: "{{ userId }}"
-            
-          
-
-          
-     

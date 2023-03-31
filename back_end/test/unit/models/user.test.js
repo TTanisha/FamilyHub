@@ -1,4 +1,5 @@
 const Users = require("../../../models/userModel");
+
 const mongoose = require("mongoose");
 const { ValidationError } = require("mongodb");
 require("dotenv").config({ path: "config.env" }); // load environment variables
@@ -31,7 +32,7 @@ beforeAll(async () => {
     },
     (err) => {
       console.error("Unable to connect to MongoDB.", err.message);
-    }
+    },
   );
 
   try {
@@ -40,7 +41,7 @@ beforeAll(async () => {
     await newUser.save();
     defaultUser_ID = newUser._id;
   } catch (err) {
-    console.log("Error creating User.");
+    console.error("Error creating User.");
   }
 });
 
@@ -60,7 +61,7 @@ afterAll(async () => {
     },
     (err) => {
       console.error("Unable to disconnect from MongoDB.", err.message);
-    }
+    },
   );
 });
 

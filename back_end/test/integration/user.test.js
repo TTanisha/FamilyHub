@@ -1,9 +1,10 @@
 const app = require("../../app");
 const Users = require("../../models/userModel");
-let supertest = require("supertest");
-let request = supertest(app);
-const mongoose = require("mongoose");
 const FamilyGroups = require("../../models/familyGroupModel");
+
+const supertest = require("supertest");
+const request = supertest(app);
+const mongoose = require("mongoose");
 require("dotenv").config({ path: "config.env" }); // load environment variables
 
 //=====================================================================================//
@@ -29,8 +30,12 @@ beforeAll(async () => {
   };
 
   mongoose.connect(DB, connectionOptions).then(
-    () => {console.log("Successfully connected to MongoDB.")},
-    err => {console.error("Unable to connect to MongoDB.", err.message)}
+    () => {
+      console.log("Successfully connected to MongoDB.");
+    },
+    (err) => {
+      console.error("Unable to connect to MongoDB.", err.message);
+    },
   );
 
   try {
@@ -39,7 +44,7 @@ beforeAll(async () => {
     await newUser.save();
     defaultUser_ID = newUser._id;
   } catch (err) {
-    console.log("Error creating User.");
+    console.error("Error creating User.");
   }
 });
 
@@ -54,8 +59,12 @@ afterAll(async () => {
   }
 
   await mongoose.connection.close().then(
-    () => {console.log("Successfully disconnected from MongoDB.")},
-    err => {console.error("Unable to disconnect from MongoDB.", err.message)}
+    () => {
+      console.log("Successfully disconnected from MongoDB.");
+    },
+    (err) => {
+      console.error("Unable to disconnect from MongoDB.", err.message);
+    },
   );
 });
 
@@ -473,7 +482,7 @@ describe("User Integration  Tests", () => {
       });
     });
 
-    describe("Delete user with a family group consisting of more than 1 member", () => {
+    describe("Given a family group consisting of more than 1 member", () => {
       it("Should remove only the user from database", async () => {
         const familyGroupData = {
           groupName: "family group",

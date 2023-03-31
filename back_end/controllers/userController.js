@@ -1,17 +1,15 @@
-const { MongoServerError } = require("mongodb");
 const Users = require("../models/userModel");
 const FamilyGroups = require("../models/familyGroupModel");
 
 //from w3resource: https://www.w3resource.com/javascript/form/email-validation.php
-exports.validateEmail = function(mail) 
-{
- return (/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail))
-}
+exports.validateEmail = function (mail) {
+  return /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail);
+};
 
 exports.registerUser = async (req, res) => {
   try {
-    if(!this.validateEmail(req.body.email)) {
-      throw new Error("Please enter a valid email address.");
+    if (!this.validateEmail(req.body.email)) {
+      throw new Error(message = "Please enter a valid email address.");
     }
 
     const newUser = await Users.create(req.body);
@@ -22,13 +20,14 @@ exports.registerUser = async (req, res) => {
       data: { newUser },
     });
   } catch (err) {
-    if(err.code === 11000) {
+    if (err.code === 11000) { 
+      // MongoDB error code, can happen due to duplicate entries or bad syntax
       res.status(400).send({
         // bad request
         status: "fail",
         message: "This email is already associated with an account.",
       });
-    } else { 
+    } else {
       res.status(400).send({
         // bad request
         status: "fail",
@@ -42,8 +41,8 @@ exports.registerUser = async (req, res) => {
 exports.getUserById = async (req, res) => {
   try {
     const user = await Users.findById(req.body.id);
-    if (user == null) {
-      throw err;
+    if (user === null) {
+      throw new Error(message = "User not found");
     } else {
       res.status(200).send({
         // everything is OK
@@ -65,8 +64,8 @@ exports.getUserById = async (req, res) => {
 exports.getUser = async (req, res) => {
   try {
     const user = await Users.findOne({ email: req.body.email });
-    if (user == null) {
-      throw err;
+    if (user === null) {
+      throw new Error(message = "User not found");
     }
     if (user.password === req.body.password) {
       res.status(200).send({
@@ -76,7 +75,7 @@ exports.getUser = async (req, res) => {
         data: { user },
       });
     } else {
-      throw err;
+      throw new Error(message = "Invalid password");
     }
   } catch (err) {
     res.status(400).send({
@@ -96,9 +95,9 @@ exports.updateUser = async (req, res) => {
     if (req.body.newEmail != null) {
       // check for duplicates first
       const checkDuplicate = await Users.find({ email: req.body.newEmail });
-      if (checkDuplicate == null || checkDuplicate.length != 0) {
+      if (checkDuplicate === null || checkDuplicate.length != 0) {
         // email already exists
-        throw err;
+        throw new Error(message = "Email address already exists");
       }
     } // either not updating email, or email is unique
 
@@ -111,7 +110,7 @@ exports.updateUser = async (req, res) => {
       filter["email"] = req.body.email;
     } else {
       // should pass at least email or id.
-      throw err;
+      throw new Error(message = "Email and ID are both missing");
     }
 
     const names = [
@@ -151,8 +150,8 @@ exports.updateUser = async (req, res) => {
       { new: true, runValidators: true },
     );
 
-    if (user == null) {
-      throw err;
+    if (user === null) {
+      throw new Error(message = "User not found");
     } else {
       res.status(200).send({
         // everything is OK
@@ -176,28 +175,30 @@ exports.deleteUser = async (req, res) => {
   try {
     const user = await Users.findOne({ email: req.body.email });
 
-    if (user == null) {
-      throw new Error("User not found.");
-    } 
+    if (user === null) {
+      throw new Error(message = "User not found");
+    }
 
     //remove from family groups
     for (var i = 0; i < user.groups.length; i++) {
-      await FamilyGroups.updateOne({ _id: user.groups[i] },
+      await FamilyGroups.updateOne(
+        { _id: user.groups[i] },
         {
-            $pull: {
-                groupMembers: user._id,
-            },
-        });   
+          $pull: {
+            groupMembers: user._id,
+          },
+        },
+      );
 
       let updatedGroup = await FamilyGroups.findOne({ _id: user.groups[i] });
 
       //delete family group if no members are left
-      if (updatedGroup.groupMembers.length == 0) {
-          await FamilyGroups.findOneAndRemove({ _id: user.groups[i] });
-      } 
+      if (updatedGroup.groupMembers.length === 0) {
+        await FamilyGroups.findOneAndRemove({ _id: user.groups[i] });
+      }
     }
 
-    await Users.findOneAndDelete({email: req.body.email});
+    await Users.findOneAndDelete({ email: req.body.email });
 
     res.status(200).send({
       // everything is OK
@@ -205,7 +206,6 @@ exports.deleteUser = async (req, res) => {
       message: "User deleted",
       data: { user },
     });
-
   } catch (err) {
     res.status(400).send({
       // bad request

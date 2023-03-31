@@ -145,7 +145,7 @@ docker run -p 8080:8080 armijosj/familyhub:server
 In a different terminal:
 ```
 docker pull armijosj/familyhub:client
-docker run -p 5173:5173 armijosj/familyhub:server
+docker run -p 5173:5173 armijosj/familyhub:client
 ```
 
 Note: Run server before running client.

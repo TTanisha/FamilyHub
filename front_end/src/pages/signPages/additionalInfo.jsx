@@ -25,7 +25,7 @@ const AdditionalInfo = () => {
 
   return (
     <div className="sign-up">
-      <h1>Sign-Up</h1>
+      <h1>Complete Your Profile</h1>
       <form>
         <Grid.Container direction="column" gap={3} alignContent="left">
           <Grid>

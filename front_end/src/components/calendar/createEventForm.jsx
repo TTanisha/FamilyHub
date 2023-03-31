@@ -181,9 +181,22 @@ const CreateEventForm = (props) => {
 
   return (
     <>
-      <Button auto flat onPress={() => setVisible(true)}>
+      <Button
+        auto
+        flat
+        disabled={familyGroup == null}
+        onPress={() => setVisible(true)}
+      >
         Create Event
       </Button>
+      {familyGroup == null ? (
+        <Text h6 i>
+          {" "}
+          You must be part of a family group to create an event.{" "}
+        </Text>
+      ) : (
+        ""
+      )}
       <Modal
         scroll
         closeButton

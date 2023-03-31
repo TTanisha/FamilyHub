@@ -27,7 +27,7 @@ exports.getFamilyGroup = async (req, res) => {
     const { groupId } = req.body;
     const group = await FamilyGroups.findById(groupId);
 
-    if (group == null) {
+    if (group === null) {
       throw new Error((message = "Group not found for id: " + groupId));
     }
 
@@ -53,11 +53,11 @@ exports.addMemberToFamilyGroup = async (req, res) => {
     let group = await FamilyGroups.findById(groupId);
     let member = await Users.findOne({ email: memberEmail });
 
-    if (group == null) {
+    if (group === null) {
       throw new Error((message = "Family Group not found"));
     }
 
-    if (member == null) {
+    if (member === null) {
       throw new Error((message = "Member not found"));
     }
 
@@ -80,7 +80,7 @@ exports.addMemberToFamilyGroup = async (req, res) => {
           groups: group,
         },
       },
-      { runValidators: true, new: true }
+      { runValidators: true, new: true },
     );
 
     group = await FamilyGroups.findByIdAndUpdate(
@@ -90,7 +90,7 @@ exports.addMemberToFamilyGroup = async (req, res) => {
           groupMembers: member,
         },
       },
-      { runValidators: true, new: true }
+      { runValidators: true, new: true },
     );
 
     res.status(200).send({
@@ -114,7 +114,7 @@ exports.getFamilyGroupEvents = async (req, res) => {
     const { groupId } = req.body;
     const group = await FamilyGroups.findById(groupId).populate("events");
 
-    if (group == null) {
+    if (group === null) {
       throw new Error((message = "Family Group not found"));
     }
 
@@ -142,11 +142,11 @@ exports.leaveFamilyGroup = async (req, res) => {
     successMessage = "";
 
     //check if group and user are null
-    if (group == null) {
+    if (group === null) {
       throw new Error((message = "Family Group not found"));
     }
 
-    if (member == null) {
+    if (member === null) {
       throw new Error((message = "User not found"));
     }
 
@@ -164,14 +164,14 @@ exports.leaveFamilyGroup = async (req, res) => {
           groupMembers: memberId,
         },
       },
-      { new: true }
+      { new: true },
     );
 
     //if member array is now empty, delete the group
 
     group = await FamilyGroups.findById(groupId);
 
-    if (group.groupMembers.length == 0) {
+    if (group.groupMembers.length === 0) {
       group = await FamilyGroups.findByIdAndRemove(groupId, {
         new: true,
       });

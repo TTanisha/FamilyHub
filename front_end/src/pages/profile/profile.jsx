@@ -1,15 +1,15 @@
-import React from 'react';
-import UserProfile from '../../components/profile/userProfile';
-import './profile.css';
+import React from "react";
+import UserProfile from "../../components/profile/userProfile";
+import "./profile.css";
 
 const Profile = () => {
-    return (
-      <div className="familyGroupContainer">
-        <div className="content">
-          <UserProfile currUser={true} />
-        </div>
+  return (
+    <div className="familyGroupContainer">
+      <div className="content">
+        <UserProfile currUser={true} />
       </div>
-    );
-  };
-    
-  export default Profile;
+    </div>
+  );
+};
+
+export default Profile;

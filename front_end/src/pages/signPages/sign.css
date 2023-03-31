@@ -1,35 +1,36 @@
-
 :root {
-    --background-colour: #ff86eb;
-    --button-colour: #006aff;
+  --background-colour: #ff86eb;
+  --button-colour: #006aff;
 }
 
 div.sign-in {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto;
-    row-gap: 20px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto;
+  row-gap: 20px;
 }
 
 label {
-    display: grid;
-    grid-template-columns: auto;
-    grid-template-rows: auto auto;
-    align-items: center;
-    width: 250px;
+  display: grid;
+  grid-template-columns: auto;
+  grid-template-rows: auto auto;
+  align-items: center;
+  width: 250px;
 }
 
 button.sign-in {
-    margin-top: 10px;
-    background-color: var(--button-colour);
+  margin-top: 10px;
+  background-color: var(--button-colour);
 }
 
-div.sign-up, div.sign-in{
-    align-items: center;
-    display: flex;
-    flex-direction: column;
+div.sign-up,
+div.sign-in {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
 }
 
-input, textarea {
-    background-color : #d1d1d1; 
+input,
+textarea {
+  background-color: #d1d1d1;
 }

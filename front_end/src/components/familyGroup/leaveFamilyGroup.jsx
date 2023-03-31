@@ -1,47 +1,46 @@
-import React from 'react';
-import axios from 'axios';
+import React from "react";
+import axios from "axios";
 import { Text, Modal, useModal, Button } from "@nextui-org/react";
+import * as Constants from "../../constants";
 
 const LeaveFamilyGroup = (props) => {
-
   const { setVisible, bindings } = useModal();
   //form input
-  var currUser = JSON.parse(localStorage.getItem("user"));
+  var currUser = JSON.parse(localStorage.getItem(Constants.USER));
 
   const leaveGroup = () => {
-    axios.post("http://localhost:8080/api/familyGroups/leaveFamilyGroup", 
-    {
-        groupId: props.groupId, 
-        memberId: currUser._id
-    })
-    .then(function(response)
-    {
-        if(response.data.status === "success")
-        {
+    axios
+      .post("http://localhost:8080/api/familyGroups/leaveFamilyGroup", {
+        groupId: props.groupId,
+        memberId: currUser._id,
+      })
+      .then(function (response) {
+        if (response.data.status === Constants.SUCCESS) {
           updateLocalStorage(currUser, props.groupId);
           location.reload();
           console.log(response);
         }
-    }).catch(function (error) {
+      })
+      .catch(function (error) {
         console.log("Error in Family Group");
-    })
-  }
+      });
+  };
 
-  const updateLocalStorage = ( inputUser, groupId ) => {
+  const updateLocalStorage = (inputUser, groupId) => {
     let updatedGroups = currUser.groups;
-    for (let i = 0; i < updatedGroups.length; i++){
-      if (updatedGroups[i] == groupId){
-        updatedGroups.splice(i, 1); 
+    for (let i = 0; i < updatedGroups.length; i++) {
+      if (updatedGroups[i] == groupId) {
+        updatedGroups.splice(i, 1);
       }
     }
     currUser.groups = updatedGroups;
-    localStorage.setItem("user", JSON.stringify(inputUser));   
-  }
+    localStorage.setItem(Constants.USER, JSON.stringify(inputUser));
+  };
 
   return (
     <>
       <Button auto flat color="error" onPress={() => setVisible(true)}>
-          Leave Group
+        Leave Group
       </Button>
       <Modal
         scroll
@@ -57,14 +56,20 @@ const LeaveFamilyGroup = (props) => {
             Are you sure you want to leave this group?
           </Text>
         </Modal.Header>
-        <Modal.Body> 
-          <Text size="$md" > Family Group: {props.groupName} </Text> 
+        <Modal.Body>
+          <Text size="$md"> Family Group: {props.groupName} </Text>
         </Modal.Body>
         <Modal.Footer>
           <Button flat auto color="error" onPress={() => leaveGroup()}>
             Leave this group
           </Button>
-          <Button onPress={() => { {setVisible(false);}}}>
+          <Button
+            onPress={() => {
+              {
+                setVisible(false);
+              }
+            }}
+          >
             Stay in this group
           </Button>
         </Modal.Footer>

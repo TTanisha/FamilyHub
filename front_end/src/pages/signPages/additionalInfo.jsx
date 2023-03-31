@@ -2,6 +2,7 @@ import React from "react";
 import "react-datepicker/dist/react-datepicker.css";
 import axios from "axios";
 import { Button, Grid, Input, Spacer } from "@nextui-org/react";
+import * as Constants from "../../constants";
 
 const AdditionalInfo = () => {
   const [nickname, setNickname] = React.useState("");
@@ -11,7 +12,7 @@ const AdditionalInfo = () => {
   const [homeNumber, setHomeNumber] = React.useState("");
 
   const handleKeyDown = (event) => {
-    if (event.key === "Enter") {
+    if (event.key === Constants.ENTER) {
       addAdditionalInfo({
         nickname: nickname,
         pronouns: pronouns,
@@ -87,14 +88,16 @@ const AdditionalInfo = () => {
 };
 
 async function addAdditionalInfo(props) {
-    const currUser = JSON.parse(localStorage.getItem("user"));
-    let body = props;
-    body.email = currUser.email;
-    axios.post("http://localhost:8080/api/users/updateUser", props).then(function (response) {
-      if (response.data.status === "success") {
+  const currUser = JSON.parse(localStorage.getItem(Constants.USER));
+  let body = props;
+  body.email = currUser.email;
+  axios
+    .post("http://localhost:8080/api/users/updateUser", props)
+    .then(function (response) {
+      if (response.data.status === Constants.SUCCESS) {
         console.log(response);
         updateLocalStorage(props);
-        window.location.href = '/calendar';
+        window.location.href = "/calendar";
       }
     })
     .catch(function (error) {
@@ -104,16 +107,15 @@ async function addAdditionalInfo(props) {
     });
 }
 
-
 async function updateLocalStorage(props) {
-    const currUser = JSON.parse(localStorage.getItem("user"));
-    currUser.nickname = props.nickname;
-    currUser.pronouns = props.pronouns;
-    currUser.address = props.address;
-    currUser.cellNumber = props.cellNumber;
-    currUser.homeNumber = props.homeNumber;
-    // update
-    localStorage.setItem("user", JSON.stringify(currUser));
-  }
+  const currUser = JSON.parse(localStorage.getItem(Constants.USER));
+  currUser.nickname = props.nickname;
+  currUser.pronouns = props.pronouns;
+  currUser.address = props.address;
+  currUser.cellNumber = props.cellNumber;
+  currUser.homeNumber = props.homeNumber;
+  // update
+  localStorage.setItem(Constants.USER, JSON.stringify(currUser));
+}
 
 export default AdditionalInfo;

@@ -1,145 +1,148 @@
 .toastui-calendar-template-allday {
-    background-color:rgb(186 222 255);
+  background-color: rgb(186 222 255);
 }
 
 .calendar {
-    height: 70vh;
-    width: 50vw;
+  height: 70vh;
+  width: 50vw;
 }
 
 .calendar-title {
-    align-self: center;
-    text-align: right;
-    font-weight: bold;
+  align-self: center;
+  text-align: right;
+  font-weight: bold;
 }
 
 .calendar-navi {
-    width: 100%;
-    display: flex;
-    justify-content: space-between;
-    font-size: larger;
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  font-size: larger;
 }
 
-.prev-button, .next-button, .today-button {
-    background-color : #d1d1d1; 
+.prev-button,
+.next-button,
+.today-button {
+  background-color: #d1d1d1;
 }
 
-.prev-button, .next-button {
-    width: 20%;
+.prev-button,
+.next-button {
+  width: 20%;
 }
 
 .prev-button {
-    align-self: flex-start;
+  align-self: flex-start;
 }
 
 .next-button {
-    align-self: flex-end;
+  align-self: flex-end;
 }
 
 .today-button {
-    align-self: left;
-    font-size: medium;
-    padding: 10px;
-    width: fit-content;
+  align-self: left;
+  font-size: medium;
+  padding: 10px;
+  width: fit-content;
 }
 
 .filters-container-box {
-    border: 2px;
-    border-color: black;
+  border: 2px;
+  border-color: black;
 }
 
 .container {
-    padding-top: 100px;
-    width: 99vw;
-    position: absolute;
-    left: 0px;
-    top: 0px;
-    display: grid;
-    height: 100vh;
-    grid-template-columns: 0.7fr 1.7fr 0.3fr;
-    grid-template-rows: 1fr 1fr 10fr;
-    gap: 0px 50px;
-    grid-template-areas:
-        "filters-container calendar-container schedule-container"
-        "filters-container calendar-container schedule-container"
-        "filters-container event-buttons-container schedule-container";
+  padding-top: 100px;
+  width: 99vw;
+  position: absolute;
+  left: 0px;
+  top: 0px;
+  display: grid;
+  height: 100vh;
+  grid-template-columns: 0.7fr 1.7fr 0.3fr;
+  grid-template-rows: 1fr 1fr 10fr;
+  gap: 0px 50px;
+  grid-template-areas:
+    "filters-container calendar-container schedule-container"
+    "filters-container calendar-container schedule-container"
+    "filters-container event-buttons-container schedule-container";
 }
 
 .filters-container {
-    grid-area: filters-container;
-    width: 80%;
-    justify-self: right;
-    border-color: lightgray;
+  grid-area: filters-container;
+  width: 80%;
+  justify-self: right;
+  border-color: lightgray;
 }
 
 .calendar {
-    grid-area: calendar-container;
-    width: 100%;
-    text-align: left;
-    border-style: dashed;
-    border-color: lightgray;
+  grid-area: calendar-container;
+  width: 100%;
+  text-align: left;
+  border-style: dashed;
+  border-color: lightgray;
 }
 
 .calendar-center-header {
-    justify-content: left;
-    display: inline-flex;
+  justify-content: left;
+  display: inline-flex;
 }
 
 .schedule-container {
-    grid-area: schedule-container;
-    width: 80%;
-    justify-self: left;
-    border-color: lightgray;
+  grid-area: schedule-container;
+  width: 80%;
+  justify-self: left;
+  border-color: lightgray;
 }
 
 .event-buttons-container {
-    grid-area: event-buttons-container;
-    width: 100%;
-    border-color: lightgray;
-    display: flex;
-    flex-direction: row-reverse;
+  grid-area: event-buttons-container;
+  width: 100%;
+  border-color: lightgray;
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 .select-date {
-    width: fit-content;
-    padding: 0;
-    background-color: white;
+  width: fit-content;
+  padding: 0;
+  background-color: white;
 }
 
 .toastui-calendar-grid-cell-more-events {
-    cursor: default;
+  cursor: default;
 }
 
 .datePicker {
-    border: #e5e5e5;
-    border-style: solid;
+  border: #e5e5e5;
+  border-style: solid;
 }
 
 .datePicker input,
 .datePicker button {
-    font: inherit;
-    background-color: #ffffff;
-    border-radius: 0;
+  font: inherit;
+  background-color: #ffffff;
+  border-radius: 0;
 }
 
 .datePicker button:hover {
-    background-color: #bfbff8;
+  background-color: #bfbff8;
 }
 
 .datePicker .react-calendar .react-calendar__navigation {
-    display: flex;
+  display: flex;
 }
 
 .datePicker .react-calendar .react-calendar__navigation button {
-    border: #3700ff;
-    border-style: dotted;
-    border-width: 1px;
+  border: #3700ff;
+  border-style: dotted;
+  border-width: 1px;
 }
 
 .datePicker .react-calendar .react-calendar__navigation button:hover {
-    background-color: #bfbff8;
+  background-color: #bfbff8;
 }
 
 .datePicker .react-calendar .react-calendar__month-view__weekdays {
-    background-color: #ffffff;
+  background-color: #ffffff;
 }

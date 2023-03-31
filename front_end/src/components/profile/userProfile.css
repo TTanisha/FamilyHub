@@ -1,17 +1,16 @@
 .userProfileContainer {
-    border: thin solid;
-    border-color: black;
-    padding: 5px;
+  border: thin solid;
+  border-color: black;
+  padding: 5px;
 }
 
 .userProfileName {
-    text-decoration: underline;
+  text-decoration: underline;
 }
 
 .inputWrapper {
-    margin: auto;
-    width: 75%;
-    display: flex; 
-    flex-direction: column;
+  margin: auto;
+  width: 75%;
+  display: flex;
+  flex-direction: column;
 }
-

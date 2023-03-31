@@ -54,8 +54,7 @@ const FamilyGroups = () => {
       <div className="content">
         <Card css={{ $$cardColor: "$colors$gradient" }}>
           <Text h3 color="#ffffff">
-            {" "}
-            My Family Groups{" "}
+            My Family Groups
           </Text>
         </Card>
 

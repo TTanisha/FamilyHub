@@ -133,13 +133,11 @@ const UserProfile = (props) => {
       <Card css={{ $$cardColor: "$colors$gradient" }}>
         {isLoggedUser && (
           <Text h3 color="#ffffff">
-            {" "}
             My Profile
           </Text>
         )}
         {!isLoggedUser && (
           <Text h3 color="#ffffff">
-            {" "}
             Family Member Profile
           </Text>
         )}
@@ -265,7 +263,6 @@ const UserProfile = (props) => {
                     restoreValue(JSON.parse(localStorage.getItem("user")));
                   }}
                 >
-                  {" "}
                   Discard changes
                 </Button>
               </Grid>

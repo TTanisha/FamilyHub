@@ -59,8 +59,7 @@ const FamilyGroupSelector = (props) => {
           ? data.map((groupData) => (
               <div key={groupData.group?._id}>
                 <Radio size="sm" value={groupData.group?._id}>
-                  {" "}
-                  {groupData.group?.groupName}{" "}
+                  {groupData.group?.groupName}
                 </Radio>
               </div>
             ))

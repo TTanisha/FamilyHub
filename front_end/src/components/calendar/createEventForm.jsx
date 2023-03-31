@@ -259,8 +259,7 @@ const CreateEventForm = (props) => {
             </Grid>
           </Grid.Container>
           <Checkbox size="sm" onChange={setIsAllDay}>
-            {" "}
-            All day{" "}
+            All day
           </Checkbox>
 
           {/* Recurring Event */}
@@ -269,8 +268,7 @@ const CreateEventForm = (props) => {
               <Grid.Container direction="column">
                 <Grid>
                   <Checkbox size="sm" onChange={setRecurring}>
-                    {" "}
-                    Recurring{" "}
+                    Recurring
                   </Checkbox>
                 </Grid>
               </Grid.Container>

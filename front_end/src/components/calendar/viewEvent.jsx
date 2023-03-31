@@ -382,8 +382,7 @@ const ViewEvent = (props) => {
           {editMode && (
             <div>
               <Checkbox size="sm" isSelected={isAllDay} onChange={setIsAllDay}>
-                {" "}
-                All day{" "}
+                All day
               </Checkbox>
 
               <FamilyGroupSelector
@@ -405,8 +404,7 @@ const ViewEvent = (props) => {
                         isSelected={recurring}
                         onChange={setRecurring}
                       >
-                        {" "}
-                        Recurring{" "}
+                        Recurring
                       </Checkbox>
                     </Grid>
                   </Grid.Container>

@@ -40,14 +40,12 @@ function App() {
         <Navbar.Content enableCursorHighlight>
           <Navbar.Brand>
             <Text b color="inherit" hideIn="xs">
-              {" "}
-              FamilyHub{" "}
+              FamilyHub
             </Text>
           </Navbar.Brand>
           {isLoggedIn ? null : (
             <Navbar.Link href="/" isActive={window.location.pathname === "/"}>
-              {" "}
-              Login{" "}
+              Login
             </Navbar.Link>
           )}
           {!isLoggedIn ? null : (
@@ -55,8 +53,7 @@ function App() {
               href="/calendar"
               isActive={window.location.pathname === "/calendar"}
             >
-              {" "}
-              Calendar{" "}
+              Calendar
             </Navbar.Link>
           )}
           {!isLoggedIn ? null : (
@@ -64,8 +61,7 @@ function App() {
               href="/familygroups"
               isActive={window.location.pathname === "/familygroups"}
             >
-              {" "}
-              Family Groups{" "}
+              Family Groups
             </Navbar.Link>
           )}
           {isLoggedIn ? null : (
@@ -73,8 +69,7 @@ function App() {
               href="/sign-up"
               isActive={window.location.pathname === "/sign-up"}
             >
-              {" "}
-              Sign up{" "}
+              Sign up
             </Navbar.Link>
           )}
         </Navbar.Content>

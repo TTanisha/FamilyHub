@@ -41,21 +41,21 @@ exports.createRecurringEvent = async function (event) {
     var initialStartDate = new Date(start);
     var initialEndDate = new Date(end);
 
-    var startDate = new Date(initialStartDate);
-    var endDate = new Date(initialEndDate);
+    var startDate = new Date(initialStartDate.toUTCString());
+    var endDate = new Date(initialEndDate.toUTCString());
 
     if (recurrenceRule === "DAILY") {
-      startDate.setDate(initialStartDate.getDate() + i);
-      endDate.setDate(initialEndDate.getDate() + i);
+      startDate.setUTCDate(initialStartDate.getUTCDate() + i);
+      endDate.setUTCDate(initialEndDate.getUTCDate() + i);
     } else if (recurrenceRule === "WEEKLY") {
-      startDate.setDate(initialStartDate.getDate() + i * 7);
-      endDate.setDate(initialEndDate.getDate() + i * 7);
+      startDate.setUTCDate(initialStartDate.getUTCDate() + (i * 7));
+      endDate.setUTCDate(initialEndDate.getUTCDate() + (i * 7));
     } else if (recurrenceRule === "MONTHLY") {
-      startDate.setMonth(initialStartDate.getMonth() + i);
-      endDate.setMonth(initialEndDate.getMonth() + i);
+      startDate.setUTCMonth(initialStartDate.getUTCMonth() + i);
+      endDate.setUTCMonth(initialEndDate.getUTCMonth() + i);
     } else if (recurrenceRule === "YEARLY") {
-      startDate.setFullYear(initialStartDate.getFullYear() + i);
-      endDate.setFullYear(initialEndDate.getFullYear() + i);
+      startDate.setUTCFullYear(initialStartDate.getUTCFullYear() + i);
+      endDate.setUTCFullYear(initialEndDate.getUTCFullYear() + i);
     }
 
     newEvent = await Events.create({

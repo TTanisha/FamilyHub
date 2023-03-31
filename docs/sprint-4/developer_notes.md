@@ -77,6 +77,7 @@ We will follow the basic JS and HTML/CSS coding conventions.
 #### Naming Conventions 
 
 - Use `camelCase` for variables and functions. 
+- Use `UPPERCASE` for global constants.
 - All names start with a letter.
 - Use descriptive names for variables and functions.
 

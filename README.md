@@ -1,6 +1,6 @@
 <div align="center">
 
-# FamilyHub
+# ![FamilyHub Logo](docs/FamilyHubLogo.png)
 
 [![Build](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml)
 [![Tests](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml)

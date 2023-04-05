@@ -1,6 +1,6 @@
 <div align="center">
 
-# ![FamilyHub Logo](docs/FamilyHubLogo.png)
+# FamilyHub 
 
 [![Build](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/push-image.yml)
 [![Tests](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml/badge.svg)](https://github.com/TTanisha/FamilyHub/actions/workflows/regression-testing.yml)
@@ -121,7 +121,7 @@ Project Organization:
 
 - [Project Proposal](docs/presentations/Project_Proposal.pptx)
 - [Technique Seminar](docs/presentations/Technique_Seminar.pptx)
-- ~~[Final Project](docs/presentations/)~~ (In progress)
+- [Final Project](docs/presentations/Final_Presentation.pptx) 
 
 ## Usage 
 

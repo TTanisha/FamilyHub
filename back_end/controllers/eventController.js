@@ -17,7 +17,6 @@ exports.validateEventDates = function (event) {
 };
 
 exports.createRecurringEvent = async function (event) {
-  
   var {
     title,
     body,
@@ -48,8 +47,8 @@ exports.createRecurringEvent = async function (event) {
       startDate.setUTCDate(initialStartDate.getUTCDate() + i);
       endDate.setUTCDate(initialEndDate.getUTCDate() + i);
     } else if (recurrenceRule === "WEEKLY") {
-      startDate.setUTCDate(initialStartDate.getUTCDate() + (i * 7));
-      endDate.setUTCDate(initialEndDate.getUTCDate() + (i * 7));
+      startDate.setUTCDate(initialStartDate.getUTCDate() + i * 7);
+      endDate.setUTCDate(initialEndDate.getUTCDate() + i * 7);
     } else if (recurrenceRule === "MONTHLY") {
       startDate.setUTCMonth(initialStartDate.getUTCMonth() + i);
       endDate.setUTCMonth(initialEndDate.getUTCMonth() + i);
@@ -79,9 +78,11 @@ exports.createRecurringEvent = async function (event) {
         $addToSet: {
           events: newEvent,
         },
-      },
+      }
     );
   }
+
+  return recurrenceId;
 };
 
 exports.createEvent = async (req, res) => {
@@ -106,7 +107,7 @@ exports.createEvent = async (req, res) => {
           $addToSet: {
             events: newEvent,
           },
-        },
+        }
       );
 
       res.status(201).send({
@@ -184,7 +185,7 @@ exports.updateEvent = async (req, res) => {
       eventToUpdate = await Events.findByIdAndUpdate(
         req.body.id,
         { $set: req.body },
-        { new: true, runValidators: true },
+        { new: true, runValidators: true }
       );
 
       res.status(200).send({
@@ -209,21 +210,26 @@ exports.updateEvent = async (req, res) => {
 
 exports.updateRecurrence = async (req, res) => {
   try {
-    //delete all events in recurrence
-    await Events.deleteMany({ recurrenceId: req.body.recurrenceId });
-
-    //recreate updated recurrence
-    this.validateEventDates(req.body);
-
     //handle recurrence
     if (req.body.recurrenceRule !== "ONCE") {
-      await this.createRecurringEvent(req.body);
+      //delete all events in recurrence
+      await Events.deleteMany({ recurrenceId: req.body.recurrenceId });
+
+      //recreate updated recurrence
+      this.validateEventDates(req.body);
+
+      let recurrenceId = await this.createRecurringEvent(req.body);
 
       res.status(201).send({
         // created successfully
         status: "success",
         message: "New recurring event created",
+        data: {
+          recurrenceId: recurrenceId,
+        },
       });
+    } else {
+      throw new Error((message = "Event is not a recurrence"));
     }
   } catch (err) {
     res.status(400).send({
@@ -265,6 +271,10 @@ exports.deleteEvent = async (req, res) => {
 
 exports.deleteRecurrence = async (req, res) => {
   try {
+    if (!req.body.recurrenceId) {
+      throw new Error((message = "Recurrence ID is required"));
+    }
+
     //delete all events in recurrence
     await Events.deleteMany({ recurrenceId: req.body.recurrenceId });
 

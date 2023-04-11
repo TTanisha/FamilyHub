@@ -213,8 +213,30 @@ File path with a clickable GitHub link	Purpose (1 line description)
 |           |         |
 
 ## Continuous Integration and deployment (CI/CD)
-1) Describe your CI/CD environment and the clickable link to your CI/CD pipeline. For instance, if you use GitHub Action, provide the link to the workflow; if you use Jenkins, provide the link to the pipeline file. 
-2) Snapshots of the CI/CD execution. Provide one for CI and one for CD to demo your have successfully set up the environment. 
+1. Describe your CI/CD environment and the clickable link to your CI/CD pipeline. For instance, if you use GitHub Action, provide the link to the workflow; if you use Jenkins, provide the link to the pipeline file. 
+2. Snapshots of the CI/CD execution. Provide one for CI and one for CD to demo your have successfully set up the environment. 
+
+We are using Github Action for our CI/CD pipeline. We separated the pipeline into three different workflows that run when there is an update to the main branch.
+
+- [Regression Testing](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/regression-testing.yml). 
+
+    This is the first workflow that runs in our pipeline. If it fails then the image does not get pushed to DockerHub.
+
+    ![Regression_Testing](./pipeline_images/regression_testing_img.png)
+
+- [Push Image](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/push-image.yml)
+
+    This workflow pushes the image to DockerHub with the updated version of main branch.
+
+    ![push_image](./pipeline_images/push_image_img.png)
+
+- [CodeQL Scan](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/codeql-scan.yml)
+
+    This workflow performs a static analysis using CodeQL and notifies if there are any potential security breaches.
+
+    ![codeql_scan](./pipeline_images/CodeQL_img.png)
+
+
 
 
 ## Testing

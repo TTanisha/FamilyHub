@@ -114,32 +114,81 @@ Provide instructions on how to run the application for each core feature.
 
 For each library, framework, database, tool, etc
 
-- **JavaScript**
-- **Axios** - handling HTTP requests
-- **Docker** - deployment
-- **GitHub Actions** - CI/CD pipeline implementation
-- **Prettier** - code formatter to force a consistent style
+- **JavaScript** [link]( https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
-#### Front End
+    We chose it because it is the most popular scripting language and is widely supported by web browsers, making it an excellent choice for client-side web development.
 
-- **React** - library for implementing a user interface
-- **Vite** - build tool 
-- **ToastUI** - javascript calendar API 
-- **NextUI** - react ui library for buttons, navbar, etc. 
-- **HTML** and **CSS**
+- **Axios** [link](https://axios-http.com/docs/intro)
 
-#### Back End
+    It's a lightweight and easy-to-use library for making HTTP requests in JavaScript applications. It has better error handling and supports automatic serialization of request and response data.
 
-- **Node.js** - javascript runtime environment 
-- **Express.js** - API framework
-- **MongoDB** - data storage
-- **mongoose** - library to easily connect mongoDB to Node.js
+- **Docker** [link](https://docs.docker.com/)
 
-#### Testing
+    It provides a consistent and reproducible environment for developing and deploying applications, making it easier to manage dependencies and ensure consistency across different environments.
 
-- **Jest** - for unit and integration tests
-- **Artillery** - load testing
-- **CodeQL** - security analysis
+- **GitHub Actions** [link](https://docs.github.com/en/actions)
+
+    It provides an easy-to-use and powerful platform for automating the software development process, just like Jenkins. The difference is that it is integrated with Github repos; therefore, it will be easier for us to create, manage and run workflows for building, testing and deploying software. Having things in one place will allow us to be more efficient.
+
+- **Prettier** [link](https://reactjs.org/docs/getting-started.html)
+
+    It's a code formatter that helps maintain consistent code style across the entire codebase, making it easier to read and understand code. It is a simple VS Code plug-in.
+
+#### **Front End**
+
+- **React** [link](https://reactjs.org/docs/getting-started.html)
+
+    It's a popular JavaScript library for building user interfaces that allows for easy component-based development, efficient rendering, and easy integration with other libraries and frameworks. We choose it over Angular or Vue because of it relatively low learning curve.
+
+- **Vite** [link](https://vitejs.dev/guide/)
+
+    It's a fast build tool that helps reduce development time by improving the build and reload speed of modern web applications.
+
+- **ToastUI** [link](https://ui.toast.com/)
+
+    It's a collection of customizable UI components for building modern web applications with ease and provides a rich set of features and flexibility. We choose it because it has calendar component.
+
+- **NextUI**  [link](https://nextjs.org/docs/getting-started)
+
+    It's a React-based UI framework that provides pre-built UI components and an easy-to-use API to help build modern web applications. We choose it because it has straighforward documentation.
+
+#### **Back End**
+
+- **Node.js** [link](https://nodejs.org/en/docs/)
+
+    It's a JavaScript runtime that allows developers to build fast and scalable applications on the server-side using JavaScript. We use it because is the most common among web applications.
+
+
+- **Express.js** [link](https://expressjs.com/)
+
+    It's a fast and minimal web framework for Node.js that makes it easy to build web applications and APIs. It made the routing fast and easy.
+
+
+- **MongoDB** [link](https://docs.mongodb.com/)
+
+    It's a popular NoSQL database that provides high scalability, flexibility, and document-based data storage for modern web applications. It is also a popular choice for modern web applications because it allows for storing semi-structured data, making it a good fit for applications with dynamic data models.
+
+- **mongoose** [link](https://mongoosejs.com/docs/)
+
+    It's a MongoDB object modeling tool that provides a schema-based solution to model and interact with MongoDB data. This library made our database connection really simple.
+
+#### **Testing**
+
+- **Jest** [link](https://jestjs.io/docs/getting-started)
+
+    It's preferred over other JavaScript testing frameworks because it has an easy-to-use API, a rich set of features, and good integration with other tools and frameworks. Plus we liked the code coverage feature.
+
+
+- **Artillery** [link](https://artillery.io/docs/)
+
+    It's a load testing tool that helps developers simulate and measure the performance of their applications under load and provides an easy-to-use API for creating complex test scenarios. We liked it because of the HTML generated report after the test.
+
+
+- **CodeQL** [link](https://codeql.github.com/docs/)
+
+    It's a static analysis tool that helps developers identify security vulnerabilities and other bugs in their codebase, with easy to set up instructions and lots of community support.
+
+
 
 
 ### Name and link
@@ -149,6 +198,8 @@ For each library, framework, database, tool, etc
 List your naming conventions or just provide a link to the standard ones used online.
 
 For example: Java naming conventions
+
+
 ### Code
 Key files: top 5 most important files (full path). We will also be randomly checking the code quality of files. Please let us know if there are parts of the system that are stubs or are a prototype so we grade these accordingly.
 File path with a clickable GitHub link	Purpose (1 line description)

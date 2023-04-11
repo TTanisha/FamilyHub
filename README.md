@@ -84,7 +84,7 @@ Project Organization:
     └── src
 ```
 
-- ~~[Project Release](docs/sprint-4/project_release.md)~~ (In progress)
+- [Project Release](docs/project_release.md) (In progress)
 - [Coding Style](docs/sprint-4/developer_notes.md/#coding-standards)
 - [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes)
 

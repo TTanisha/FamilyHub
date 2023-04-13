@@ -108,7 +108,7 @@ Provide instructions on how to run the application for each core feature.
 - [Sequence Diagrams](docs/sprint-2/Sequence%20Diagrams/)
   - [User Profile](./docs/sprint-2/Sequence%20Diagrams/profile-page-sequence-diagram.png)
   - [Family Group](./docs/sprint-2/Sequence%20Diagrams/family-group-sequence-diagram.png)
-  - [Shared Calendar](./docs/sprint-2/Sequence%20Diagrams/shared-calendar-sequence-diagram.png)  
+  - [Shared Calendar](./docs/sprint-3/sequence-diagram-shared-calendar-v2.png)  
 
 ## Infrastructure
 
@@ -146,7 +146,7 @@ For each library, framework, database, tool, etc
 
 - **ToastUI** [link](https://ui.toast.com/)
 
-    It's a collection of customizable UI components for building modern web applications with ease and provides a rich set of features and flexibility. We choose it because it has calendar component.
+    It's a collection of customizable UI components for building modern web applications with ease and provides a rich set of features and flexibility. We choose it because it has calendar component. Additionally, it was a TA recommendation.
 
 - **NextUI**  [link](https://nextjs.org/docs/getting-started)
 

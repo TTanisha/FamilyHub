@@ -107,10 +107,163 @@ https://github.com/TTanisha/FamilyHub
 
 - All User stories were completed in Sprint 3.
 
-
 ## User manual
 
-Provide instructions on how to run the application for each core feature. 
+### 1. Family Member Profiles
+
+#### 1.1 Create an account
+
+1. While not logged in, go to the home page
+2. Select `Create an Account` 
+3. Fill in the required fields (first name, last name, email address, password, and birthday)
+    - email should be of the format "email@domain" (ex. jane.doe@example.com) 
+    - password should be more than 6 characters 
+4. Select `Create Account`
+5. (Optional) Fill in additional profile details 
+6. Select `Complete My Profile`
+
+#### 1.2 Update your account
+
+1. While logged in, select the profile icon in the top-right 
+2. Select `My Profile` 
+3. Select `Edit`
+4. Edit the fields you want to update
+5. Select `Update`
+
+#### 1.3 Delete your account 
+
+1. While logged in, select the profile icon in the top-right 
+2. Select `My Profile`
+3. Select `Delete Account`
+4. Select `Yes, delete my account`
+
+#### 1.4 View a family member's profile 
+
+1. Select `Family Groups` in the navigation bar
+2. Select the name of the family group the member is a part of 
+3. Select their name in the dropdown list 
+
+### 2. Family Groups
+
+#### 2.1 Create a family group
+
+1. Select `Family Groups` in the navigation bar
+2. Select `Create Family Group`
+3. Enter a family group name 
+4. Select `Submit` 
+
+#### 2.2 View a family group
+
+1. Select `Family Groups` in the navigation bar
+2. Select the name of the family group you would like to view
+    - A list of all the family members in this group should be displayed in the dropdown list
+
+#### 2.3 Add a member to a family group
+
+1. Select `Family Groups` in the navigation bar
+2. Select the name of the family group you would like to add a member to
+3. Select `Add Member` 
+4. Enter the email address associated with the family member's FamilyHub account
+5. Select `Submit`
+
+#### 2.4 Leave a family group
+
+1. Select `Family Groups` in the navigation bar
+2. Select the name of the family group you would like to leave
+3. Select `Leave Group` 
+4. Select `Leave this group`
+
+### 3. Shared Calendar
+
+#### 3.1 Navigate the calendar
+
+#### 3.1.1 Change month/day/week
+
+There are two options for navigating the calendar:
+1. Use the prev arrow, next arrow, and today buttons at the top of the calendar
+2. Select a date using the date selector on the left 
+
+#### 3.1.2 Monthly/Weekly/Daily View
+
+1. Select the dropdown under "Select View:"
+2. Select the desired view (Monthly/Weekly/Daily) 
+
+#### 3.2 Create an event 
+
+1. Go to the Calendar page 
+2. Select `Create Event`
+3. Enter an event title 
+4. Enter a start date/time and an end date/time
+    - Note: Start date/time must be before end date/time
+5. (Optional) If the event is an all day event, select the `All day` checkbox 
+6. (Optional) If this is a recurring event, select the `Recurring` checkbox    
+    - 6.1. Select the recurrence type (Daily/Weekly/Monthly/Yearly)
+    - 6.2. Enter the number of times you want this event to occur
+        - Ex. An event on Apr. 1, 2023 with recurrence set to `Monthly 2` will occur on Apr 1, 2023 and May. 1, 2023. 
+7. (Optional) Enter a description
+8. (Optional) Enter a location 
+9. Select `Submit` 
+
+NOTE: Once created, an event cannot be switched from a recurring to a non-recurring event and vice versa. 
+
+#### 3.3 View an event
+
+1. Go to the Calendar page 
+2. Locate the event you would like to edit on the calendar
+3. Select the event
+    - This should open up the event details modal
+
+#### 3.4 Edit a non-recurring event
+
+NOTE: A non-recurring event cannot be turned into a recurring event. Please create a new event if you would like a recurring one. 
+
+NOTE: Only the event creator can edit the event.
+
+1. Go to the Calendar page 
+2. Locate the event you would like to edit on the calendar
+3. Select the event
+4. Select `Edit` 
+5. Edit the event details that you want to update
+6. Select `Save`
+
+#### 3.5 Edit a recurring event
+
+NOTE: An recurring event cannot be turned into a non-recurring event. Please delete the recurring series if you would like a non-recurring one instead.
+
+NOTE: Only the event creator can edit the event.
+
+#### 3.5.1 Edit an _entire_ recurring series 
+
+NOTE: Updating a series will overwrite ALL existing events in the series, including past and future events. Please make sure the start and end date/time is set to the start and end date/tme of the first occurence in the series. 
+
+1. Go to the Calendar page 
+2. Locate the **first** occurrence of the recurring event series you would like to edit on the calendar
+    - This is to ensure the updated recurrence will start on the correct date.
+3. Select the event
+4. Select `Edit this series` 
+5. Edit the event details that you want to update
+6. Select `Save series`
+
+#### 3.5.2 Edit a _single_ event in a recurring series: 
+
+1. Go to the Calendar page 
+2. Locate the event you would like to edit on the calendar
+3. Select the event
+4. Select `Edit this event` 
+5. Edit the event details that you want to update
+6. Select `Save event`
+
+#### 3.6 Delete an event
+
+NOTE: Only the event creator can delete the event.
+
+1. Go to the Calendar page 
+2. Locate the event you would like to delete on the calendar
+3. Select the event
+4. Select `Delete` 
+5. If this event was part of a recurrence,
+    - If you would like to delete the entire recurring series, select `Delete the entire series`
+    - If you would like to delete the single event in the recurring series, select `Delete this event` 
 
 ## Overall Architecture and Design
 
@@ -203,16 +356,14 @@ For example: Java naming conventions
 
 
 ### Code
-Key files: top 5 most important files (full path). We will also be randomly checking the code quality of files. Please let us know if there are parts of the system that are stubs or are a prototype so we grade these accordingly.
-File path with a clickable GitHub link	Purpose (1 line description)
 
 | File Path | Purpose | 
 | --------- | ------- |
-|           |         |
-|           |         |
-|           |         |
-|           |         |
-|           |         |
+| [back_end/controllers/eventController.js](https://github.com/TTanisha/FamilyHub/blob/main/back_end/controllers/eventController.js) | The back-end controller methods for events |
+| [back_end/models/eventModel.js](https://github.com/TTanisha/FamilyHub/blob/main/back_end/models/eventModel.js) | The back-end event model |
+| [front_end/src/App.jsx](https://github.com/TTanisha/FamilyHub/blob/main/front_end/src/App.jsx) | The front-end file used for our navigation and router |
+| [front_end/src/components/calendar/viewEvent.jsx](https://github.com/TTanisha/FamilyHub/blob/main/front_end/src/components/calendar/viewEvent.jsx) | The front-end view/edit event modal in the calendar |
+| [front_end/srs/pages/signPages/signUp.jsx](https://github.com/TTanisha/FamilyHub/blob/main/front_end/src/pages/signPages/signUp.jsx) | The front-end sign up page |
 
 ## Continuous Integration and deployment (CI/CD)
 
@@ -277,13 +428,15 @@ Each story needs a test before it is complete. In other word, the code coverage 
 
 #### 5 Most Important Acceptance Tests 
 
+NOTE: Our acceptance tests are all manual. Links will be provided to the manual acceptance test steps in our Testing Plan. 
+
 | Test File Path | What it is Testing | 
 | -------------- | ------------------ |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
+| [Create Account](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=sign%20up%20page-,Given%20a%20user%20is%20on%20the%20sign%20up%20page,-when%20the%20user) | Creating an account with valid input data |
+| [Create Event](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=form%20should%20appear.-,Given%20when%20a%20user%20is%20on%20the%20Create%20Event%20form%2C,-when%20the%20user) | Creating an event with valid input data |
+| [Leave Family Group](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=Delete%20Family%20Group-,Given%20a%20user%20is%20on%20the%20Leave%20group%20confirmation%20modal,-given%20the%20user) | Leaving a family group as the last member of the family |
+| [View Event](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=Get%20Event-,Given%20a%20user%20is%20on%20the%20calendar%20page%2C,-when%20the%20user) | Viewing an event that was not created by the logged-in user |
+|  [View Member Profiles](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=the%20login%20page-,Given%20a%20user%20is%20logged%20in%2C,-given%20the%20user) | Viewing a famly member's profile|
 
 
 ### Regression testing

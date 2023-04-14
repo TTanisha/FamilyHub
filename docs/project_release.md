@@ -42,9 +42,7 @@ https://github.com/TTanisha/FamilyHub
     *NOTE:* Run server before running client. 
 
 
-## List of user stories for each sprint
-
-Example: US #1: US name [Status: Done, Removed, Pushed]
+## User Stories for each sprint
 
 ### Sprint 1
 
@@ -52,9 +50,13 @@ Example: US #1: US name [Status: Done, Removed, Pushed]
 
 ### Sprint 2 
 
-- US [#53](https://github.com/TTanisha/FamilyHub/issues/53): Sign Into Account [Status: Done]
+- US [#1](https://github.com/TTanisha/FamilyHub/issues/1): View Shared Calendar [Status: Done]
 
 - US [#51](https://github.com/TTanisha/FamilyHub/issues/51): Create an Account [Status: Done]
+
+- US [#53](https://github.com/TTanisha/FamilyHub/issues/53): Sign Into Account [Status: Done]
+
+- US [#2](https://github.com/TTanisha/FamilyHub/issues/2): Individual Profile [Status: Pushed]
 
 - US [#20](https://github.com/TTanisha/FamilyHub/issues/20): Delete Individual Profile [Status: Pushed]
 
@@ -62,14 +64,22 @@ Example: US #1: US name [Status: Done, Removed, Pushed]
 
 - US [#54](https://github.com/TTanisha/FamilyHub/issues/54): Sign Out of Account [Status: Pushed]
 
-- US [#56](https://github.com/TTanisha/FamilyHub/issues/56): Edit Personal Information [Status: Pushed]
-
 - US [#55](https://github.com/TTanisha/FamilyHub/issues/55): Add Personal Information [Status: Pushed]
+
+- US [#56](https://github.com/TTanisha/FamilyHub/issues/56): Edit Personal Information [Status: Pushed]
 
 - US [#63](https://github.com/TTanisha/FamilyHub/issues/63): Edit Personal Information [Status: Pushed]
 
 
 ### Sprint 3 
+
+- US [#2](https://github.com/TTanisha/FamilyHub/issues/2): Individual Profile [Status: Done]
+
+- US [#3](https://github.com/TTanisha/FamilyHub/issues/3): Add Events [Status: Done]
+
+- US [#4](https://github.com/TTanisha/FamilyHub/issues/4): Remove Events [Status: Done]
+
+- US [#5](https://github.com/TTanisha/FamilyHub/issues/5): Edit Events [Status: Done]
 
 - US [#20](https://github.com/TTanisha/FamilyHub/issues/20): Delete Individual Profile [Status: Done]
 
@@ -79,7 +89,7 @@ Example: US #1: US name [Status: Done, Removed, Pushed]
 
 - US [#23](https://github.com/TTanisha/FamilyHub/issues/23):Leave Family Group [Status: Done]
 
-- US [#52](https://github.com/TTanisha/FamilyHub/issues/51): Delete an Account [Status: Done]
+- US [#52](https://github.com/TTanisha/FamilyHub/issues/52): Delete an Account [Status: Done]
 
 - US [#54](https://github.com/TTanisha/FamilyHub/issues/54): Sign Out of Account [Status: Done]
 
@@ -104,15 +114,13 @@ Provide instructions on how to run the application for each core feature.
 
 ## Overall Architecture and Design
 
-- [Architecture Diagram](docs/sprint-1/architecture-diagram.png)
+- [Architecture Diagram](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-1/architecture-diagram.png)
 - [Sequence Diagrams](docs/sprint-2/Sequence%20Diagrams/)
-  - [User Profile](./docs/sprint-2/Sequence%20Diagrams/profile-page-sequence-diagram.png)
-  - [Family Group](./docs/sprint-2/Sequence%20Diagrams/family-group-sequence-diagram.png)
-  - [Shared Calendar](./docs/sprint-3/sequence-diagram-shared-calendar-v2.png)  
+  - [User Profile](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-2/Sequence%20Diagrams/profile-page-sequence-diagram.png)
+  - [Family Group](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-2/Sequence%20Diagrams/family-group-sequence-diagram.png)
+  - [Shared Calendar](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/sequence-diagram-shared-calendar-v2.png)  
 
 ## Infrastructure
-
-For each library, framework, database, tool, etc
 
 - **JavaScript** [link]( https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 
@@ -188,12 +196,6 @@ For each library, framework, database, tool, etc
 
     It's a static analysis tool that helps developers identify security vulnerabilities and other bugs in their codebase, with easy to set up instructions and lots of community support.
 
-
-
-
-### Name and link
-1 paragraph description of why you are using this framework, not other alternatives and why you didn’t choose them.
-
 ### Name Conventions
 List your naming conventions or just provide a link to the standard ones used online.
 
@@ -213,30 +215,26 @@ File path with a clickable GitHub link	Purpose (1 line description)
 |           |         |
 
 ## Continuous Integration and deployment (CI/CD)
-1. Describe your CI/CD environment and the clickable link to your CI/CD pipeline. For instance, if you use GitHub Action, provide the link to the workflow; if you use Jenkins, provide the link to the pipeline file. 
-2. Snapshots of the CI/CD execution. Provide one for CI and one for CD to demo your have successfully set up the environment. 
 
-We are using Github Action for our CI/CD pipeline. We separated the pipeline into three different workflows that run when there is an update to the main branch.
+We are using Github Actions for our CI/CD pipeline. We separated the pipeline into three different workflows that run when there is an update to the main branch.
 
-- [Regression Testing](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/regression-testing.yml). 
+- Regression Testing [Link to workflow](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/regression-testing.yml)
 
-    This is the first workflow that runs in our pipeline. If it fails then the image does not get pushed to DockerHub.
+    Regression testing is the first workflow that runs in our pipeline. If it fails then the image does not get pushed to DockerHub. Here is an [instance](https://github.com/TTanisha/FamilyHub/actions/runs/4683106504) of the job.
 
     ![Regression_Testing](./pipeline_images/regression_testing_img.png)
 
-- [Push Image](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/push-image.yml)
+- Push Image [Link to workflow](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/push-image.yml)
 
-    This workflow pushes the image to DockerHub with the updated version of main branch.
+    This is our second step in our pipeline. It pushes the image to DockerHub with the updated version of the main branch. Here is an [instance](https://github.com/TTanisha/FamilyHub/actions/runs/4683106498) of the job.
 
     ![push_image](./pipeline_images/push_image_img.png)
 
-- [CodeQL Scan](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/codeql-scan.yml)
+- CodeQL Scan [Link to workflow](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/codeql-scan.yml)
 
-    This workflow performs a static analysis using CodeQL and notifies if there are any potential security breaches.
+    This workflow performs a static analysis using CodeQL and notifies if there are any potential security breaches. Here is an [instance](https://github.com/TTanisha/FamilyHub/actions/runs/4681285508) of the job.
 
     ![codeql_scan](./pipeline_images/CodeQL_img.png)
-
-
 
 
 ## Testing
@@ -296,11 +294,16 @@ Each story needs a test before it is complete. In other word, the code coverage 
 
 ### Load testing
 
-1. Describe the environment for load testing, such as tool, load test cases.  
-2. Provide the test report for load testing. 
-3. Discuss one bottleneck found in the load testing. 
-   
-For instance, if you use Jmeter, please upload the jmx file on GitHub and provide link. Also a snapshot of the results, discuss whether the load testing is passed or not.  
+We used Artillery to simulate multiple virtual users making API requests to a target our server. Our load test was designed to simulate the behavior of 200 users making a total of 1000 requests in 1 minute, with each user making 5 requests.
+
+Here are our [test scenarios](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/load_test/load_test.yml). The test scenarios were divided into three types: Log in, Populate Calendar, and Get and Edit an Event. The scenarios were executed in parallel, and the load test ran for a total of 60 seconds.
+
+We have a report in [raw](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/load_test/load_test.json) and in [HTML](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/load_test/load_test.json.html)
+
+Below is a snapshot of the HTML report, which indicates that the load test was successful. The test generated zero errors and maintained a stable connection for all users, suggesting that no bottlenecks were present. Based on this, we can conclude that the system can handle the current load without performance issues.
+
+![load_test_report](./pipeline_images/load_test_report.png)
+
 
 ### Security Analysis
 

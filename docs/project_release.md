@@ -14,6 +14,9 @@
 
 ### Elevator Pitch 
 
+*FamilyHub* is the ultimate solution for families seeking to strengthen their connections and build stronger bonds. It is a web-based application that offers a private shared calendar to help families stay on top of important events with their loved ones. With its user-friendly interface and innovative features, *FamilyHub* aims to reduce friction and conflict within a family by improving communication and organization. Providing a platform for families to stay connected, share memories, plan events, and build stronger bonds, *FamilyHub* is the perfect tool to bring families closer together. Sign up for *FamilyHub* today and experience the positive impact it will have on your family's life!
+
+> Because Family is Complicated Enough. 
 
 ### Differences
 

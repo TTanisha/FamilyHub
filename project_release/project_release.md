@@ -428,26 +428,26 @@ Each story needs a test before it is complete. In other word, the code coverage 
 
 | Test File Path | What it is Testing | 
 | -------------- | ------------------ |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L154) | Invalid event end date given                    |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L189) | No event date given                             |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L269) | Successful event update                         |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L189) | Event deletion                                  |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/familyGroup.test.js#L99) | Family Group creation with duplicated name |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/familyGroup.test.js#L167) | Adding a user already in the Famlily Group|
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/familyGroup.test.js#L278) | Delete existing Family Group              |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/user.test.js#L108) | Create user with duplicate email                 |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/user.test.js#L191) | Get user with valid email, invalid password      |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/user.test.js#L1324) | Delete User                                     |
+|[back_end/test/unit/models/event.test.js#L154](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L154) | Invalid event end date given                    |
+|[back_end/test/unit/models/event.test.js#L189](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L189) | No event date given                             |
+|[back_end/test/unit/models/event.test.js#L269](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L269) | Successful event update                         |
+|[back_end/test/unit/models/event.test.js#L189](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L189) | Event deletion                                  |
+|[back_end/test/unit/models/familyGroup.test.js#L99](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/familyGroup.test.js#L99) | Family Group creation with duplicated name |
+|[back_end/test/unit/models/familyGroup.test.js#L167](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/familyGroup.test.js#L167) | Adding a user already in the Famlily Group|
+|[back_end/test/unit/models/familyGroup.test.js#L278](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/familyGroup.test.js#L278) | Delete existing Family Group              |
+|[back_end/test/unit/models/user.test.js#L108](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/user.test.js#L108) | Create user with duplicate email                 |
+|[back_end/test/unit/models/user.test.js#L191](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/user.test.js#L191) | Get user with valid email, invalid password      |
+|[back_end/test/unit/models/user.test.js#L1324](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/user.test.js#L1324) | Delete User                                     |
 
 #### 5 Most Important Integration Tests  
 
 | Test File Path | What it is Testing | 
 | -------------- | ------------------ |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/event.test.js#L401) | Return events from Family Group           |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/event.test.js#L607) | Delete existing event                     |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/familyGroup.test.js#L103) | Create Family Group with duplicate group name    |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/familyGroup.test.js#L211) | Family Group with valid group and duplicate user |
-|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/user.test.js#L117) | Create User with existing email                 |
+|[back_end/test/integration/event.test.js#L401](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/event.test.js#L401) | Return events from Family Group           |
+|[back_end/test/integration/event.test.js#L607](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/event.test.js#L607) | Delete existing event                     |
+|[back_end/test/integration/familyGroup.test.js#L103](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/familyGroup.test.js#L103) | Create Family Group with duplicate group name    |
+|[back_end/test/integration/familyGroup.test.js#L211](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/familyGroup.test.js#L211) | Family Group with valid group and duplicate user |
+|[back_end/test/integration/user.test.js#L117](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/user.test.js#L117) | Create User with existing email                 |
 
 
 #### 5 Most Important Acceptance Tests 

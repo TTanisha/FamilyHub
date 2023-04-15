@@ -279,6 +279,21 @@ NOTE: Only the event creator can delete the event.
 
 ## Overall Architecture and Design
 
+Project Organization: 
+```
+.
+├── back_end
+│   ├── controllers
+│   ├── models
+│   ├── routes
+│   └── test
+├── docs
+├── front_end
+│   ├── public
+│   └── src
+└── project_release
+```
+
 - [Architecture Diagram](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-1/architecture-diagram.png)
 - [Sequence Diagrams](https://github.com/TTanisha/FamilyHub/tree/main/docs/sprint-2/Sequence%20Diagrams)
   - [User Profile](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-2/Sequence%20Diagrams/profile-page-sequence-diagram.png)

@@ -268,7 +268,7 @@ NOTE: Only the event creator can delete the event.
 ## Overall Architecture and Design
 
 - [Architecture Diagram](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-1/architecture-diagram.png)
-- [Sequence Diagrams](docs/sprint-2/Sequence%20Diagrams/)
+- [Sequence Diagrams](https://github.com/TTanisha/FamilyHub/tree/main/docs/sprint-2/Sequence%20Diagrams)
   - [User Profile](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-2/Sequence%20Diagrams/profile-page-sequence-diagram.png)
   - [Family Group](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-2/Sequence%20Diagrams/family-group-sequence-diagram.png)
   - [Shared Calendar](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/sequence-diagram-shared-calendar-v2.png)  

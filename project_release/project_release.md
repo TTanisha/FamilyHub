@@ -356,7 +356,7 @@ Project Organization:
 
     It's a popular NoSQL database that provides high scalability, flexibility, and document-based data storage for modern web applications. It is also a popular choice for modern web applications because it allows for storing semi-structured data, making it a good fit for applications with dynamic data models.
 
-- **mongoose** [link](https://mongoosejs.com/docs/)
+- **Mongoose** [link](https://mongoosejs.com/docs/)
 
     It's a MongoDB object modeling tool that provides a schema-based solution to model and interact with MongoDB data. This library made our database connection really simple.
 
@@ -415,7 +415,7 @@ We are using Github Actions for our CI/CD pipeline. We separated the pipeline in
 
 ## Testing
 
-### Link to Testing Plan
+[Link to Testing Plan](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md)
 
 
 ### Unit / Integration / Acceptance Tests
@@ -428,27 +428,26 @@ Each story needs a test before it is complete. In other word, the code coverage 
 
 | Test File Path | What it is Testing | 
 | -------------- | ------------------ |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
-
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L154) | Invalid event end date given                    |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L189) | No event date given                             |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L269) | Successful event update                         |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/event.test.js#L189) | Event deletion                                  |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/familyGroup.test.js#L99) | Family Group creation with duplicated name |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/familyGroup.test.js#L167) | Adding a user already in the Famlily Group|
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/familyGroup.test.js#L278) | Delete existing Family Group              |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/user.test.js#L108) | Create user with duplicate email                 |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/user.test.js#L191) | Get user with valid email, invalid password      |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/unit/models/user.test.js#L1324) | Delete User                                     |
 
 #### 5 Most Important Integration Tests  
 
 | Test File Path | What it is Testing | 
 | -------------- | ------------------ |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
-|                |                    |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/event.test.js#L401) | Return events from Family Group           |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/event.test.js#L607) | Delete existing event                     |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/familyGroup.test.js#L103) | Create Family Group with duplicate group name    |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/familyGroup.test.js#L211) | Family Group with valid group and duplicate user |
+|[Path](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/integration/user.test.js#L117) | Create User with existing email                 |
 
 
 #### 5 Most Important Acceptance Tests 
@@ -467,8 +466,8 @@ NOTE: Our acceptance tests are all manual. Links will be provided to the manual 
 ### Regression testing
 
 1. Describe how you run the regression testing (e.g., which tests are executed for regression testing and which tool is used?). 
-2. Provide the link to regression testing script and provide last snapshot of the execution and results of regression testing. 
-
+We used Jest for our regression testing.
+Click [here](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/regression-testing.yml) to see the regression testing workflow script.
 
 ### Load testing
 
@@ -485,5 +484,20 @@ Below is a snapshot of the HTML report, which indicates that the load test was s
 
 ### Security Analysis
 
-1. Describe the choice of the security analysis tool and how do you run it. The security analysis tool should analyze the language that is used in the majority of your source code. 
-2. Attach a report as an appendix below from static analysis tools by running the security analysis tool on your source code. Randomly select 5 detected problems and discuss what you see. Note that you are not required to fix the alarms (bugs and vulnerabilities) in the course.
+We used CodeQL as our security analysis tool for this project. CodeQL is a static analysis tool that helps developers identify security vulnerabilities and other bugs in their codebase, with easy to set up instructions and lots of community support.
+
+The tool is run using a GitHub Actions workflow which can be seen [here](https://github.com/TTanisha/FamilyHub/blob/final-deliverable/.github/workflows/codeql-scan.yml)
+
+It is currently set up to analyse JavaScript, as this is the main language used for our application.
+
+[Here](https://medium.com/mycostech/lets-analyze-your-code-repository-in-github-via-codeql-engine-dd196354f77e) is a tutorial for setting up and using CodeQL with GitHub Actions.
+
+Here is a sample of a report generated for our project by CodeQL.
+![CodeQL Image](../docs/pipeline_images/CodeQL_img.png)
+
+#### Problems
+1. Database Query Built from User-Controlled Sources
+2. Database Query Built from User-Controlled Sources
+3. Missing Rate Limiting
+4. Inefficient Regular Expression
+5. Polynomial Regular Expression userd on Uncontrolled Data

@@ -350,10 +350,8 @@ NOTE: Only the event creator can delete the event.
     It's a static analysis tool that helps developers identify security vulnerabilities and other bugs in their codebase, with easy to set up instructions and lots of community support.
 
 ### Name Conventions
-List your naming conventions or just provide a link to the standard ones used online.
 
-For example: Java naming conventions
-
+[This](sprint-4/developer_notes.md#coding-standards) section of our developer notes document discusses our coding standards and naming conventions. In general, we followed the basic JavaScript conventions, using `camelCase` for variables and functions, `UPPERCASE` for global constants, all names start with a letter, and names are descriptive and useful. 
 
 ### Code
 

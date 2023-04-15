@@ -12,8 +12,17 @@
 
 ## Project summary
 
-1. Elevator pitch description at a high-level. 
-2. Highlight the differences between the final version and proposal if applicable
+### Elevator Pitch 
+
+
+### Differences
+
+There are not many differences between our proposal and the final version. The main differences are due to a lack of specificity in our proposal. 
+
+For our `Shared Calendar` core feature, we only specified that a user would be able to view the calendar in a monthly or daily view, but they are also able to use a weekly view as well. Similarly, we did not originally specify that only the user that created the event is able to edit or delete it, but that is the case in the final version. 
+
+We used all of the technologies we outlined in our proposal, but those were more a starting point. On the front-end we used `vite` as a build tool, and two frameworks (`ToastUI` and `NextUI`) alongside our original plan of `ReactJS`. On the back-end we used `Node.js` and `Express.js`, but we also used `mongoose` to aid in the connection to `mongoDB`. We also used `axios` for handling http requests, `Docker` for deployment, and `GitHub Actions` for implementing the CI/CD pipeline. 
+
 
 ## GitHub repository Link
 

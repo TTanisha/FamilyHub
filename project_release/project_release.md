@@ -456,17 +456,17 @@ NOTE: Our acceptance tests are all manual. Links will be provided to the manual 
 
 | Test File Path | What it is Testing | 
 | -------------- | ------------------ |
-| [Create Account](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-a-user-is-on-the--sign-up-page) | Creating an account with valid input data (US [#51](https://github.com/TTanisha/FamilyHub/issues/51): Create an Account) |
-| [Create Event](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-when-a-user-is-on-the-create-event-form) | Creating an event with valid input data (US [#3](https://github.com/TTanisha/FamilyHub/issues/3): Add Events) |
-| [Leave Family Group](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-a-user-is-on-the-leave-group-confirmation-modal-2) | Leaving a family group as the last member of the family (US [#23](https://github.com/TTanisha/FamilyHub/issues/23):Leave Family Group) |
-| [Edit Event](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-a-user-is-on-an-events-details-page-1) | Viewing an event that was not created by the logged-in user (US [#5](https://github.com/TTanisha/FamilyHub/issues/5): Edit Events) |
-|  [View Member Profiles](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-a-user-is-logged-in) | Viewing a family member's profile (US [#2](https://github.com/TTanisha/FamilyHub/issues/2): Individual Profile) |
+| [Create Account](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=sign%20up%20page-,Given%20a%20user%20is%20on%20the%20sign%20up%20page,-when%20the%20user) | Creating an account with valid input data |
+| [Create Event](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=form%20should%20appear.-,Given%20when%20a%20user%20is%20on%20the%20Create%20Event%20form%2C,-when%20the%20user) | Creating an event with valid input data |
+| [Leave Family Group](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=Delete%20Family%20Group-,Given%20a%20user%20is%20on%20the%20Leave%20group%20confirmation%20modal,-given%20the%20user) | Leaving a family group as the last member of the family |
+| [View Event](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=Get%20Event-,Given%20a%20user%20is%20on%20the%20calendar%20page%2C,-when%20the%20user) | Viewing an event that was not created by the logged-in user |
+|  [View Member Profiles](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=the%20login%20page-,Given%20a%20user%20is%20logged%20in%2C,-given%20the%20user) | Viewing a family member's profile|
 
 
 ### Regression testing
 
-1. Describe how you run the regression testing (e.g., which tests are executed for regression testing and which tool is used?). 
-We used Jest for our regression testing.
+We used Jest for our regression testing. The workflow runs all 128 tests from our test folders whenever changes are pushed to our main branch.
+
 Click [here](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/regression-testing.yml) to see the regression testing workflow script.
 
 ### Load testing
@@ -475,7 +475,7 @@ We used Artillery to simulate multiple virtual users making API requests to a ta
 
 Here are our [test scenarios](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/load_test/load_test.yml). The test scenarios were divided into three types: Log in, Populate Calendar, and Get and Edit an Event. The scenarios were executed in parallel, and the load test ran for a total of 60 seconds.
 
-We have a report in [raw](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/load_test/load_test.json) and in [HTML](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/load_test/load_test.json.html)
+We have a report in [raw](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/load_test/load_test.json) and in [HTML](https://github.com/TTanisha/FamilyHub/blob/main/back_end/test/load_test/load_test.json.html).
 
 Below is a snapshot of the HTML report, which indicates that the load test was successful. The test generated zero errors and maintained a stable connection for all users, suggesting that no bottlenecks were present. Based on this, we can conclude that the system can handle the current load without performance issues.
 
@@ -486,7 +486,7 @@ Below is a snapshot of the HTML report, which indicates that the load test was s
 
 We used CodeQL as our security analysis tool for this project. CodeQL is a static analysis tool that helps developers identify security vulnerabilities and other bugs in their codebase, with easy to set up instructions and lots of community support.
 
-The tool is run using a GitHub Actions workflow which can be seen [here](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/codeql-scan.yml)
+The tool is run using a GitHub Actions workflow which can be seen [here](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/codeql-scan.yml).
 
 It is currently set up to analyse JavaScript, as this is the main language used for our application.
 
@@ -502,26 +502,36 @@ Below is a sample of a report generated for our project by CodeQL.
 
     The queries made to our database by our event controller depend on user input values. There is not currently sufficient sanitization of the user data to prevent malicious database queries from being run.
     
+    Click [here](https://github.com/TTanisha/FamilyHub/security/code-scanning/69) to see the security alert.
+    
 2. **Database Query Built from User-Controlled Sources**
 
     _back_end/controllers/familyGroupController.js:28_
     
     Like in the above issue, the queries made to our database by our family group controller depend on user input values. The user data is not safely embedded into the query which leaves it vulnerable to malicious queries.
     
+    Click [here](https://github.com/TTanisha/FamilyHub/security/code-scanning/51) to see the security alert.
+    
 3. **Missing Rate Limiting**
 
     _back_end/routes/userRoutes.js:14_
     
     The route handlers used in our application do not currently implement any rate-limiting middleware. Due to this our code could be vulnerable to attacks or crashes caused by having many calls made in a short period of time.
+
+    Click [here](https://github.com/TTanisha/FamilyHub/security/code-scanning/18) to see the security alert.
     
 4. **Inefficient Regular Expression**
 
     _back_end/controllers/userController.js:6_
     
     In the back end of the project there are a few regular expressions that are not as efficient as they could be. Given the way that it is currently written, it could take a long time to match the input string.
+
+    Click [here](https://github.com/TTanisha/FamilyHub/security/code-scanning/67) to see the security alert.
     
 5. **Polynomial Regular Expression used on Uncontrolled Data**
 
     _back_end/controllers/userController.js:8_
     
     Similarly to the above issue, there are a few parts of our code that uses regular expressions that are not as efficient as they could be. In this situation the regular expression is used on uncontrolled user data which could be time consuming to evaluate.
+    
+    Click [here](https://github.com/TTanisha/FamilyHub/security/code-scanning/46) to see the security alert.

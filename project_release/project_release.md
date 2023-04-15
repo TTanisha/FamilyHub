@@ -378,7 +378,7 @@ Project Organization:
 
 ### Name Conventions
 
-[This](https://github.com/TTanisha/FamilyHub/blob/final-deliverable/docs/sprint-4/developer_notes.md#coding-standards) section of our developer notes document discusses our coding standards and naming conventions. In general, we followed the basic JavaScript conventions, using `camelCase` for variables and functions, `UPPERCASE` for global constants, all names start with a letter, and names are descriptive and useful. 
+[This](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-4/developer_notes.md#coding-standards) section of our developer notes document discusses our coding standards and naming conventions. In general, we followed the basic JavaScript conventions, using `camelCase` for variables and functions, `UPPERCASE` for global constants, all names start with a letter, and names are descriptive and useful. 
 
 ### Code
 
@@ -398,19 +398,19 @@ We are using Github Actions for our CI/CD pipeline. We separated the pipeline in
 
     Regression testing is the first workflow that runs in our pipeline. If it fails then the image does not get pushed to DockerHub. Here is an [instance](https://github.com/TTanisha/FamilyHub/actions/runs/4683106504) of the job.
 
-    ![Regression_Testing](./pipeline_images/regression_testing_img.png)
+    ![Regression_Testing](https://github.com/TTanisha/FamilyHub/blob/main/project_release/pipeline_images/regression_testing_img.png)
 
 - Push Image [Link to workflow](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/push-image.yml)
 
     This is our second step in our pipeline. It pushes the image to DockerHub with the updated version of the main branch. Here is an [instance](https://github.com/TTanisha/FamilyHub/actions/runs/4683106498) of the job.
 
-    ![push_image](./pipeline_images/push_image_img.png)
+    ![push_image](https://github.com/TTanisha/FamilyHub/blob/main/project_release/pipeline_images/push_image_img.png)
 
 - CodeQL Scan [Link to workflow](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/codeql-scan.yml)
 
     This workflow performs a static analysis using CodeQL and notifies if there are any potential security breaches. Here is an [instance](https://github.com/TTanisha/FamilyHub/actions/runs/4681285508) of the job.
 
-    ![codeql_scan](./pipeline_images/CodeQL_img.png)
+    ![codeql_scan](https://github.com/TTanisha/FamilyHub/blob/main/project_release/pipeline_images/CodeQL_img.png)
 
 
 ## Testing
@@ -479,7 +479,7 @@ We have a report in [raw](https://github.com/TTanisha/FamilyHub/blob/main/back_e
 
 Below is a snapshot of the HTML report, which indicates that the load test was successful. The test generated zero errors and maintained a stable connection for all users, suggesting that no bottlenecks were present. Based on this, we can conclude that the system can handle the current load without performance issues.
 
-![load_test_report](./pipeline_images/load_test_report.png)
+![load_test_report](https://github.com/TTanisha/FamilyHub/blob/main/project_release/pipeline_images/load_test_report.png)
 
 
 ### Security Analysis

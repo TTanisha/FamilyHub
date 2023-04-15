@@ -486,7 +486,7 @@ Below is a snapshot of the HTML report, which indicates that the load test was s
 
 We used CodeQL as our security analysis tool for this project. CodeQL is a static analysis tool that helps developers identify security vulnerabilities and other bugs in their codebase, with easy to set up instructions and lots of community support.
 
-The tool is run using a GitHub Actions workflow which can be seen [here](https://github.com/TTanisha/FamilyHub/blob/final-deliverable/.github/workflows/codeql-scan.yml)
+The tool is run using a GitHub Actions workflow which can be seen [here](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/codeql-scan.yml)
 
 It is currently set up to analyse JavaScript, as this is the main language used for our application.
 

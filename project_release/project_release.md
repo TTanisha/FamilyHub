@@ -492,7 +492,7 @@ It is currently set up to analyse JavaScript, as this is the main language used 
 
 [Here](https://medium.com/mycostech/lets-analyze-your-code-repository-in-github-via-codeql-engine-dd196354f77e) is a tutorial for setting up and using CodeQL with GitHub Actions.
 
-Here is a sample of a report generated for our project by CodeQL.
+Below is a sample of a report generated for our project by CodeQL.
 ![CodeQL Image](../project_release/pipeline_images/codeQL_image.png)
 
 #### Problems

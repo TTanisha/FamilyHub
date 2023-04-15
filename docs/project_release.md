@@ -234,7 +234,7 @@ NOTE: Only the event creator can edit the event.
 
 #### 3.5.1 Edit an _entire_ recurring series 
 
-NOTE: Updating a series will overwrite ALL existing events in the series, including past and future events. Please make sure the start and end date/time is set to the start and end date/tme of the first occurence in the series. 
+NOTE: Updating a series will overwrite ALL existing events in the series, including past and future events. Please make sure the start and end date/time is set to the start and end date/tme of the first occurrence in the series. 
 
 1. Go to the Calendar page 
 2. Locate the **first** occurrence of the recurring event series you would like to edit on the calendar
@@ -311,7 +311,7 @@ NOTE: Only the event creator can delete the event.
 
 - **NextUI**  [link](https://nextjs.org/docs/getting-started)
 
-    It's a React-based UI framework that provides pre-built UI components and an easy-to-use API to help build modern web applications. We choose it because it has straighforward documentation.
+    It's a React-based UI framework that provides pre-built UI components and an easy-to-use API to help build modern web applications. We choose it because it has straight forward documentation.
 
 #### **Back End**
 
@@ -351,7 +351,7 @@ NOTE: Only the event creator can delete the event.
 
 ### Name Conventions
 
-[This](sprint-4/developer_notes.md#coding-standards) section of our developer notes document discusses our coding standards and naming conventions. In general, we followed the basic JavaScript conventions, using `camelCase` for variables and functions, `UPPERCASE` for global constants, all names start with a letter, and names are descriptive and useful. 
+[This](https://github.com/TTanisha/FamilyHub/blob/final-deliverable/docs/sprint-4/developer_notes.md#coding-standards) section of our developer notes document discusses our coding standards and naming conventions. In general, we followed the basic JavaScript conventions, using `camelCase` for variables and functions, `UPPERCASE` for global constants, all names start with a letter, and names are descriptive and useful. 
 
 ### Code
 
@@ -434,7 +434,7 @@ NOTE: Our acceptance tests are all manual. Links will be provided to the manual 
 | [Create Event](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=form%20should%20appear.-,Given%20when%20a%20user%20is%20on%20the%20Create%20Event%20form%2C,-when%20the%20user) | Creating an event with valid input data |
 | [Leave Family Group](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=Delete%20Family%20Group-,Given%20a%20user%20is%20on%20the%20Leave%20group%20confirmation%20modal,-given%20the%20user) | Leaving a family group as the last member of the family |
 | [View Event](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=Get%20Event-,Given%20a%20user%20is%20on%20the%20calendar%20page%2C,-when%20the%20user) | Viewing an event that was not created by the logged-in user |
-|  [View Member Profiles](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=the%20login%20page-,Given%20a%20user%20is%20logged%20in%2C,-given%20the%20user) | Viewing a famly member's profile|
+|  [View Member Profiles](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=the%20login%20page-,Given%20a%20user%20is%20logged%20in%2C,-given%20the%20user) | Viewing a family member's profile|
 
 
 ### Regression testing

@@ -402,7 +402,7 @@ const ViewEvent = (props) => {
                       <Checkbox
                         size="sm"
                         isSelected={recurring}
-                        onChange={setRecurring}
+                        readOnly
                       >
                         Recurring
                       </Checkbox>

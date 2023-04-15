@@ -522,6 +522,6 @@ Here is a sample of a report generated for our project by CodeQL.
     
 5. **Polynomial Regular Expression used on Uncontrolled Data**
 
-    _back_end/controllers/userController.js:6_
+    _back_end/controllers/userController.js:8_
     
     Similarly to the above issue, there are a few parts of our code that uses regular expressions that are not as efficient as they could be. In this situation the regular expression is used on uncontrolled user data which could be time consuming to evaluate.

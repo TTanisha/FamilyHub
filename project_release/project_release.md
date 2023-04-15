@@ -456,11 +456,11 @@ NOTE: Our acceptance tests are all manual. Links will be provided to the manual 
 
 | Test File Path | What it is Testing | 
 | -------------- | ------------------ |
-| [Create Account](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=sign%20up%20page-,Given%20a%20user%20is%20on%20the%20sign%20up%20page,-when%20the%20user) | Creating an account with valid input data |
-| [Create Event](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=form%20should%20appear.-,Given%20when%20a%20user%20is%20on%20the%20Create%20Event%20form%2C,-when%20the%20user) | Creating an event with valid input data |
-| [Leave Family Group](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=Delete%20Family%20Group-,Given%20a%20user%20is%20on%20the%20Leave%20group%20confirmation%20modal,-given%20the%20user) | Leaving a family group as the last member of the family |
-| [View Event](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=Get%20Event-,Given%20a%20user%20is%20on%20the%20calendar%20page%2C,-when%20the%20user) | Viewing an event that was not created by the logged-in user |
-|  [View Member Profiles](https://github.com/TTanisha/FamilyHub/blob/main/docs/sprint-3/Testing_Plan.md#:~:text=the%20login%20page-,Given%20a%20user%20is%20logged%20in%2C,-given%20the%20user) | Viewing a family member's profile|
+| [Create Account](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-a-user-is-on-the--sign-up-page) | Creating an account with valid input data (US [#51](https://github.com/TTanisha/FamilyHub/issues/51): Create an Account) |
+| [Create Event](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-when-a-user-is-on-the-create-event-form) | Creating an event with valid input data (US [#3](https://github.com/TTanisha/FamilyHub/issues/3): Add Events) |
+| [Leave Family Group](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-a-user-is-on-the-leave-group-confirmation-modal-2) | Leaving a family group as the last member of the family (US [#23](https://github.com/TTanisha/FamilyHub/issues/23):Leave Family Group) |
+| [Edit Event](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-a-user-is-on-an-events-details-page-1) | Viewing an event that was not created by the logged-in user (US [#5](https://github.com/TTanisha/FamilyHub/issues/5): Edit Events) |
+|  [View Member Profiles](https://github.com/TTanisha/FamilyHub/blob/main/project_release/acceptance_tests.md#given-a-user-is-logged-in) | Viewing a family member's profile (US [#2](https://github.com/TTanisha/FamilyHub/issues/2): Individual Profile) |
 
 
 ### Regression testing

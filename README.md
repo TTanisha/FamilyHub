@@ -79,12 +79,13 @@ Project Organization:
 │   ├── sprint-2
 │   ├── sprint-3
 │   └── sprint-4
-└── front_end
-    ├── public
-    └── src
+├── front_end
+│   ├── public
+│   └── src
+└── project_release
 ```
 
-- ~~[Project Release](docs/sprint-4/project_release.md)~~ (In progress)
+- [Project Release](project_release/project_release.md)
 - [Coding Style](docs/sprint-4/developer_notes.md/#coding-standards)
 - [Meeting Minutes](https://github.com/TTanisha/FamilyHub/wiki/Meeting-Minutes)
 

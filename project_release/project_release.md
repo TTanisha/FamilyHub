@@ -398,19 +398,19 @@ We are using Github Actions for our CI/CD pipeline. We separated the pipeline in
 
     Regression testing is the first workflow that runs in our pipeline. If it fails then the image does not get pushed to DockerHub. Here is an [instance](https://github.com/TTanisha/FamilyHub/actions/runs/4683106504) of the job.
 
-    ![Regression_Testing](../project_release/pipeline_images/regression_testing_img.png)
+    ![Regression_Testing](https://raw.githubusercontent.com/TTanisha/FamilyHub/main/project_release/pipeline_images/regression_testing_img.png)
 
 - Push Image [Link to workflow](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/push-image.yml)
 
     This is our second step in our pipeline. It pushes the image to DockerHub with the updated version of the main branch. Here is an [instance](https://github.com/TTanisha/FamilyHub/actions/runs/4683106498) of the job.
 
-    ![push_image](../project_release/pipeline_images/push_image_img.png)
+    ![push_image](https://raw.githubusercontent.com/TTanisha/FamilyHub/main/project_release/pipeline_images/push_image_img.png)
 
 - CodeQL Scan [Link to workflow](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/codeql-scan.yml)
 
     This workflow performs a static analysis using CodeQL and notifies if there are any potential security breaches. Here is an [instance](https://github.com/TTanisha/FamilyHub/actions/runs/4681285508) of the job.
 
-    ![codeql_scan](../project_release/pipeline_images/CodeQL_img.png)
+    ![codeql_scan](https://raw.githubusercontent.com/TTanisha/FamilyHub/main/project_release/pipeline_images/CodeQL_img.png)
 
 
 ## Testing
@@ -480,7 +480,7 @@ NOTE: Our acceptance tests are all manual. Links will be provided to the manual 
 We used Jest for our regression testing. The workflow runs all tests from our test folders whenever changes are pushed to our main branch, in a random order. The tests are seperated by the type of test, then by the main feature they belong to. The tests contain all 53 unit tests and 75 integration tests for a total of 128 tests total.
 
 Below is an image of the latest run of the integration tests.
-![regression tests](../project_release/pipeline_images/test_coverage_img.png)
+![regression tests](https://raw.githubusercontent.com/TTanisha/FamilyHub/main/project_release/pipeline_images/test_coverage_img.png)
 
 Click [here](https://github.com/TTanisha/FamilyHub/blob/main/.github/workflows/regression-testing.yml) to see the regression testing workflow script.
 
@@ -494,7 +494,7 @@ We have a report in [raw](https://github.com/TTanisha/FamilyHub/blob/main/back_e
 
 Below is a snapshot of the HTML report, which indicates that the load test was successful. The test generated zero errors and maintained a stable connection for all users, suggesting that no bottlenecks were present. Based on this, we can conclude that the system can handle the current load without performance issues.
 
-![load_test_report](../project_release/pipeline_images/load_test_report.png)
+![load_test_report](https://raw.githubusercontent.com/TTanisha/FamilyHub/main/project_release/pipeline_images/load_test_report.png)
 
 
 ### Security Analysis
@@ -508,7 +508,7 @@ It is currently set up to analyse JavaScript, as this is the main language used 
 [Here](https://medium.com/mycostech/lets-analyze-your-code-repository-in-github-via-codeql-engine-dd196354f77e) is a tutorial for setting up and using CodeQL with GitHub Actions.
 
 Below is a sample of a report generated for our project by CodeQL.
-![CodeQL Image](../project_release/pipeline_images/codeQL_image.png)
+![CodeQL Image](https://raw.githubusercontent.com/TTanisha/FamilyHub/main/project_release/pipeline_images/codeQL_image.png)
 
 #### Problem Discussion
 1. **Database Query Built from User-Controlled Sources**

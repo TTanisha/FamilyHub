@@ -433,7 +433,7 @@ The tests include
   - 14 unit tests
   - 17 integration tests
 
-For a total of 53 unit tests and 75 integration tests.
+For a total of 128 tests, 53 unit tests and 75 integration tests.
 
 #### 10 Most Important Unit Tests 
 
